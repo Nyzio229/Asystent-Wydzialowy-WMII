@@ -1,0 +1,1 @@
+Katalog dla Modelu LLm
