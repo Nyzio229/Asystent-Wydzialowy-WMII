@@ -32,7 +32,6 @@ namespace WMiIApp.Services
 
             var messages = new
             {
-                //content = "cos tam",
                 content = message.Content,
                 role = "user"
             };
@@ -49,7 +48,7 @@ namespace WMiIApp.Services
                 var responseContent = await response.Content.ReadAsStringAsync();
                 return responseContent;
             }
-            return "nie udalo sie";
+            return "coś poszło nie tak";
         }
     }
 }
