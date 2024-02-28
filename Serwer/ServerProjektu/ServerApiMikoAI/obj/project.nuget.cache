@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5VwPABidLGaoSMaI7LqiQyQUnpJQbdFCBmvvPYsKNGAjPUl91R1d2034Hhnm7ICu4IW73BaYEdkJTVbK7VUOEg==",
+  "dgSpecHash": "/Zp4aAcs7SHQ42XSSC9Gbw8XaD4jGdMBOjDLfbhnKMgZcIQQ1NwoYXgTX0cVZMUBgo2sYNdaKrEDDP6Uf9kp8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\ServerProjekt\\ServerProjektu\\ServerApiMikoAI\\ServerApiMikoAI.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\Projekt zespolowy\\Asystent-Wydzialowy-WMII\\Serwer\\ServerProjektu\\ServerApiMikoAI\\ServerApiMikoAI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\google.protobuf\\3.24.2\\google.protobuf.3.24.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\grpc.core.api\\2.57.0\\grpc.core.api.2.57.0.nupkg.sha512",

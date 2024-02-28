@@ -21,31 +21,48 @@ namespace ServerApiMikoAI.Controllers
         [SwaggerOperation(OperationId = "post")]
         public async Task<int> Post(float[] request)
         {
-            return await QdrantClient(request);
+            return await QdrantClientEndPoint(request);
         }
         
-        public static async Task<int> QdrantClient([FromBody][Required] float[] request)
+        public static async Task<int> QdrantClientEndPoint([FromBody][Required] float[] request)
         {
-            var cmd = "C:/Users/Admin/Desktop/qdrantClient.py ";
+            string apiUrl = "http://localhost:5000/api/getIndex";
 
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe";
-            start.Arguments = cmd + JsonConvert.SerializeObject(request);
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            start.RedirectStandardError = true;
-            start.CreateNoWindow = true;
-
-            using (Process process = Process.Start(start))
+            var data = new
             {
-                using (StreamReader reader = process.StandardOutput)
+                data = request
+            };
+
+            var jsonPayload = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+                try
                 {
-                    string stderr = process.StandardError.ReadToEnd(); 
-                    string  result = await reader.ReadToEndAsync(); 
-                    return int.Parse(result);
+                    var response = await httpClient.PostAsync(apiUrl, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+
+                        QdrantClientAnswer responseData = JsonConvert.DeserializeObject<QdrantClientAnswer>(responseContent);
+
+                        return responseData.output_string;
+                    }
+                    return -1;
+                }
+                catch
+                {
+                    return -1;
                 }
             }
         }
 
+    }
+
+    public class QdrantClientAnswer
+    {
+        public int output_string;
     }
 }
