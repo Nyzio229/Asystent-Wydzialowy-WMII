@@ -74,7 +74,7 @@ namespace ServerApiMikoAI.Controllers
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
             float[] embedding = await EmbedingController.Embedding(request.messages.Content);
-            int resultId = await QdrantController.QdrantClientEndPoint(embedding);
+            int resultId = await QdrantController.QdrantClientId(embedding);
 
             if(resultId != -1)
             {

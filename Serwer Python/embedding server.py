@@ -37,7 +37,6 @@ def getIndex():
         return jsonify({'error': 'Input float[] not provided'}), 400
     
 
-
 @app.route('/api/embedding', methods=['POST'])
 def embedding():
     data = request.json

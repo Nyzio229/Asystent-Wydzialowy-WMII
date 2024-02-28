@@ -9,6 +9,7 @@ using Grpc.Net.Client;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Diagnostics;
+using ServerApiMikoAI.Models;
 
 namespace ServerApiMikoAI.Controllers
 {
@@ -21,10 +22,10 @@ namespace ServerApiMikoAI.Controllers
         [SwaggerOperation(OperationId = "post")]
         public async Task<int> Post(float[] request)
         {
-            return await QdrantClientEndPoint(request);
+            return await QdrantClientId(request);
         }
         
-        public static async Task<int> QdrantClientEndPoint([FromBody][Required] float[] request)
+        public static async Task<int> QdrantClientId([FromBody][Required] float[] request)
         {
             string apiUrl = "http://localhost:5000/api/getIndex";
 
@@ -58,7 +59,6 @@ namespace ServerApiMikoAI.Controllers
                 }
             }
         }
-
     }
 
     public class QdrantClientAnswer
