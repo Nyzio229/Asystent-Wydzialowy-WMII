@@ -29,3 +29,16 @@ C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\obj\Deb
 C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\ServerApiMikoAI.xml
 C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\obj\Debug\net6.0\ServerApiMikoAI.xml
 C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Google.Protobuf.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Grpc.Core.Api.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Grpc.Net.Client.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Grpc.Net.Common.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Qdrant.Client.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Npgsql.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Admin\source\repos\ServerProjekt\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

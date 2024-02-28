@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -27,22 +28,28 @@ namespace ServerApiMikoAI.Controllers
         }
     }
 
+
     [ApiController]
     [Route("[controller]")]
     public class LLMResponseController : ControllerBase
     {
+        private readonly PostrgeSQLContext _context;
+        public LLMResponseController(PostrgeSQLContext context)
+        {
+            _context = context;
+        }
 
         [HttpPost(Name = "LLMRequest")]
         [ProducesResponseType(typeof(LLMRequest), StatusCodes.Status200OK)]
         [SwaggerOperation(OperationId = "post")]
         public async Task<string> Post(LLMRequest request)
         {
-            return await LLMApi(request);
+            return await LLMApi(request,_context);
         }
 
-        public static async Task<string> LLMApi([FromBody][Required]LLMRequest request)
+        public static async Task<string> LLMApi([FromBody][Required] LLMRequest request,PostrgeSQLContext context)
         {
-            string apiUrl = "http://158.75.112.64:8000/v1/chat/completions";
+            string apiUrl = "http://158.75.112.151:9123/v1/chat/completions";
 
             var messages = new[]
             {
@@ -65,6 +72,17 @@ namespace ServerApiMikoAI.Controllers
 
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            float[] embedding = await EmbedingController.Embedding(request.messages.Content);
+            int resultId = await QdrantController.QdrantClient(embedding);
+
+            if(resultId != -1)
+            {
+                PostgreConnectionController postgreConnectionController = new PostgreConnectionController(context);
+                TableContext tableContext =  await postgreConnectionController.GetQueryById(resultId);
+
+                return tableContext.odpowiedz;
+            }
 
             using (var httpClient = new HttpClient())
             {
