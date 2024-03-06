@@ -6,7 +6,7 @@ namespace WMiIApp.Models
     {
         public string Content { get; set; }
         public string Role { get; set; }
-        //content, role
+        public bool IsSent { get; set; }
     }
 
     [JsonSerializable(typeof(Message))]

@@ -14,15 +14,14 @@ namespace WMiIApp.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         MessageService messageService;
-        Message message;
         public MainViewModel(MessageService messageService) 
         {
-            Items = new ObservableCollection<string>();
+            Items = new ObservableCollection<Message>();
             this.messageService = messageService;
         }
 
         [ObservableProperty]
-        ObservableCollection<string> items;
+        ObservableCollection<Message> items;
 
         [ObservableProperty]
         string text;
@@ -31,24 +30,35 @@ namespace WMiIApp.ViewModels
         {
             await Task.Delay(2000);
         }
-        /*
+        
+
         [RelayCommand]
         async Task Add()
         {
             if (string.IsNullOrEmpty(Text))
-                return; 
-            Items.Add(Text);
+                return;
+
+            Message message = new Message();
+            message.Content = Text;
+            message.Role = "user";
+            message.IsSent = true;
+
+            Items.Add(message);
             Text = string.Empty;
             await PutTaskDelay();
-            //test
-                Text = "odpowiedź z serwera...";
-                Items.Add(Text);
-                Text = string.Empty;
-            //test
-        }*/
+            Text = "odpowiedź z serwera...";
+
+            Message messageReceived = new Message();
+            messageReceived.Content = Text;
+            messageReceived.Role = "user";
+            messageReceived.IsSent = false;
+
+            Items.Add(messageReceived);
+            Text = string.Empty;
+        }
         
         
-       
+       /*
        [RelayCommand]
         async Task Add()
         {
@@ -68,7 +78,7 @@ namespace WMiIApp.ViewModels
             {
                 Text = string.Empty;
             }
-        }
+        }*/
         
     }
 }
