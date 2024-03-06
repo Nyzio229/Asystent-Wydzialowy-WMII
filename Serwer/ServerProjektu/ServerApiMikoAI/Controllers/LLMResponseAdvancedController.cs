@@ -32,34 +32,46 @@ namespace ServerApiMikoAI.Controllers
 
             const string initialMessage = "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. Your main task is responding to students' questions regarding their studies, but you can also engage in a friendly informal chat. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. Please ensure that your responses are socially unbiased and positive in nature. If you don't know the answer to a question, please don't share false information.";
 
-            string contextForMessages = initialMessage;
-
-            if (requestAdvanced.previousQuestions.Length > 0)
-            {
-                foreach(PreviousQuestion previousQuestion in requestAdvanced.previousQuestions)
-                {
-                    contextForMessages += "PreviousQuestion: " + previousQuestion.previousQuestion + "; Answer: " + previousQuestion.previousAnswer+";";
-                }
-            }
-
 
             var messages = new[]
             {
                 new
                 {
-                    content = contextForMessages,
+                    content = initialMessage,
                     role = "system"
-                },
-                new
-                {
-                    content = requestAdvanced.message,
-                    role = "user"
                 }
             };
 
+            if (requestAdvanced.previousQuestions.Length > 0)
+            {
+                foreach (PreviousQuestion previousInteraction in requestAdvanced.previousQuestions)
+                {
+                    var userItem = new
+                    {
+                        content = previousInteraction.previousQuestion,
+                        role = "user"
+                    };
+                    var LLMItem = new
+                    {
+                        content = previousInteraction.previousAnswer,
+                        role = "assistant"
+                    };
+                    messages = messages.Concat(new[] { userItem }).ToArray();
+                    messages = messages.Concat(new[] { LLMItem }).ToArray();
+                }
+            }
+
+            var currentUserQuestion = new
+            {
+                content = requestAdvanced.message,
+                role = "user"
+            };
+
+            messages = messages.Concat(new[] { currentUserQuestion }).ToArray();
+
             var payload = new
             {
-                messages
+                messages,
             };
 
             var jsonPayload = JsonConvert.SerializeObject(payload);
