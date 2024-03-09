@@ -4,14 +4,16 @@ using ServerApiMikoAI.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using DeepL;
 
 namespace ServerApiMikoAI.Controllers
 {
-
     [ApiController]
     [Route("[controller]")]
     public class LLMResponseAdvancedController : ControllerBase
     {
+        private var translator = new Translator("f63c02c5-f056-...");
+
         private readonly PostrgeSQLContext _context;
         public LLMResponseAdvancedController(PostrgeSQLContext context)
         {
@@ -67,7 +69,14 @@ namespace ServerApiMikoAI.Controllers
                 role = "user"
             };
 
-            messages = messages.Concat(new[] { currentUserQuestion }).ToArray();
+            var translatedQuestion = await translator.TranslateTextAsync(
+              currentUserQuestion,
+              LanguageCode.Polish,
+              LanguageCode.English);
+
+            Console.WriteLine($"Tłumaczenie pytania: '{currentUserQuestion}' -> '{translatedQuestion}');
+
+            messages = messages.Concat(new[] { translatedQuestion }).ToArray();
 
             var payload = new
             {
@@ -93,8 +102,14 @@ namespace ServerApiMikoAI.Controllers
                         if (chatResponse.Choices != null && chatResponse.Choices.Count > 0)
                         {
                             string chatResponseMessage = chatResponse.Choices[0].Message.Content;
-                            Console.WriteLine(chatResponseMessage);
-                            return chatResponseMessage;
+                            var translatedResponse = await translator.TranslateTextAsync(
+                              chatResponseMessage,
+                              LanguageCode.English,
+                              LanguageCode.Polish);
+
+                            Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}');
+               
+                            return translatedResponse;
                         }
                         return "Coś poszło nie tak";
                     }
