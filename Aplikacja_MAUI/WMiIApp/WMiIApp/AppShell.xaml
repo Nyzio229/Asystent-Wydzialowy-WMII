@@ -4,11 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WMiIApp"
-    Shell.FlyoutBehavior="Disabled"
     Title="WMiIApp">
 
-    <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Czat">
+        <ShellContent
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Mapa">
+        <ShellContent
+        ContentTemplate="{DataTemplate local:TabbedMapPage}"/>
+    </FlyoutItem>
+
 
 </Shell>

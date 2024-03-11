@@ -23,6 +23,7 @@ namespace WMiIApp
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MessageService>();
             builder.Services.AddSingleton<MainViewModel>();
+            //builder.Services.AddSingleton<TabbedMapPage>();
             return builder.Build();
         }
     }
