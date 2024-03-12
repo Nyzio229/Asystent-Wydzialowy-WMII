@@ -4,7 +4,14 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WMiIApp"
-    Title="WMiIApp">
+    Title="WMiIApp"
+    BackgroundColor="Grey">
+    <Shell.Shadow>
+            <Shadow Brush="Black"
+                Offset="20,20"
+                Radius="40"
+                Opacity="0.8" />
+    </Shell.Shadow> 
 
     <FlyoutItem Title="Czat">
         <ShellContent
@@ -12,8 +19,22 @@
             Route="MainPage" />
     </FlyoutItem>
     <FlyoutItem Title="Mapa">
-        <ShellContent
-        ContentTemplate="{DataTemplate local:TabbedMapPage}"/>
+        <Tab Title="-1">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage_1}"/>
+        </Tab>
+        <Tab Title="0">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage0}"/>
+        </Tab>
+        <Tab Title="1">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage1}"/>
+        </Tab>
+        <Tab Title="2">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage2}"/>
+        </Tab>
     </FlyoutItem>
 
 
