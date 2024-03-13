@@ -86,3 +86,7 @@ C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerP
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\obj\Debug\net6.0\ServerApiMikoAI.pdb
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\obj\Debug\net6.0\ServerApiMikoAI.genruntimeconfig.cache
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\obj\Debug\net6.0\ref\ServerApiMikoAI.dll
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\DeepL.net.dll
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.Extensions.Http.Polly.dll
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Polly.dll
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Polly.Extensions.Http.dll

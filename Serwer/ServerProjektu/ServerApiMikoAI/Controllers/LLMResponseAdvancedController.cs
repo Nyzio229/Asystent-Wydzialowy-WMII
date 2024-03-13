@@ -12,7 +12,7 @@ namespace ServerApiMikoAI.Controllers
     [Route("[controller]")]
     public class LLMResponseAdvancedController : ControllerBase
     {
-        private var translator = new Translator("f63c02c5-f056-...");
+        //private static Translator translator = new Translator("f63c02c5-f056-...");
 
         private readonly PostrgeSQLContext _context;
         public LLMResponseAdvancedController(PostrgeSQLContext context)
@@ -69,14 +69,22 @@ namespace ServerApiMikoAI.Controllers
                 role = "user"
             };
 
-            var translatedQuestion = await translator.TranslateTextAsync(
-              currentUserQuestion,
+            /*var translatedQuestion = await translator.TranslateTextAsync(
+              currentUserQuestion.content,
               LanguageCode.Polish,
-              LanguageCode.English);
+              LanguageCode.EnglishBritish);
 
-            Console.WriteLine($"Tłumaczenie pytania: '{currentUserQuestion}' -> '{translatedQuestion}');
+            Console.WriteLine($"Tłumaczenie pytania: '{currentUserQuestion.content}' -> '{translatedQuestion}'");
 
-            messages = messages.Concat(new[] { translatedQuestion }).ToArray();
+            var newCurrentUserQuestion = new
+            {
+                content = translatedQuestion.Text,
+                role = "user"
+            };
+
+            messages = messages.Concat(new[] { newCurrentUserQuestion }).ToArray();*/
+
+            messages = messages.Concat(new[] { currentUserQuestion }).ToArray();
 
             var temperature = 0.7;
 
@@ -114,14 +122,15 @@ namespace ServerApiMikoAI.Controllers
                         if (chatResponse.Choices != null && chatResponse.Choices.Count > 0)
                         {
                             string chatResponseMessage = chatResponse.Choices[0].Message.Content;
-                            var translatedResponse = await translator.TranslateTextAsync(
+                            /*var translatedResponse = await translator.TranslateTextAsync(
                               chatResponseMessage,
-                              LanguageCode.English,
+                              LanguageCode.EnglishBritish,
                               LanguageCode.Polish);
 
-                            Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}');
+                            Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}'");
                
-                            return translatedResponse;
+                            return translatedResponse.Text;*/
+                            return chatResponseMessage;
                         }
                         return "Coś poszło nie tak";
                     }
