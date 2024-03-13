@@ -13,11 +13,11 @@ namespace WMiIApp
         {
             if (value is bool isSent && isSent)
             {
-                return Colors.DarkBlue;
+                return Color.FromRgba("#395B64");
             }
             else
             {
-                return Colors.DimGray;
+                return Color.FromRgba("#A5C9CA");
             }
         }
 

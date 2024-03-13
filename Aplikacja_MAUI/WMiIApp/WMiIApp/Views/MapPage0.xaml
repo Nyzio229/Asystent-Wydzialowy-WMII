@@ -3,8 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WMiIApp.MapPage0"
              Title="Parter"
-             BackgroundColor="#232924"
+             BackgroundColor="#2C3333"
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
+
+    <Shell.TitleView>
+        <Label
+          Text="Parter"
+          TextColor="#E7F6F2"
+          VerticalTextAlignment="Center"
+          VerticalOptions="Center"
+          FontSize="Medium"/>
+    </Shell.TitleView>
 
     <local:PinchToZoomContainer>
         <AbsoluteLayout x:Name="parterFloor">

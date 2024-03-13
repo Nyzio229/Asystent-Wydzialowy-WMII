@@ -12,7 +12,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto" ColumnDefinitions=".75*, .25*"
-          RowSpacing="10" ColumnSpacing="0" BackgroundColor="Grey">
+          RowSpacing="10" ColumnSpacing="0" BackgroundColor="#2C3333">
         
         <CollectionView x:Name="collectionView" ItemsUpdatingScrollMode="KeepLastItemInView"  
                         Grid.ColumnSpan="2" VerticalOptions="End" ItemsSource="{Binding Items}">
@@ -23,7 +23,7 @@
                         <Grid Padding="5,5">
                             <Frame BackgroundColor="{Binding IsSent, Converter={StaticResource FromIsSentToMessageColorConverter}}" 
                                    BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30">
-                                <Label Text="{Binding Content}" FontSize="16" TextColor="White"/>
+                                <Label Text="{Binding Content}" FontSize="16" TextColor="#E7F6F2"/>
                             </Frame>
                         </Grid>
                     </VerticalStackLayout>
@@ -32,9 +32,11 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         
-        <Entry Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1"/>
+        <Entry Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1"
+               TextColor="#E7F6F2"/>
         
-        <Button Text="Wyślij" Grid.Row="1" Grid.Column="1" Command="{Binding AddCommand}"/>
+        <Button Text="Wyślij" Grid.Row="1" Grid.Column="1" Command="{Binding AddCommand}"
+                BackgroundColor="#395B64" TextColor="#E7F6F2"/>
         
     </Grid>
 
