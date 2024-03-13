@@ -69,9 +69,21 @@ namespace ServerApiMikoAI.Controllers
 
             messages = messages.Concat(new[] { currentUserQuestion }).ToArray();
 
+            var temperature = 0.7;
+
+            var repeat_penalty = 1.176;
+
+            var top_k = 40;
+
+            var top_p = 0.1;
+
             var payload = new
             {
                 messages,
+                temperature,
+                repeat_penalty,
+                top_k,
+                top_p
             };
 
             var jsonPayload = JsonConvert.SerializeObject(payload);
