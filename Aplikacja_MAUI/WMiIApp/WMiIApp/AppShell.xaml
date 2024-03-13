@@ -4,11 +4,51 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WMiIApp"
-    Shell.FlyoutBehavior="Disabled"
-    Title="WMiIApp">
+    Title="WMiIApp"
+    BackgroundColor="#181b1b"
+    FlyoutBackgroundColor="#181b1b"
+    Shell.ForegroundColor="#E7F6F2" 
+    TabBarBackgroundColor="#181b1b"
+    TabBarUnselectedColor="#E7F6F2"
+    TabBarTitleColor="#A5C9CA">
 
-    <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="0.2*,0.8*">
+                <Image Source="{Binding FlyoutIcon}"
+                       Margin="5"
+                       HeightRequest="35" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" 
+                       TextColor="#E7F6F2"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <FlyoutItem Title="Czat" Icon="chat_icon.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Mapa" Icon="map_icon.png">
+        <Tab Title="-1">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage_1}"/>
+        </Tab>
+        <Tab Title="0">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage0}"/>
+        </Tab>
+        <Tab Title="1">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage1}"/>
+        </Tab>
+        <Tab Title="2">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MapPage2}"/>
+        </Tab>
+    </FlyoutItem>
+
 
 </Shell>

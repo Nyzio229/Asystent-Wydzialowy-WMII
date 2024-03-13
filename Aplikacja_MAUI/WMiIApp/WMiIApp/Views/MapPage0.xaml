@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WMiIApp.MapPage0"
+             Title="Parter"
+             BackgroundColor="#2C3333"
+             xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
+
+    <Shell.TitleView>
+        <Label
+          Text="Parter"
+          TextColor="#E7F6F2"
+          VerticalTextAlignment="Center"
+          VerticalOptions="Center"
+          FontSize="Medium"/>
+    </Shell.TitleView>
+
+    <local:PinchToZoomContainer>
+        <AbsoluteLayout x:Name="parterFloor">
+            <!-- Mapa parteru -->
+            <Image x:Name="ParterImage" 
+               Source="parter.png" 
+               HeightRequest="600"
+               Aspect="AspectFit" 
+               AbsoluteLayout.LayoutBounds="0,0,400,600"
+               AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        </AbsoluteLayout>
+    </local:PinchToZoomContainer>
+
+</ContentPage>
