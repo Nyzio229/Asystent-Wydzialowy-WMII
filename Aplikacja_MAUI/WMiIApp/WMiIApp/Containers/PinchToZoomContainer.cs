@@ -12,13 +12,32 @@ namespace WMiIApp
         double startScale = 1;
         double xOffset = 0;
         double yOffset = 0;
+        double previousWidth = 0;
+        double previousHeight = 0;
 
         public PinchToZoomContainer()
         {
             PinchGestureRecognizer pinchGesture = new PinchGestureRecognizer();
             pinchGesture.PinchUpdated += OnPinchUpdated;
             GestureRecognizers.Add(pinchGesture);
+
+            // Dodajemy gest przeciągania
+            var panGesture = new PanGestureRecognizer();
+            panGesture.PanUpdated += OnPanUpdated;
+            GestureRecognizers.Add(panGesture);
+
+            SizeChanged += (sender, e) =>
+            {
+                if (Content != null)
+                {
+                    double screenWidth = Width;
+                    double screenHeight = Height;
+                    Content.WidthRequest = screenWidth;
+                    Content.HeightRequest = screenHeight;
+                }
+            };
         }
+       
 
         void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
@@ -65,6 +84,49 @@ namespace WMiIApp
                 yOffset = Content.TranslationY;
             }
         }
+
+        void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            // Przesun obraz o wektor przesunięcia
+            Content.TranslationX = Math.Clamp(Content.TranslationX + e.TotalX, -Content.Width * (currentScale - 1), 0);
+            Content.TranslationY = Math.Clamp(Content.TranslationY + e.TotalY, -Content.Height * (currentScale - 1), 0);
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (previousWidth != width || previousHeight != height)
+            {
+                previousWidth = width;
+                previousHeight = height;
+
+                UpdateContentScale();
+            }
+        }
+
+        void UpdateContentScale()
+        {
+            double newScale = Math.Min(Width / Content.Width, Height / Content.Height);
+
+            // Jesli obraz jest mniejszy niz ekran, powieksz go do odpowiedniego rozmiaru
+            if (newScale > 1)
+                newScale = Math.Max(Width / Content.Width, Height / Content.Height);
+
+            // Dodatkowy mnoznik
+            double additionalScaleFactor = 1.3;
+
+            currentScale = newScale * additionalScaleFactor;
+            startScale = newScale * additionalScaleFactor;
+
+            Content.Scale = currentScale;
+            Content.TranslationX = 0;
+            Content.TranslationY = 0;
+            xOffset = 0;
+            yOffset = 0;
+        }
+
+
 
     }
 }
