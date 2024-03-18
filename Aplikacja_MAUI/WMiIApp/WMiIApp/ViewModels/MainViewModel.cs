@@ -13,25 +13,25 @@ namespace WMiIApp.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        MessageService messageService;
+        readonly MessageService messageService;
         public MainViewModel(MessageService messageService) 
         {
-            Items = new ObservableCollection<Message>();
+            Items = [];
             this.messageService = messageService;
         }
 
         [ObservableProperty]
-        ObservableCollection<Message> items;
+        ObservableCollection<Message>? items;
 
         [ObservableProperty]
-        string text;
+        string? text;
 
-        async Task PutTaskDelay()
+        static async Task PutTaskDelay()
         {
             await Task.Delay(2000);
         }
         
-
+        /*
         [RelayCommand]
         async Task Add()
         {
@@ -57,19 +57,34 @@ namespace WMiIApp.ViewModels
             Items.Add(messageReceived);
             Text = string.Empty;
         }
+        */
         
-        
-       /*
+       
        [RelayCommand]
         async Task Add()
         {
             if (string.IsNullOrEmpty(Text))
                 return;
-            Items.Add(Text);
+            Message message = new()
+            {
+                Content = Text,
+                IsSent = true,
+                Role = "user"
+            };
+            Items.Add(message);
             try
             {
-                Text = await messageService.GetMessage(Text);
-                Items.Add(Text);
+                Message messageReceived = new()
+                {
+                    Role = "user",
+                    IsSent = false,
+                    Content = await messageService.GetMessage(Text)
+                };
+                Items.Add(messageReceived);
+            }
+            catch(HttpRequestException e)
+            {
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
             }
             catch (Exception ex)
             {
@@ -79,7 +94,7 @@ namespace WMiIApp.ViewModels
             {
                 Text = string.Empty;
             }
-        }*/
+        }
         
     }
 }

@@ -8,31 +8,19 @@ namespace WMiIApp.Services
 {
     public class MessageService
     {
-        const string uri= "https://7018-188-146-248-221.ngrok-free.app/LLMResponse";
-        HttpClient httpClient;
+        //const string uri = "https://5cbb-2a01-117f-440f-b00-a403-5fc6-f6d1-cb76.ngrok-free.app/LLMResponseAdvanced"; //glowny
+        const string uri = "https://5cbb-2a01-117f-440f-b00-a403-5fc6-f6d1-cb76.ngrok-free.app/LLMResponse"; //do testowania
+        readonly HttpClient httpClient;
         public MessageService()
         {
             this.httpClient = new HttpClient();
         }
 
-        Message message;
         public async Task<string> GetMessage(string text)
         {
-            message = new Message();
-            message.Content = text;
-            message.Role = "user";
-            /*var messages = new[]
-            {
-                new
-                {
-                    content = text,
-                    role = "user"
-                }
-            };*/
-
             var messages = new
             {
-                content = message.Content,
+                content = text,
                 role = "user"
             };
             var payload = new
@@ -42,13 +30,9 @@ namespace WMiIApp.Services
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(uri, content);
-            if (response.IsSuccessStatusCode)
-            {
-                //message = await response.Content.ReadFromJsonAsync(MessageContext.Default.Message);
-                var responseContent = await response.Content.ReadAsStringAsync();
-                return responseContent;
-            }
-            return "coś poszło nie tak";
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return responseContent;
         }
     }
 }
