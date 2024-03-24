@@ -21,7 +21,7 @@ namespace WMiIApp
             pinchGesture.PinchUpdated += OnPinchUpdated;
             GestureRecognizers.Add(pinchGesture);
 
-            // Dodajemy gest przeciągania
+            // Dodajemy gest przeciagania
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
             GestureRecognizers.Add(panGesture);
@@ -87,9 +87,17 @@ namespace WMiIApp
 
         void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            // Przesun obraz o wektor przesunięcia
-            Content.TranslationX = Math.Clamp(Content.TranslationX + e.TotalX, -Content.Width * (currentScale - 1), 0);
-            Content.TranslationY = Math.Clamp(Content.TranslationY + e.TotalY, -Content.Height * (currentScale - 1), 0);
+            if (currentScale > 1 && (e.StatusType == GestureStatus.Running || e.StatusType == GestureStatus.Completed))
+            {
+                    // Interpolacja pozycji obrazka z użyciem mnoznika
+                    double multiplier = 0.5; // Mnoznik interpolacji
+                    double deltaX = e.TotalX * multiplier;
+                    double deltaY = e.TotalY * multiplier;
+
+                    // Przesun obraz o przesuniecie z uwzglednieniem interpolacji
+                    Content.TranslationX = Math.Clamp(Content.TranslationX + deltaX, -Content.Width * (currentScale - 1), 0);
+                    Content.TranslationY = Math.Clamp(Content.TranslationY + deltaY, -Content.Height * (currentScale - 1), 0);
+            }
         }
 
         protected override void OnSizeAllocated(double width, double height)
