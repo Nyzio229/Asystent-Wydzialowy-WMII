@@ -384,8 +384,8 @@
              Clicked="HandleRoomButtonClick"
              FontSize="8"/>
 
-            <Button x:Name="schody_parter_piwnica"
-             Text="Schody Parter-Piwnica"
+            <Button x:Name="schody_parter_kolo_wejscia"
+             Text="Schody Koło wejścia"
              Opacity="0.5"
              BackgroundColor="Transparent"
              TextColor="Transparent"

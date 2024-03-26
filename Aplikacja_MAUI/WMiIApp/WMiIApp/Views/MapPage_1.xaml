@@ -65,16 +65,6 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="korytarz_piwnica"
-            Text="Korytarz w piwnicy"
-            Opacity="0.5"
-            BackgroundColor="Transparent"
-            TextColor="Transparent"
-            AbsoluteLayout.LayoutBounds="91,138,70,21"
-            AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
-            FontSize="8"/>
-
             <Button x:Name="schody_parter_piwnica"
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
@@ -85,7 +75,7 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="schody_parter_piwnica_lesk"
+            <Button x:Name="schody_parter_kolo_wejscia"
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
             BackgroundColor="Transparent"
