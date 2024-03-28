@@ -23,12 +23,12 @@ namespace ServerApiMikoAI.Controllers
         [HttpPost(Name = "LLMRequest - New")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [SwaggerOperation(OperationId = "post")]
-        public async Task<string> Post(LLMRequestAdvanced requestAdvanced)
+        public async Task<string> Post(Message[] requestAdvanced)
         {
             return await LLMApiNew(requestAdvanced, _context);
         }
 
-        public static async Task<string> LLMApiNew([Required] LLMRequestAdvanced requestAdvanced, PostrgeSQLContext context)
+        public static async Task<string> LLMApiNew([Required] Message[] requestAdvanced, PostrgeSQLContext context)
         {
             string apiUrl = "http://158.75.112.151:9123/v1/chat/completions";
 
@@ -44,30 +44,15 @@ namespace ServerApiMikoAI.Controllers
                 }
             };
 
-            if (requestAdvanced.previousQuestions.Length > 0)
+            foreach (Message previousMessage in requestAdvanced)
             {
-                foreach (PreviousQuestion previousInteraction in requestAdvanced.previousQuestions)
+                var newItem = new
                 {
-                    var userItem = new
-                    {
-                        content = previousInteraction.previousQuestion,
-                        role = "user"
-                    };
-                    var LLMItem = new
-                    {
-                        content = previousInteraction.previousAnswer,
-                        role = "assistant"
-                    };
-                    messages = messages.Concat(new[] { userItem }).ToArray();
-                    messages = messages.Concat(new[] { LLMItem }).ToArray();
-                }
+                    content = previousMessage.Content,
+                    role = previousMessage.Role,
+                };
+                messages = messages.Concat(new[] { newItem }).ToArray();
             }
-
-            var currentUserQuestion = new
-            {
-                content = requestAdvanced.message,
-                role = "user"
-            };
 
             /*var translatedQuestion = await translator.TranslateTextAsync(
               currentUserQuestion.content,
@@ -84,7 +69,6 @@ namespace ServerApiMikoAI.Controllers
 
             messages = messages.Concat(new[] { newCurrentUserQuestion }).ToArray();*/
 
-            messages = messages.Concat(new[] { currentUserQuestion }).ToArray();
 
             var temperature = 0.7;
 
