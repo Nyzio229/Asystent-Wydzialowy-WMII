@@ -4,6 +4,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace ServerApiMikoAI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class FAQController : ControllerBase
     {
         private readonly PostrgeSQLContext _context;
@@ -15,14 +17,14 @@ namespace ServerApiMikoAI.Controllers
         [HttpPost(Name = "FAQRequest")]
         [ProducesResponseType(typeof(TableContext), StatusCodes.Status200OK)]
         [SwaggerOperation(OperationId = "post")]
-        public async Task<TableContext> Post(string message)
+        public async Task<TableContext> Post(FAQMessage FAQMessage)
         {
-            return await FAQRequest(message, _context);
+            return await FAQRequest(FAQMessage, _context);
         }
 
-        public static async Task<TableContext> FAQRequest(string message, PostrgeSQLContext postrgeSQLContext)
+        public static async Task<TableContext> FAQRequest(FAQMessage FAQMessage, PostrgeSQLContext postrgeSQLContext)
         {
-            float[] embedding = await EmbedingController.Embedding(message);
+            float[] embedding = await EmbedingController.Embedding(FAQMessage.message);
             int resultId = await QdrantController.QdrantClientId(embedding);
 
             if (resultId != -1)
