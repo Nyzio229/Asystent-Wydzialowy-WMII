@@ -6,4 +6,9 @@ public partial class MapPage0 : ContentPage
 	{
 		InitializeComponent();
 	}
+    private void HandleRoomButtonClick(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        DisplayAlert("Pomieszczenie", "Klikniêto " + button.Text, "OK");
+    }
 }

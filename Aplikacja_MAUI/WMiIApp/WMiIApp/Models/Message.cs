@@ -4,14 +4,9 @@ namespace WMiIApp.Models
 {
     public class Message
     {
-        public string Content { get; set; }
-        public string Role { get; set; }
+        public string? Content { get; set; }
+        public string? Role { get; set; }
+        [JsonIgnore]
         public bool IsSent { get; set; }
-    }
-
-    [JsonSerializable(typeof(Message))]
-    internal sealed partial class MessageContext : JsonSerializerContext
-    {
-
     }
 }

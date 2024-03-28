@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMiIApp.Services;
 using WMiIApp.Models;
 
@@ -13,25 +8,27 @@ namespace WMiIApp.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        MessageService messageService;
+        readonly MessageService messageService;
+
+        [ObservableProperty]
+        ObservableCollection<Message>? items;
+
+        [ObservableProperty]
+        string? text;
+
         public MainViewModel(MessageService messageService) 
         {
-            Items = new ObservableCollection<Message>();
+            Items = [];
             this.messageService = messageService;
         }
 
-        [ObservableProperty]
-        ObservableCollection<Message> items;
-
-        [ObservableProperty]
-        string text;
-
-        async Task PutTaskDelay()
+        static async Task PutTaskDelay()
         {
             await Task.Delay(2000);
         }
-        
 
+        //odpowiedzi na sztywno
+        /*
         [RelayCommand]
         async Task Add()
         {
@@ -51,25 +48,40 @@ namespace WMiIApp.ViewModels
 
             Message messageReceived = new Message();
             messageReceived.Content = Text;
-            messageReceived.Role = "user";
+            messageReceived.Role = "system";
             messageReceived.IsSent = false;
 
             Items.Add(messageReceived);
             Text = string.Empty;
         }
-        
-        
-       /*
-       [RelayCommand]
+        */
+
+        //odpowiedzi z serwera
+        [RelayCommand]
         async Task Add()
         {
             if (string.IsNullOrEmpty(Text))
                 return;
-            Items.Add(Text);
+            Message message = new()
+            {
+                Content = Text,
+                IsSent = true,
+                Role = "user"
+            };
+            Items.Add(message);
             try
             {
-                Text = await messageService.GetMessage(Text);
-                Items.Add(Text);
+                Message messageReceived = new()
+                {
+                    Role = "system",
+                    IsSent = false,
+                    Content = await messageService.GetMessageFromMain(Items)
+                };
+                Items.Add(messageReceived);
+            }
+            catch(HttpRequestException e)
+            {
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
             }
             catch (Exception ex)
             {
@@ -79,7 +91,7 @@ namespace WMiIApp.ViewModels
             {
                 Text = string.Empty;
             }
-        }*/
-        
+        }
+
     }
 }
