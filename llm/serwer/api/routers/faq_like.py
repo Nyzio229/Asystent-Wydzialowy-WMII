@@ -2,10 +2,7 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from embed import embed
-
 from common import common
-
 from config import config
 
 class FAQLikeRequest(BaseModel):
@@ -21,12 +18,17 @@ router = APIRouter()
 async def faq_like(
     request: FAQLikeRequest
 ) -> FAQLikeResult:
-    score_threshold = config["api"]["faq_like"]["score_threshold"]
+    faq_like_config = config.api.faq_like
 
-    query_embedding = embed(common.embedder, request.text)
-    result = common.qdrant_client.search("asystent_FAQ", query_embedding, limit=request.limit)
-    result = filter(lambda x: x.score > score_threshold, result)
-    result = sorted(result, key=lambda x: x.score, reverse=True)
+    query_embedding = common.embedder.embed_query(request.text)
+
+    result = common.vector_store_client.search(
+        collection_name=faq_like_config.collection_name,
+        query_vector=query_embedding,
+        limit=request.limit,
+        score_threshold=faq_like_config.score_threshold
+    )
+
     result = FAQLikeResult(faq_ids=[x.id for x in result])
 
     return result
