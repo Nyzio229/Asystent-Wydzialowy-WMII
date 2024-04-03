@@ -88,7 +88,7 @@ def init_common(cmd_line_args):
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
-        ("human", "{input}"),
+        ("human", "{input}")
     ])
 
     common.history_aware_retriever = create_history_aware_retriever(
@@ -121,5 +121,7 @@ def langchain_chat_completion(
     ]
 
     response = chat_completion(llm, messages, **kwargs)
+
+    print(response)
 
     return response

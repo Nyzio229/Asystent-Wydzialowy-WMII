@@ -9,7 +9,6 @@ from llama_cpp import Llama
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
-from langchain_core.vectorstores import VectorStoreRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from common import common, chat_completion, langchain_chat_completion
@@ -54,20 +53,28 @@ def _get_llm_params_kwargs(request: ChatCompletionRequest) -> dict[str]:
 
     return kwargs
 
+# @TODO: rag nie widzi historii rozmowy
 def _rag(
     llm: Llama,
-    retriever: VectorStoreRetriever,
     request: ChatCompletionRequest
 ) -> str:
     system_message = (
-        "You're a helpful assistant."
+        "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students " +
+        "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. " +
+        "Your main task is responding to students' questions regarding their studies, but you can also engage " +
+        "in a friendly informal chat. Always answer as helpfully as possible, while being safe. " +
+        "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, " +
+        "or illegal content. If a question does not make any sense, or is not factually coherent, " +
+        "explain why instead of answering something not correct. " +
+        "Please ensure that your responses are socially unbiased and positive in nature. " +
+        "If you don't know the answer to a question, please don't share false information."
     )
 
     system_message += "\n\n{context}"
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),
-        MessagesPlaceholder("chat_history_without_input"),
+        MessagesPlaceholder("chat_history"),
         ("human", "{input}")
     ])
 
@@ -87,8 +94,7 @@ def _rag(
 
     prompt_template_input = dict(
         input=messages[-1][1],
-        chat_history=messages,
-        chat_history_without_input=messages[:-1]
+        chat_history=messages
     )
 
     response = rag_chain.invoke(prompt_template_input)
@@ -112,7 +118,6 @@ async def chat(
     if request.rag:
         response = _rag(
             llm=common.llm,
-            retriever=common.rag_retriever,
             request=request
         )
     else:
