@@ -18,16 +18,17 @@ router = APIRouter()
 async def faq_like(
     request: FAQLikeRequest
 ) -> FAQLikeResult:
-    result = common.rag_vector_store.search(
-        query=request.text,
-        search_type="similarity",
-        score_threshold=config.api.faq_like.score_threshold,
-        k=request.limit
+    faq_like_config = config.api.faq_like
+
+    query_embedding = common.embedder.embed_query(request.text)
+
+    result = common.vector_store_client.search(
+        collection_name=faq_like_config.collection_name,
+        query_vector=query_embedding,
+        limit=request.limit,
+        score_threshold=faq_like_config.score_threshold
     )
 
-    # @TODO: get documents id
-    print(result)
-
-    result = FAQLikeResult(faq_ids=[1])
+    result = FAQLikeResult(faq_ids=[x.id for x in result])
 
     return result

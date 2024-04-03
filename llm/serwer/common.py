@@ -16,6 +16,7 @@ class Common:
     classifier: Pipeline
     embedder: HuggingFaceEmbeddings
     rag_vector_store: VectorStore
+    vector_store_client: QdrantClient
     rag_retriever: VectorStoreRetriever
 
 common: Common = Common()
@@ -34,16 +35,16 @@ def init_common(cmd_line_args):
         model_name=config.embed.model
     )
 
-    vector_store_config = config.rag_vector_store
+    vector_store_config = config.vector_store
     vector_store_client_config = vector_store_config.client
-    vector_store_client = QdrantClient(
+    common.vector_store_client = QdrantClient(
         url=vector_store_client_config.url,
         api_key=vector_store_client_config.api_key
     )
 
     common.rag_vector_store = Qdrant(
-        client=vector_store_client,
-        collection_name=vector_store_config.collection_name,
+        client=common.vector_store_client,
+        collection_name=vector_store_config.rag_collection_name,
         embeddings=common.embedder
     )
 

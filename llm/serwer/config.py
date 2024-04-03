@@ -8,13 +8,13 @@ class Config(BaseModel):
         n_ctx: int
         n_gpu_layers: int
 
-    class RagVectorStore(BaseModel):
+    class VectorStore(BaseModel):
         class Client(BaseModel):
             url: str
             api_key: str
 
         client: Client
-        collection_name: str
+        rag_collection_name: str
 
     class Embed(BaseModel):
         model: str
@@ -36,7 +36,7 @@ class Config(BaseModel):
         rag_docs_upload: RagDocsUpload
 
     command_line: CommandLine
-    rag_vector_store: RagVectorStore
+    vector_store: VectorStore
     embed: Embed
     api: Api
 
@@ -48,12 +48,12 @@ config = Config(
         n_ctx=2048,
         n_gpu_layers=-1
     ),
-    rag_vector_store=Config.RagVectorStore(
-        client=Config.RagVectorStore.Client(
+    vector_store=Config.VectorStore(
+        client=Config.VectorStore.Client(
             url="http://158.75.112.151:6333",
             api_key="MikoAI"
         ),
-        collection_name="rag_docs"
+        rag_collection_name="rag_docs"
     ),
     embed=Config.Embed(
         model="sentence-transformers/all-MiniLM-L6-v2"
