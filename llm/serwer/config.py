@@ -1,0 +1,31 @@
+config = dict(
+    command_line=dict(
+        host="0.0.0.0",
+        port=9123,
+        chat_format="chatml",
+        n_ctx=2048,
+        n_gpu_layers=-1
+    ),
+    vector_store=dict(
+        client=dict(
+            url="http://158.75.112.151:6333",
+            api_key="MikoAI"
+        ),
+        collection_name="rag_docs"
+    ),
+    embed=dict(
+        model="sentence-transformers/all-MiniLM-L6-v2"
+    ),
+    api=dict(
+        faq_like=dict(
+            score_threshold=0.75
+        ),
+        classify=dict(
+            model="facebook/bart-large-mnli"
+        ),
+        rag_docs_upload=dict(
+            chunk_size=1024,
+            separator="\n"
+        )
+    )
+)
