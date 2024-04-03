@@ -4,6 +4,16 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
+from llama_cpp import Llama
+
+from langchain.chains.retrieval import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.vectorstores import VectorStoreRetriever
+
 from common import common
 
 class Message(BaseModel):
@@ -12,6 +22,7 @@ class Message(BaseModel):
 
 class ChatCompletionRequest(BaseModel):
     messages: list[Message]
+    rag: bool = True
     temperature: float = 0.2
     top_p: float = 0.95
     top_k: int = 40
@@ -26,13 +37,44 @@ class ChatCompletionRequest(BaseModel):
     mirostat_eta: float = 0.1
     max_tokens: Optional[int] = None
 
+def rag(
+    retriever: VectorStoreRetriever,
+    llm: Llama,
+    messages: list[Message]
+) -> str:
+    prompt = ChatPromptTemplate.from_messages(
+        [(message.role, message.content)
+         for message in messages]
+    )
+
+    chain = create_stuff_documents_chain(llm, prompt)
+
+    rag_chain = create_retrieval_chain(retriever, chain)
+
+    response = rag_chain.invoke({})
+
+    # @TODO: return only the answer
+    print(response)
+
+    return response
+
 router = APIRouter()
 
 # @TODO: lepiej opisać wynik
+# @TODO: parametry llma będą podawane z linii poleceń? bo rag nie pozwala ich zmienić
 @router.post("/chat")
 async def chat(
     request: ChatCompletionRequest
 ) -> dict:
+    if request.rag:
+        result = rag(
+            retriever=common.rag_retriever,
+            llm=common.llm,
+            messages=request.messages
+        )
+
+        return result
+
     messages = list(map(dict, request.messages))
 
     result = common.llm.create_chat_completion(

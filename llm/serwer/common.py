@@ -1,21 +1,22 @@
-from fastapi import FastAPI
-
 from llama_cpp import Llama
 
 from qdrant_client import QdrantClient
 
 from transformers import pipeline, Pipeline
 
-from sentence_transformers import SentenceTransformer
+from langchain_community.vectorstores.qdrant import Qdrant
+from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
+from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 
 from config import config
 
 # @TODO: rename Common
 class Common:
     llm: Llama
-    qdrant_client: QdrantClient
     classifier: Pipeline
-    embedder: SentenceTransformer
+    embedder: HuggingFaceEmbeddings
+    rag_vector_store: VectorStore
+    rag_retriever: VectorStoreRetriever
 
 common: Common = Common()
 
@@ -29,15 +30,26 @@ def init_common(cmd_line_args):
         verbose=False
     )
 
-    client_config = config["vector_store"]["client"]
-    common.qdrant_client = QdrantClient(
-        url=client_config["url"],
-        api_key=client_config["api_key"]
+    common.embedder = HuggingFaceEmbeddings(
+        model_name=config.embed.model
     )
+
+    vector_store_config = config.rag_vector_store
+    vector_store_client_config = vector_store_config.client
+    vector_store_client = QdrantClient(
+        url=vector_store_client_config.url,
+        api_key=vector_store_client_config.api_key
+    )
+
+    common.rag_vector_store = Qdrant(
+        client=vector_store_client,
+        collection_name=vector_store_config.collection_name,
+        embeddings=common.embedder
+    )
+
+    common.rag_retriever = common.rag_vector_store.as_retriever()
 
     common.classifier = pipeline(
         "zero-shot-classification",
-        model=config["api"]["classify"]["model"]
+        model=config.api.classify.model
     )
-
-    common.embedder = SentenceTransformer(config["embed"]["model"])
