@@ -106,17 +106,16 @@ namespace ServerApiMikoAI.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        LLMResponse chatResponse = JsonConvert.DeserializeObject<LLMResponse>(responseContent);
+                        LLMResponseAdvanced chatResponse = JsonConvert.DeserializeObject<LLMResponseAdvanced>(responseContent);
 
                         Console.WriteLine("Odpowiedź z API:");
                         Console.WriteLine(responseContent);
-                        if (chatResponse.Choices != null && chatResponse.Choices.Count > 0)
+                        if (chatResponse.text != null && chatResponse.text.Length > 0)
                         {
-                            string chatResponseMessage = chatResponse.Choices[0].Message.Content;
+                            string chatResponseMessage = chatResponse.text;
 
-                            TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, "en-GB", "pl");
+                            TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, LanguageCode.English, "pl");
                             var translatedResponse = await TranslationController.DeepLApi(translationMessage);
-
                             /*var translatedResponse = await translator.TranslateTextAsync(
                               chatResponseMessage,
                               LanguageCode.EnglishBritish,
