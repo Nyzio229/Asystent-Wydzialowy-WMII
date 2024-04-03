@@ -51,6 +51,7 @@ config = Config(
     vector_store=Config.VectorStore(
         client=Config.VectorStore.Client(
             url="http://158.75.112.151:6333",
+            # @TODO: trudniejszy api key
             api_key="MikoAI"
         ),
         rag_collection_name="rag_docs"

@@ -2,9 +2,8 @@ import uvicorn
 
 from fastapi import FastAPI
 
+from common import init_common
 from command_line import parse_args
-
-from common import common, init_common
 
 from api.routers import (
     chat,

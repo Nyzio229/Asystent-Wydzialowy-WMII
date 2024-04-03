@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from langchain_text_splitters import CharacterTextSplitter
+from langchain_community.docstore.document import Document as LangchainDocument
 
 from common import common
 from config import config
@@ -26,5 +27,13 @@ async def rag_docs_upload(
         chunk_size=rag_docs_upload_config.chunk_size
     )
 
-    docs = text_splitter.split_documents(request.docs)
+    docs = [
+        LangchainDocument(
+            page_content=doc.text,
+            **doc.metadata
+        )
+        for doc in request.docs
+    ]
+
+    docs = text_splitter.split_documents(docs)
     common.rag_vector_store.add_documents(docs)
