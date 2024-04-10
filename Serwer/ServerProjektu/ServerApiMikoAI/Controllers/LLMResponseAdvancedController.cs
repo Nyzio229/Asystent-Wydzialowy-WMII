@@ -12,7 +12,7 @@ namespace ServerApiMikoAI.Controllers
     [Route("[controller]")]
     public class LLMResponseAdvancedController : ControllerBase
     {
-        //private static Translator translator = new Translator("f63c02c5-f056-...");
+        //private static Translator translator = new Translator("b7b072d0-f9c7-4820-8003-dcd228a1df91:fx");
 
         private readonly PostrgeSQLContext _context;
         public LLMResponseAdvancedController(PostrgeSQLContext context)
@@ -30,7 +30,7 @@ namespace ServerApiMikoAI.Controllers
 
         public static async Task<string> LLMApiNew([Required] Message[] requestAdvanced, PostrgeSQLContext context)
         {
-            string apiUrl = "http://158.75.112.151:9123/v1/chat/completions";
+            string apiUrl = "http://158.75.112.151:9123/chat";
 
             const string initialMessage = "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. Your main task is responding to students' questions regarding their studies, but you can also engage in a friendly informal chat. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. Please ensure that your responses are socially unbiased and positive in nature. If you don't know the answer to a question, please don't share false information.";
 
@@ -55,19 +55,26 @@ namespace ServerApiMikoAI.Controllers
             }
 
             /*var translatedQuestion = await translator.TranslateTextAsync(
-              currentUserQuestion.content,
+              messages.Last().content,
               LanguageCode.Polish,
               LanguageCode.EnglishBritish);
 
-            Console.WriteLine($"Tłumaczenie pytania: '{currentUserQuestion.content}' -> '{translatedQuestion}'");
+            Console.WriteLine($"Tłumaczenie pytania: '{messages.Last().content}' -> '{translatedQuestion}'");
+
+            
+            var messagesList = messages.ToList();
+            messagesList.RemoveAt(messagesList.Count - 1);
+            messages = messagesList.ToArray();
 
             var newCurrentUserQuestion = new
             {
                 content = translatedQuestion.Text,
                 role = "user"
             };
-
             messages = messages.Concat(new[] { newCurrentUserQuestion }).ToArray();*/
+
+
+
 
 
             var temperature = 0.7;
@@ -99,22 +106,25 @@ namespace ServerApiMikoAI.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        LLMResponse chatResponse = JsonConvert.DeserializeObject<LLMResponse>(responseContent);
+                        LLMResponseAdvanced chatResponse = JsonConvert.DeserializeObject<LLMResponseAdvanced>(responseContent);
 
                         Console.WriteLine("Odpowiedź z API:");
                         Console.WriteLine(responseContent);
-                        if (chatResponse.Choices != null && chatResponse.Choices.Count > 0)
+                        if (chatResponse.text != null && chatResponse.text.Length > 0)
                         {
-                            string chatResponseMessage = chatResponse.Choices[0].Message.Content;
+                            string chatResponseMessage = chatResponse.text;
+
+                            TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, LanguageCode.English, "pl");
+                            var translatedResponse = await TranslationController.DeepLApi(translationMessage);
                             /*var translatedResponse = await translator.TranslateTextAsync(
                               chatResponseMessage,
                               LanguageCode.EnglishBritish,
                               LanguageCode.Polish);
-
+                            */
                             Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}'");
                
-                            return translatedResponse.Text;*/
-                            return chatResponseMessage;
+                            return translatedResponse;
+                            //return chatResponseMessage;
                         }
                         return "Coś poszło nie tak";
                     }

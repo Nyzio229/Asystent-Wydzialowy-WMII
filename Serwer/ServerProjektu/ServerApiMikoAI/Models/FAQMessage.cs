@@ -2,6 +2,7 @@
 {
     public class FAQMessage
     {
-        public string message { get; set; }
+        public string text { get; set; }
+        public int limit { get; set; }
     }
 }
