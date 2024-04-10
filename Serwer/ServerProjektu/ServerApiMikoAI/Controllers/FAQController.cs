@@ -33,6 +33,8 @@ namespace ServerApiMikoAI.Controllers
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
             TableContext[] tableContexts = new TableContext[FAQMessage.limit];
+            tableContexts[0] = new TableContext();
+            tableContexts[0].id_pytania = -1;
 
             using (var httpClient = new HttpClient())
             {
@@ -54,12 +56,10 @@ namespace ServerApiMikoAI.Controllers
                             }
                             return tableContexts;
                         }
-                        tableContexts[0].id_pytania=-1;
                         return tableContexts;
                     }
                     else
                     {
-                        tableContexts[0].id_pytania = -1;
                         return tableContexts;
                     }
                 }

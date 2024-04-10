@@ -143,3 +143,7 @@ G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\
 G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
 G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
 G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\WebDriver.dll
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\linux\selenium-manager
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
+C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\WebDriver.dll

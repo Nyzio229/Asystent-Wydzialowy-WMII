@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "ServerApiMikoAI/1.0.0": {
         "dependencies": {
+          "DeepL.net": "1.9.0",
           "Microsoft.EntityFrameworkCore": "6.0.27",
           "Newtonsoft.Json": "13.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.8",
@@ -19,6 +20,18 @@
         },
         "runtime": {
           "ServerApiMikoAI.dll": {}
+        }
+      },
+      "DeepL.net/1.9.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Http.Polly": "5.0.1",
+          "System.Text.Json": "5.0.2"
+        },
+        "runtime": {
+          "lib/net5.0/DeepL.net.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.9.0.0"
+          }
         }
       },
       "Google.Protobuf/3.24.2": {
@@ -137,6 +150,27 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {},
+      "Microsoft.Extensions.Http/5.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Logging": "6.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Options": "6.0.0"
+        }
+      },
+      "Microsoft.Extensions.Http.Polly/5.0.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Http": "5.0.0",
+          "Polly": "7.1.0",
+          "Polly.Extensions.Http": "3.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll": {
+            "assemblyVersion": "5.0.1.0",
+            "fileVersion": "5.0.120.58002"
+          }
+        }
+      },
       "Microsoft.Extensions.Logging/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "6.0.1",
@@ -196,6 +230,25 @@
           "lib/net6.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "6.0.8.0",
             "fileVersion": "6.0.8.0"
+          }
+        }
+      },
+      "Polly/7.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/Polly.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.1.0.0"
+          }
+        }
+      },
+      "Polly.Extensions.Http/3.0.0": {
+        "dependencies": {
+          "Polly": "7.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Polly.Extensions.Http.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
           }
         }
       },
@@ -288,7 +341,8 @@
           }
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {}
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
+      "System.Text.Json/5.0.2": {}
     }
   },
   "libraries": {
@@ -296,6 +350,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "DeepL.net/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EGlXumiKp4Dz62vm0sr+4EnYy+4ajWqhRCrk5Zgw354ybaCMNp6vGvC1HY5zcW1OKTb8/f0WeECX9dG2y3QWqg==",
+      "path": "deepl.net/1.9.0",
+      "hashPath": "deepl.net.1.9.0.nupkg.sha512"
     },
     "Google.Protobuf/3.24.2": {
       "type": "package",
@@ -395,6 +456,20 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/6.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
     },
+    "Microsoft.Extensions.Http/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kT1ijDKZuSUhBtYoC1sXrmVKP7mA08h9Xrsr4VrS/QOtiKCEtUTTd7dd3XI9dwAb46tZSak13q/zdIcr4jqbyg==",
+      "path": "microsoft.extensions.http/5.0.0",
+      "hashPath": "microsoft.extensions.http.5.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Http.Polly/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Tzf+x8HVDhri9dkIGCGOP5RVjgXnTZuBcwZHr0sW6KAtVGPDU0xEDXPDpoW5vwq/K12dMI75vuapUtMw0d/pIw==",
+      "path": "microsoft.extensions.http.polly/5.0.1",
+      "hashPath": "microsoft.extensions.http.polly.5.0.1.nupkg.sha512"
+    },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",
       "serviceable": true,
@@ -450,6 +525,20 @@
       "sha512": "sha512-YJRpO+3wXQyWuwRUCVJj/Rsn46sY0bZ6uCGOEFApiRe0ZYJ6N6TxZUWKbTNJYjesickcLGzynOerpSbDJX1AYg==",
       "path": "npgsql.entityframeworkcore.postgresql/6.0.8",
       "hashPath": "npgsql.entityframeworkcore.postgresql.6.0.8.nupkg.sha512"
+    },
+    "Polly/7.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mpQsvlEn4ipgICh5CGyVLPV93RFVzOrBG7wPZfzY8gExh7XgWQn0GCDY9nudbUEJ12UiGPP9i4+CohghBvzhmg==",
+      "path": "polly/7.1.0",
+      "hashPath": "polly.7.1.0.nupkg.sha512"
+    },
+    "Polly.Extensions.Http/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-drrG+hB3pYFY7w1c3BD+lSGYvH2oIclH8GRSehgfyP5kjnFnHKQuuBhuHLv+PWyFuaTDyk/vfRpnxOzd11+J8g==",
+      "path": "polly.extensions.http/3.0.0",
+      "hashPath": "polly.extensions.http.3.0.0.nupkg.sha512"
     },
     "Qdrant.Client/1.7.0": {
       "type": "package",
@@ -527,6 +616,13 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/5.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I47dVIGiV6SfAyppphxqupertT/5oZkYLDCX6vC3HpOI4ZLjyoKAreUoem2ie6G0RbRuFrlqz/PcTQjfb2DOfQ==",
+      "path": "system.text.json/5.0.2",
+      "hashPath": "system.text.json.5.0.2.nupkg.sha512"
     }
   }
 }
