@@ -8,11 +8,13 @@
     ".NETCoreApp,Version=v6.0": {
       "ServerApiMikoAI/1.0.0": {
         "dependencies": {
-          "DeepL.net": "1.8.0",
+          "DeepL.net": "1.9.0",
           "Microsoft.EntityFrameworkCore": "6.0.27",
           "Newtonsoft.Json": "13.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.8",
           "Qdrant.Client": "1.7.0",
+          "Selenium.WebDriver": "4.19.0",
+          "Selenium.WebDriver.ChromeDriver": "123.0.6312.8600",
           "Swashbuckle.AspNetCore": "6.5.0",
           "Swashbuckle.AspNetCore.Annotations": "6.5.0"
         },
@@ -20,7 +22,7 @@
           "ServerApiMikoAI.dll": {}
         }
       },
-      "DeepL.net/1.8.0": {
+      "DeepL.net/1.9.0": {
         "dependencies": {
           "Microsoft.Extensions.Http.Polly": "5.0.1",
           "System.Text.Json": "5.0.2"
@@ -28,7 +30,7 @@
         "runtime": {
           "lib/net5.0/DeepL.net.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.8.0.0"
+            "fileVersion": "1.9.0.0"
           }
         }
       },
@@ -262,6 +264,18 @@
           }
         }
       },
+      "Selenium.WebDriver/4.19.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriver.ChromeDriver/123.0.6312.8600": {},
       "Swashbuckle.AspNetCore/6.5.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -337,12 +351,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DeepL.net/1.8.0": {
+    "DeepL.net/1.9.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Fo7GAm5D576EGbMwAdZr80t8mecsqxGw4AiWyJVinWGjKfdd4eq5GYQhw0Tz4fT4sUnoYric9uJjlUVUoSH6Sw==",
-      "path": "deepl.net/1.8.0",
-      "hashPath": "deepl.net.1.8.0.nupkg.sha512"
+      "sha512": "sha512-EGlXumiKp4Dz62vm0sr+4EnYy+4ajWqhRCrk5Zgw354ybaCMNp6vGvC1HY5zcW1OKTb8/f0WeECX9dG2y3QWqg==",
+      "path": "deepl.net/1.9.0",
+      "hashPath": "deepl.net.1.9.0.nupkg.sha512"
     },
     "Google.Protobuf/3.24.2": {
       "type": "package",
@@ -532,6 +546,20 @@
       "sha512": "sha512-AeBl4x5qBh2q921TgC7EmQAFnUif5zAxaqZekaxR0Y+Lf1KmdFjoer76uTh1jWqXuBvQ7cosqUGXuSQHzzda4w==",
       "path": "qdrant.client/1.7.0",
       "hashPath": "qdrant.client.1.7.0.nupkg.sha512"
+    },
+    "Selenium.WebDriver/4.19.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rguRY+Kbiow0s7RHtnHXnJdMgsmqAOOtv7ZGBtIQ1DbErkFtksrZHdUMcKyMK6VKNMmfsViqcCDGw4mPSPT70w==",
+      "path": "selenium.webdriver/4.19.0",
+      "hashPath": "selenium.webdriver.4.19.0.nupkg.sha512"
+    },
+    "Selenium.WebDriver.ChromeDriver/123.0.6312.8600": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1OnN2EepEdRxCKkVJHZFaLoCNWpwELO1un2RzDcpRsjulemXiBV9xv4Fz0ylKQtTRGeKapTSAK5E1eZL+draQw==",
+      "path": "selenium.webdriver.chromedriver/123.0.6312.8600",
+      "hashPath": "selenium.webdriver.chromedriver.123.0.6312.8600.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",

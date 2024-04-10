@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "DeepL.net/1.8.0": {
+      "DeepL.net/1.9.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Http.Polly": "5.0.1",
@@ -453,6 +453,31 @@
           }
         }
       },
+      "Selenium.WebDriver/4.19.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/WebDriver.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Selenium.WebDriver.targets": {}
+        }
+      },
+      "Selenium.WebDriver.ChromeDriver/123.0.6312.8600": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.ChromeDriver.targets": {}
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -602,15 +627,15 @@
     }
   },
   "libraries": {
-    "DeepL.net/1.8.0": {
-      "sha512": "Fo7GAm5D576EGbMwAdZr80t8mecsqxGw4AiWyJVinWGjKfdd4eq5GYQhw0Tz4fT4sUnoYric9uJjlUVUoSH6Sw==",
+    "DeepL.net/1.9.0": {
+      "sha512": "EGlXumiKp4Dz62vm0sr+4EnYy+4ajWqhRCrk5Zgw354ybaCMNp6vGvC1HY5zcW1OKTb8/f0WeECX9dG2y3QWqg==",
       "type": "package",
-      "path": "deepl.net/1.8.0",
+      "path": "deepl.net/1.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
-        "deepl.net.1.8.0.nupkg.sha512",
+        "deepl.net.1.9.0.nupkg.sha512",
         "deepl.net.nuspec",
         "icon.png",
         "lib/net5.0/DeepL.net.dll",
@@ -1409,6 +1434,50 @@
         "qdrant.client.nuspec"
       ]
     },
+    "Selenium.WebDriver/4.19.0": {
+      "sha512": "rguRY+Kbiow0s7RHtnHXnJdMgsmqAOOtv7ZGBtIQ1DbErkFtksrZHdUMcKyMK6VKNMmfsViqcCDGw4mPSPT70w==",
+      "type": "package",
+      "path": "selenium.webdriver/4.19.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Selenium.WebDriver.targets",
+        "buildTransitive/Selenium.WebDriver.targets",
+        "icon.png",
+        "lib/netstandard2.0/WebDriver.dll",
+        "lib/netstandard2.0/WebDriver.xml",
+        "manager/linux/selenium-manager",
+        "manager/macos/selenium-manager",
+        "manager/windows/selenium-manager.exe",
+        "selenium.webdriver.4.19.0.nupkg.sha512",
+        "selenium.webdriver.nuspec"
+      ]
+    },
+    "Selenium.WebDriver.ChromeDriver/123.0.6312.8600": {
+      "sha512": "1OnN2EepEdRxCKkVJHZFaLoCNWpwELO1un2RzDcpRsjulemXiBV9xv4Fz0ylKQtTRGeKapTSAK5E1eZL+draQw==",
+      "type": "package",
+      "path": "selenium.webdriver.chromedriver/123.0.6312.8600",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "build/DefinePropertiesChromeDriver.targets",
+        "build/Selenium.WebDriver.ChromeDriver.targets",
+        "driver/linux64/LICENSE.chromedriver",
+        "driver/linux64/chromedriver",
+        "driver/mac64/LICENSE.chromedriver",
+        "driver/mac64/chromedriver",
+        "driver/mac64arm/LICENSE.chromedriver",
+        "driver/mac64arm/chromedriver",
+        "driver/win32/LICENSE.chromedriver",
+        "driver/win32/chromedriver.exe",
+        "nupkg-icon.png",
+        "selenium.webdriver.chromedriver.123.0.6312.8600.nupkg.sha512",
+        "selenium.webdriver.chromedriver.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.5.0": {
       "sha512": "FK05XokgjgwlCI6wCT+D4/abtQkL1X1/B9Oas6uIwHFmYrIO9WUD5aLC9IzMs9GnHfUXOtXZ2S43gN1mhs5+aA==",
       "type": "package",
@@ -1623,11 +1692,13 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "DeepL.net >= 1.8.0",
+      "DeepL.net >= 1.9.0",
       "Microsoft.EntityFrameworkCore >= 6.0.27",
       "Newtonsoft.Json >= 13.0.3",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 6.0.8",
       "Qdrant.Client >= 1.7.0",
+      "Selenium.WebDriver >= 4.19.0",
+      "Selenium.WebDriver.ChromeDriver >= 123.0.6312.8600",
       "Swashbuckle.AspNetCore >= 6.5.0",
       "Swashbuckle.AspNetCore.Annotations >= 6.5.0"
     ]
@@ -1679,7 +1750,7 @@
         "dependencies": {
           "DeepL.net": {
             "target": "Package",
-            "version": "[1.8.0, )"
+            "version": "[1.9.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -1696,6 +1767,14 @@
           "Qdrant.Client": {
             "target": "Package",
             "version": "[1.7.0, )"
+          },
+          "Selenium.WebDriver": {
+            "target": "Package",
+            "version": "[4.19.0, )"
+          },
+          "Selenium.WebDriver.ChromeDriver": {
+            "target": "Package",
+            "version": "[123.0.6312.8600, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

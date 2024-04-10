@@ -47,7 +47,7 @@
           "dependencies": {
             "DeepL.net": {
               "target": "Package",
-              "version": "[1.8.0, )"
+              "version": "[1.9.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -64,6 +64,14 @@
             "Qdrant.Client": {
               "target": "Package",
               "version": "[1.7.0, )"
+            },
+            "Selenium.WebDriver": {
+              "target": "Package",
+              "version": "[4.19.0, )"
+            },
+            "Selenium.WebDriver.ChromeDriver": {
+              "target": "Package",
+              "version": "[123.0.6312.8600, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

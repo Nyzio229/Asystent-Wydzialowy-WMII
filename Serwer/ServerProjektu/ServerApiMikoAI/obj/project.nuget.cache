@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "qmlaGtwupTDXWVTedVZCApGbCuZznbYsE3zpOzB+9teerZ14dUp+VE59Y6NR1ZHGyYrNSD/zYvnlaBrtKx5y5g==",
+  "dgSpecHash": "g5KHwvLTtdEhVocNHMH4djwqNFCnXUzKQnUUKWGDQeXQOCaJ1bZCtAjb3XMBJamQSy5IRH9Ky/WLer9n9rV+DA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Desktop\\Projekt zespolowy\\Asystent-Wydzialowy-WMII\\Serwer\\ServerProjektu\\ServerApiMikoAI\\ServerApiMikoAI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Admin\\.nuget\\packages\\deepl.net\\1.8.0\\deepl.net.1.8.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\deepl.net\\1.9.0\\deepl.net.1.9.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\google.protobuf\\3.24.2\\google.protobuf.3.24.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\grpc.core.api\\2.57.0\\grpc.core.api.2.57.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\grpc.net.client\\2.57.0\\grpc.net.client.2.57.0.nupkg.sha512",
@@ -32,6 +32,8 @@
     "C:\\Users\\Admin\\.nuget\\packages\\polly\\7.1.0\\polly.7.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\qdrant.client\\1.7.0\\qdrant.client.1.7.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\selenium.webdriver\\4.19.0\\selenium.webdriver.4.19.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\selenium.webdriver.chromedriver\\123.0.6312.8600\\selenium.webdriver.chromedriver.123.0.6312.8600.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\6.5.0\\swashbuckle.aspnetcore.annotations.6.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",

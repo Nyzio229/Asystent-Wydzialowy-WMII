@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DeepL;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ServerApiMikoAI.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using DeepL;
 
 namespace ServerApiMikoAI.Controllers
 {
