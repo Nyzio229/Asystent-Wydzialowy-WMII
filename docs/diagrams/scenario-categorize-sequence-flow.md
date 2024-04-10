@@ -1,4 +1,4 @@
-
+```plantuml
 @startuml
 actor Student
 
@@ -96,3 +96,4 @@ Smartfon --> Smartfon: Text2Speech [PL]
 
 deactivate Smartfon
 @enduml
+```

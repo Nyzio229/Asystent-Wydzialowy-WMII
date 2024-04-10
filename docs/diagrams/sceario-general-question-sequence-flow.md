@@ -1,3 +1,4 @@
+```plantuml
 @startuml
 participant Smartfon
 participant Backend
@@ -37,3 +38,4 @@ Backend --> Smartfon: odpowiedź [PL]
 deactivate Backend
 
 @enduml
+```
