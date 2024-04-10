@@ -1,3 +1,4 @@
+```plantuml
 @startuml
 actor Student
 
@@ -44,3 +45,4 @@ Smartfon --> Backend: Wysyła pytanie do chata + API key + id urządzenia
 Backend --> DB: Sprawdza czy API key + id urządzenia jest w bazie
 
 @enduml
+```
