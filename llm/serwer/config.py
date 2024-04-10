@@ -24,15 +24,11 @@ class Config(BaseModel):
             collection_name: str
             score_threshold: float
 
-        class Classify(BaseModel):
-            model: str
-
         class RagDocsUpload(BaseModel):
             separator: str
             chunk_size: int
 
         faq_like: FaqLike
-        classify: Classify
         rag_docs_upload: RagDocsUpload
 
     command_line: CommandLine
@@ -63,9 +59,6 @@ config = Config(
         faq_like=Config.Api.FaqLike(
             collection_name="asystent_FAQ",
             score_threshold=0.75
-        ),
-        classify=Config.Api.Classify(
-            model="facebook/bart-large-mnli"
         ),
         rag_docs_upload=Config.Api.RagDocsUpload(
             chunk_size=1024,
