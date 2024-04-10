@@ -28,7 +28,7 @@ Backend --> DB: Sprawdza, czy kod X pasuje do id urządzenia
 
 Backend --> Backend: Generuje API key
 
-Backend --> DB: Zapisuje API key i mapuje na id urządzenia
+Backend --> DB: Zapisuje hash(API key) i mapuje na id urządzenia
 
 Backend --> Smartfon: Sukces, odsyła API key
 
@@ -42,7 +42,19 @@ Student --> Smartfon: Wysyła pytanie do chata
 
 Smartfon --> Backend: Wysyła pytanie do chata + API key + id urządzenia
 
-Backend --> DB: Sprawdza czy API key + id urządzenia jest w bazie
+Backend --> DB: Sprawdza czy hash(API key) + id urządzenia jest w bazie
+
+== logout ==
+
+Student --> Smartfon: Wyloguj się
+
+Smartfon --> Backend: Wyloguj się + API key + id urządzenia
+
+Backend --> DB: Usuń hash(API key) + id urządzenia (jeśli jest w bazie)
+
+Backend --> Smartfon
+
+Smartfon --> Smartfon: Usuń API key
 
 @enduml
 ```
