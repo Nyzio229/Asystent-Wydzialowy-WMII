@@ -4,7 +4,6 @@ using ServerApiMikoAI.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using DeepL;
 
 namespace ServerApiMikoAI.Controllers
 {
