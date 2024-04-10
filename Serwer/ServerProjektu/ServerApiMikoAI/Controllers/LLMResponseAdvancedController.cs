@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DeepL;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ServerApiMikoAI.Models;
 using Swashbuckle.AspNetCore.Annotations;
