@@ -1,3 +1,4 @@
+```plantuml
 @startuml
 participant Smartfon
 participant Backend
@@ -13,6 +14,8 @@ activate Backend
 
 Backend --> LLMServer: Chat endpoint - Odpowiedz na pytanie [EN]
 activate LLMServer
+LLMServer --> LLMServer: Podsumuj konwersacje
+LLMServer --> LLMServer: weź embeding dla podsumowania
 LLMServer --> VectorDB: Pobiera częśći pasujących dokumentów
 activate VectorDB
 VectorDB --> LLMServer:
@@ -22,6 +25,7 @@ note left
     i pyta LLMa
 end note
 deactivate VectorDB
+LLMServer --> LLMServer: zapytaj LLMa przekazując podsumowania i cząstki tekstu jako kontekst
 LLMServer --> Backend: Zwraca odpowiedź [EN]
 deactivate LLMServer
 
@@ -34,3 +38,4 @@ Backend --> Smartfon: odpowiedź [PL]
 deactivate Backend
 
 @enduml
+```

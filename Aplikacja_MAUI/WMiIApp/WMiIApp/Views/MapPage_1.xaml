@@ -26,6 +26,7 @@
 
             <!-- Pomieszczenia w piwnicy -->
             <Button x:Name="lesk"
+            ClassId="lesk"
             Text="LESK"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -35,7 +36,15 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
+            <Button x:Name="draw_lesk"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            AbsoluteLayout.LayoutBounds="190,184,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
+
             <Button x:Name="bar"
+            ClassId="bar"
             Text="Bar"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -45,7 +54,15 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="wc"
+            <Button x:Name="draw_bar"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            AbsoluteLayout.LayoutBounds="135,150,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
+
+            <Button x:Name="wcPiwnica"
+            ClassId="wcPiwnica"
             Text="WC"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -55,7 +72,15 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
+            <Button x:Name="draw_wc"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            AbsoluteLayout.LayoutBounds="105,150,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
+
             <Button x:Name="klubStudencki"
+            ClassId="klubStudencki"
             Text="Klub Studencki"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -65,17 +90,15 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="korytarz_piwnica"
-            Text="Korytarz w piwnicy"
+            <Button x:Name="draw_klubStudencki"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
-            AbsoluteLayout.LayoutBounds="91,138,70,21"
-            AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
-            FontSize="8"/>
+            AbsoluteLayout.LayoutBounds="94,150,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
 
             <Button x:Name="schody_parter_piwnica"
+            ClassId="schody_parter_piwnica"     
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -85,7 +108,15 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="schody_parter_piwnica_lesk"
+            <Button x:Name="draw_schody_parter_piwnica"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            AbsoluteLayout.LayoutBounds="182,140,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
+
+            <Button x:Name="schody_parter_kolo_wejscia"
+            ClassId="schody_parter_kolo_wejscia"
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
             BackgroundColor="Transparent"
@@ -94,7 +125,31 @@
             AbsoluteLayout.LayoutFlags="None"
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
+
+            <Button x:Name="draw_schody_parter_kolo_wejscia"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            AbsoluteLayout.LayoutBounds="215,184,5,5"
+            AbsoluteLayout.LayoutFlags="None"/>
+
+            <Label x:Name="RoomInfoLabel"
+            Text="Kliknij na pomieszczenie aby uzyskać więcej informacji..."
+            AbsoluteLayout.LayoutBounds="10,250,200,200"
+            AbsoluteLayout.LayoutFlags="None"
+            TextColor="#E7F6F2"/>
+
+            <Button x:Name="routeButton"
+            Text="Wyznacz trase"
+            Opacity="0.5"
+            BackgroundColor="Transparent"
+            TextColor="Transparent"
+            Clicked="routeButton_Clicked"
+            AbsoluteLayout.LayoutBounds="65,450,100,50"
+            AbsoluteLayout.LayoutFlags="None"
+            FontSize="6"/>
         </AbsoluteLayout>
     </local:PinchToZoomContainer>
+    
 
 </ContentPage>

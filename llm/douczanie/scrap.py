@@ -241,13 +241,15 @@ def get_filtered_text(tag: bs4.Tag, with_links=True) -> str:
 
 def soup_for(url: str) -> bs4.BeautifulSoup:
     # bez "User-Agent" jest błąd 404
-    response = requests.get(url,
-                            headers={
-                                "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                                                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                                                "Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582")
-                            },
-                            timeout=30)
+    response = requests.get(
+        url,
+        headers={
+            "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582")
+        },
+        timeout=30
+    )
 
     soup = bs4.BeautifulSoup(response.content, "html.parser")
 

@@ -73,7 +73,7 @@ namespace ServerApiMikoAI.Controllers
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            float[] embedding = await EmbedingController.Embedding(request.messages.Content);
+            /*float[] embedding = await EmbedingController.Embedding(request.messages.Content);
             int resultId = await QdrantController.QdrantClientId(embedding);
 
             if(resultId != -1)
@@ -82,7 +82,7 @@ namespace ServerApiMikoAI.Controllers
                 TableContext tableContext =  await postgreConnectionController.GetQueryById(resultId);
 
                 return tableContext.odpowiedz;
-            }
+            }*/
 
             using (var httpClient = new HttpClient())
             {
