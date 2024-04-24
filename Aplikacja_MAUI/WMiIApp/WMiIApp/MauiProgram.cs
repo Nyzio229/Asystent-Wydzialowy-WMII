@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using WMiIApp.ViewModels;
 using WMiIApp.Services;
+using CommunityToolkit.Maui;
 
 namespace WMiIApp
 {
@@ -11,6 +12,7 @@ namespace WMiIApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

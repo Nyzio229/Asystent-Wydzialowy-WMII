@@ -53,7 +53,6 @@ def _get_llm_params_kwargs(request: ChatCompletionRequest) -> dict[str]:
 
     return kwargs
 
-# @TODO: rag nie widzi historii rozmowy
 def _rag(
     llm: Llama,
     request: ChatCompletionRequest
@@ -75,18 +74,18 @@ def _rag(
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),
         MessagesPlaceholder("chat_history"),
-        ("human", "{input}")
+        ("user", "{input}")
     ])
 
     kwargs = _get_llm_params_kwargs(request)
-    chain = create_stuff_documents_chain(
+    chat_chain = create_stuff_documents_chain(
         llm=lambda prompt: langchain_chat_completion(llm, prompt, **kwargs),
         prompt=prompt
     )
 
     rag_chain = create_retrieval_chain(
         retriever=common.history_aware_retriever,
-        combine_docs_chain=chain
+        combine_docs_chain=chat_chain
     )
 
     messages = [(message.role, message.content)
@@ -94,14 +93,10 @@ def _rag(
 
     prompt_template_input = dict(
         input=messages[-1][1],
-        chat_history=messages
+        chat_history=messages[:-1]
     )
 
     response = rag_chain.invoke(prompt_template_input)
-
-    # @TODO: remove
-    print(response)
-
     response = response["answer"]
 
     return response

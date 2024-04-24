@@ -147,3 +147,13 @@ C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerP
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\macos\selenium-manager
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\selenium-manager\windows\selenium-manager.exe
 C:\Users\Admin\Desktop\Projekt zespolowy\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\WebDriver.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\DeepL.net.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Microsoft.Extensions.Http.Polly.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Polly.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\Polly.Extensions.Http.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\MailKit.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\MimeKit.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\System.Formats.Asn1.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+G:\Programowanie\Asystent-Wydzialowy-WMII\Serwer\ServerProjektu\ServerApiMikoAI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll

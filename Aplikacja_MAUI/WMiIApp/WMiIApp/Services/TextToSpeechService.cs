@@ -1,7 +1,7 @@
 ﻿using WMiIApp.Models;
 
 //PRZYKŁADOWE WYWOŁANIE:
-//await TextToSpeechService.ReadTheMessageAloud(message);
+//await TextToSpeechService.ReadTheMessageAloud(message, textToSpeechCancellationTokenSource.Token);
 
 //dodać możliwość przerwania
 //poprawić wybór głosu na męski
@@ -9,17 +9,17 @@ namespace WMiIApp.Services
 {
     public static class TextToSpeechService
     {
-        public static async Task ReadTheMessageAloud(Message msg)
+        public static async Task ReadTheMessageAloud(Message msg, CancellationToken cancelToken)
         {
             if(msg.Content != null)
             {
                 SpeechOptions options = await GetOptions();
-                Speak(msg.Content, options);
+                Speak(msg.Content, options, cancelToken);
             }
         }
 
-        private static async void Speak(string toRead, SpeechOptions options) =>
-            await TextToSpeech.Default.SpeakAsync(toRead, options);
+        private static async void Speak(string toRead, SpeechOptions options, CancellationToken cancelToken) =>
+            await TextToSpeech.Default.SpeakAsync(toRead, options, cancelToken);
 
         private static async Task<SpeechOptions> GetOptions()
         {

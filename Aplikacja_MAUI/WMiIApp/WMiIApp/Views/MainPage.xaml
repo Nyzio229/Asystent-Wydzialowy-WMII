@@ -11,18 +11,21 @@
         <local:FromIsSentToMessageColorConverter x:Key="FromIsSentToMessageColorConverter" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, Auto" ColumnDefinitions=".75*, .25*"
+    <Grid RowDefinitions="*, Auto" ColumnDefinitions=".75*, .1*, .15*"
           RowSpacing="10" ColumnSpacing="0" BackgroundColor="#2C3333">
         
         <CollectionView x:Name="collectionView" ItemsUpdatingScrollMode="KeepLastItemInView"  
-                        Grid.ColumnSpan="2" VerticalOptions="End" ItemsSource="{Binding Items}">
+                        Grid.ColumnSpan="3" VerticalOptions="End" ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Message">
                     <VerticalStackLayout MaximumWidthRequest="300" HorizontalOptions="{Binding IsSent, Converter={StaticResource FromIsSentToHorizontalOptionConverter}}">
-
                         <Grid Padding="5,5">
                             <Frame BackgroundColor="{Binding IsSent, Converter={StaticResource FromIsSentToMessageColorConverter}}" 
-                                   BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30">
+                                    BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TappedCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
+                                                          NumberOfTapsRequired="2" CommandParameter="{Binding Content}"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="{Binding Content}" FontSize="16" TextColor="#E7F6F2"/>
                             </Frame>
                         </Grid>
@@ -31,13 +34,14 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
-        <Entry Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1"
+
+        <Entry Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1" Grid.Column="0"
                TextColor="#E7F6F2"/>
-        
-        <Button Text="Wyślij" Grid.Row="1" Grid.Column="1" Command="{Binding AddCommand}"
-                BackgroundColor="#395B64" TextColor="#E7F6F2"/>
-        
+        <ImageButton Source="microphone_icon.png" Grid.Row="1" Grid.Column="1" MaximumHeightRequest="30"
+                     Command="{Binding SpeakCommand}"/>
+        <ImageButton Source="send_icon.png" Command="{Binding SendCommand}" MaximumHeightRequest="40"
+                      Grid.Row="1" Grid.Column="2"/>
+
     </Grid>
 
 </ContentPage>
