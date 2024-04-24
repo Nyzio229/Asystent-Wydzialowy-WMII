@@ -114,17 +114,18 @@ namespace ServerApiMikoAI.Controllers
                         {
                             string chatResponseMessage = chatResponse.text;
 
-                            TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, LanguageCode.English, "pl");
+                            /*TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, LanguageCode.English, "pl");
                             var translatedResponse = await TranslationController.DeepLApi(translationMessage);
-                            /*var translatedResponse = await translator.TranslateTextAsync(
+                            var translatedResponse = await translator.TranslateTextAsync(
                               chatResponseMessage,
                               LanguageCode.EnglishBritish,
                               LanguageCode.Polish);
                             */
-                            Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}'");
+                            //Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}'");
                
-                            return translatedResponse;
-                            //return chatResponseMessage;
+                            //return translatedResponse;
+                            return chatResponseMessage;
+                            //return "To jest wiadnomość że poszło coś nie tak i serwer nie działa";
                         }
                         return "Coś poszło nie tak";
                     }

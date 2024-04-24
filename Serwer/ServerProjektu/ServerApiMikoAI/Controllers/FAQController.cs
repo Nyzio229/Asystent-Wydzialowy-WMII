@@ -35,6 +35,9 @@ namespace ServerApiMikoAI.Controllers
             TableContext[] tableContexts = new TableContext[FAQMessage.limit];
             tableContexts[0] = new TableContext();
             tableContexts[0].id_pytania = -1;
+            //tableContexts[0].id_pytania = 1;
+            //tableContexts[0].odpowiedz = "Odpowiedz ddddd";
+            //tableContexts[0].pytanie = "Pytanie pppppppp";
 
             using (var httpClient = new HttpClient())
             {
