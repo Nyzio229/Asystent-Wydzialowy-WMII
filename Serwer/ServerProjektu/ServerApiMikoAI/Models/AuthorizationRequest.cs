@@ -1,6 +1,6 @@
 ﻿namespace ServerApiMikoAI.Models {
-    public class VerificationTableContext {
+    public class AuthorizationRequest {
         public string device_id { get; set; }
-        public int verify_code { get; set; }
+        public string api_key { get; set; }
     }
 }

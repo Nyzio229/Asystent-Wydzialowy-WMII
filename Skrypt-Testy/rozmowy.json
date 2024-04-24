@@ -1,0 +1,76 @@
+[
+	{
+	"message": [
+		{"content": "Czy są jakieś nadchodzące wydarzenia na wydziale, o których powinienem wiedzieć", "role": "user"},
+		{"content": "W przyszłą środę o godzinie 18:00 w Auli wydziału odbędzie się wykład prof. XYZ na temat ABC.", "role": "assistant"},
+		{"content": "Czy są jakieś inne ciekawe wydarzenia na wydziale, które będą odbywać się w tym semestrze?", "role": "user"},
+		{"content": "Oczywiście, podaję listę zaplanowanych wykładów i wydarzeń w tym semestrze: -wydarzenie a -wydarzenie b -wyklad c -spotkanie d Oto lista zaplanowanych na ten moment wydarzeń odywających się na naszym wydziale.", "role": "assistant"},
+		{"content": "O czym dokładnie będzie wykład c?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Chciałbym studiować semestr za granicą. Jakie mam opcje?", "role": "user"},
+		{"content": "Chodzi ci o program wymiany studenckiej Erasums+. Program ten obejmuje wszystkie kraje członkowskie Unii Europejskiej, kraje strefy Shengen i wiele innych krajów. Każdy wydział oferuje inne propozycje wymiany studenckiej w zależności od tego co cie interusje. Napisz proszę z jakiego wydziału jesteś i jaki kierunek studiujesz i jaki kierunek studiujesz.", "role": "assistant"},
+		{"content": "Jestem studentem wydziału Matematyki i Informatyki, kierunek informatyka.", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Gdzie mogę znaleźć informacje o praktykach zawodowych?", "role": "user"},
+		{"content": "Iformacje o praktykach zawodowych możesz znaleźć na stronie wydziału https://www.mat.umk.pl/web/wmii/sprawy-studenckie/praktyki-zawodowe", "role": "assistant"},
+		{"content": "Czy mógłbyś opisać jak zapisać się na praktki zawodowe?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Czy są jakieś dostępne stypendia dla studentów z dobrymi wynikami?", "role": "user"},
+		{"content": "Oczywiście, każdy student UMK może ubiegać się o stypendium. Dla osób z dobrymi wynikami zaleca się ubieganie o stypendum rektoro UMK.", "role": "assistant"},
+		{"content": "Gdzie mogę znaleźć informacje na temat stypendium rektora.", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Kiedy zaczyna się sesja?", "role": "user"},
+		{"content": "Sesja zaczyna się 15 czerwca 2024 r. do 28 czerwca 2024. Wszystkie dane odnośnie organizacji roku akademickiego UMK znajdziesz na stronie https://www.umk.pl/uczelnia/dokumenty/rok_akademicki/.", "role": "assistant"},
+		{"content": "Gdzie mogę znaleźć informacje odnośnie terminów egzaminów?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Jak mogę sprawdzić plan semestralny?", "role": "user"},
+		{"content": "Plan semestralny znajdziesz na stronie wydziału w zakładce Dla Studenów -> Plan Zajęć.", "role": "assistant"},
+		{"content": "Jestem na pierwszym roku na kierunku iformatyka inżynierska, gdzie jest dla niego plan?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Czy na wydziale jest jakieś koło naukowe?", "role": "user"},
+		{"content": "Na naszym wydziale są trzy koła naukowe: - koło naukowe Informatyków - koło naukowe Matematyków - koło naukowe Matematyki Stosowanej Na ten moment koło naukowe Matematyki Stosowanej nie podejmuje żadnej aktywności.", "role": "assistant"},
+		{"content": "Jak mogę zapisać się na koło naukowe Informatyków?", "role": "user"},
+		{"content": "Żeby wziąć udział w spotkaniach dowolnego koło nie trzeba się zapisywać, każdy jest mile widziany. Koło Informatyków spotyka się we wtorki o godzinie 18:00 w sali L9.", "role": "assistant"},
+		{"content": "Gdzie mogę znaleźć informacje o spotkaniach i zarządzie koła?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Skąd mam wziać materiały do nauki?", "role": "user"},
+		{"content": "Wszystkie materiały potrzebne do nauki na przedmioty znajdziesz w bibliotece wydziałowej.", "role": "assistant"},
+		{"content": "Jak mogę wypożyczyc książkę z biblioteki?", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Gdzie znajdę podanie o warunek?", "role": "user"},
+		{"content": "Wszystkie podania znajdziesz na stronie WMiI w zakładce Dla Studentów -> Dziekanat", "role": "assistant"},
+		{"content": "", "role": "user"}
+		]
+	},
+	{
+	"message": [
+		{"content": "Gdzie mogę sprawdzić na jakie zajęcia muszę się zapisać?", "role": "user"},
+		{"content": "Na stronie wydziału w zakładce Dla Studentów -> Studia (tu wybierz te które cie interusją) -> Plan Studiów", "role": "assistant"},
+		{"content": "Czy muszę się rejestrować dokładnie według planu studiów?", "role": "user"}
+		]
+	}
+]

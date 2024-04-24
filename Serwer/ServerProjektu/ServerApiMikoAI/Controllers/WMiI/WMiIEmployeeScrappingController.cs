@@ -1,22 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Net;
-using System.Net.Http;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers.WMiI
+{
     [Route("api/[controller]")]
     [ApiController]
-    public class WMiIClassTableController : ControllerBase {
+    public class WMiIEmployeeScrappingController : ControllerBase
+    {
         private readonly HttpClient _httpClient;
 
-        public WMiIClassTableController() {
+        public WMiIEmployeeScrappingController()
+        {
             _httpClient = new HttpClient();
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> Get() {
-            try {
+        public async Task<ActionResult<IEnumerable<string>>> Get()
+        {
+            try
+            {
                 // Konfiguracja przeglądarki Selenium
                 var options = new ChromeOptions();
                 options.AddArgument("--headless"); // Tryb headless, bez interfejsu graficznego
@@ -25,37 +30,50 @@ namespace ServerApiMikoAI.Controllers {
                 options.AddArgument("--disable-dev-shm-usage");
 
                 // Inicjalizacja przeglądarki
-                using (var driver = new ChromeDriver(options)) {
+                using (var driver = new ChromeDriver(options))
+                {
                     // Logowanie do strony
                     await Login(driver);
-                    //var reservationWebsite = "https://www.mat.umk.pl/group/wmii/rezerwacje-sal?p_p_id=Rezerwacje_WAR_Rezerwacje10_INSTANCE_HFe5UNNXD2cc&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&op=ff&date=";
-                    //DateTime currentDate = DateTime.Now;
-                    //var reservationDate = currentDate.ToString("yyyy-MM-dd");
-                    //var reservationDateString = reservationWebsite + reservationDate;
-                    var reservationDateString = "https://www.mat.umk.pl/group/wmii/rezerwacje-sal?p_p_id=Rezerwacje_WAR_Rezerwacje10_INSTANCE_HFe5UNNXD2cc&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&op=ff";
+
                     // Przejście do strony z danymi do scrapowania
-                    driver.Navigate().GoToUrl(reservationDateString);
+                    driver.Navigate().GoToUrl("https://www.mat.umk.pl/group/wmii/tablica-informacyjna");
 
                     // Pobranie danych ze strony
-                    var tableElement = driver.FindElement(By.XPath(".//table"));
-                    var tableRows = tableElement.FindElements(By.XPath(".//tr"));
-                    var reservationInfo = new List<string>();
+                    //var scrapedData = driver.FindElement(By.XPath("//div[@class='ti-container']")).Text;
+                    //var images = driver.FindElements(By.XPath($"/images/{scrapedData}"));
 
-                    foreach (var row in tableRows) {
-                        var cells = row.FindElements(By.XPath(".//td"));
-                        foreach (var cell in cells) {
-                            reservationInfo.Add(cell.Text);
-                        }
+                    //return Ok(scrapedData);
+
+                    var employeeElements = driver.FindElements(By.ClassName("ti-employee"));
+                    var employeeInfo = new List<string>();
+
+                    foreach (var employee in employeeElements)
+                    {
+                        var lampElement = employee.FindElement(By.ClassName("ti-lamp"));
+                        var lampImage = lampElement.FindElement(By.TagName("img"));
+                        var src = lampImage.GetAttribute("src");
+                        var alt = lampImage.GetAttribute("alt");
+
+                        var nameElement = employee.FindElement(By.ClassName("ti-name"));
+                        var name = nameElement.Text;
+
+                        var roomElement = employee.FindElement(By.ClassName("ti-room"));
+                        var room = roomElement.Text;
+
+                        employeeInfo.Add($"Obrazek src: {src}, alt: {alt}, Nazwa: {name}, Pokój: {room}");
                     }
 
-                    return Ok(reservationInfo);
+                    return Ok(employeeInfo);
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
-        private async Task Login(IWebDriver driver) {
+
+        private async Task Login(IWebDriver driver)
+        {
             // Dane do logowania
             var username = "user";
             var password = "password";

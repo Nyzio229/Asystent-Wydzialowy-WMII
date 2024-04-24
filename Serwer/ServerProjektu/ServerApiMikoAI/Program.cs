@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ServerApiMikoAI.Controllers;
-using ServerApiMikoAI.Models;
+using ServerApiMikoAI.Models.Context;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

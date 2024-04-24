@@ -1,4 +1,4 @@
-﻿namespace ServerApiMikoAI.Models
+﻿namespace ServerApiMikoAI.Models.Classify
 {
     public class ClassifyRequest
     {

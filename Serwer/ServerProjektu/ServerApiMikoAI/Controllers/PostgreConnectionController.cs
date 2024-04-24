@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServerApiMikoAI.Models;
+using ServerApiMikoAI.Models.Context;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers
+{
     [Route("/FAQ")]
     [ApiController]
     public class PostgreConnectionController : ControllerBase {

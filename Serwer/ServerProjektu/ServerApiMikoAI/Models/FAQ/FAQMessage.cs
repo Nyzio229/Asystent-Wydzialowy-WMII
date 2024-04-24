@@ -1,4 +1,4 @@
-﻿namespace ServerApiMikoAI.Models
+﻿namespace ServerApiMikoAI.Models.FAQ
 {
     public class FAQMessage
     {
