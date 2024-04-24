@@ -234,6 +234,8 @@ def get_filtered_text(tag: bs4.Tag, with_links=True) -> str:
     #" (AT) " lub " [AT] " - napraw e-maile (re.IGNORECASE, bo czasem jest to "AT", czasem "at")
     # (uwzględnij gwiazdki, bo one oznaczają pogrubiony tekst, a tekst dookoła "AT" czasem jest pogrubiony)
     text = re.sub(r"[ \*]?[\(|\[]at[\)|\]][ \*]?", "@", text, flags=re.IGNORECASE)
+    # (czasem jest błąd, że nie ma '[]' ani '()' wokół 'AT', więc trzeba to uwzględnić)
+    text = re.sub(r"atmat\.umk\.pl", "@mat.umk.pl", text, flags=re.IGNORECASE)
 
     text = text.strip()
 
@@ -367,7 +369,7 @@ def get_page_content(soup: bs4.BeautifulSoup) -> list[dict[str, str | list]]:
 
     return first + second
 
-def save(path: str, urls: list) -> None:
+def save(path: str, urls: list[str]) -> None:
     path = Path(path)
     path.mkdir(parents=True, exist_ok=True)
 
@@ -497,8 +499,7 @@ def main():
 
     urls = resolve_urls(sub_pages)
 
-    n = 25
-    save("dump", urls[:n])
+    save("dump", urls)
 
 if __name__ == "__main__":
     main()

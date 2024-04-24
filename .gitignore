@@ -397,3 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 Serwer/ServerProjektu/ServerApiMikoAI/obj/ServerApiMikoAI.csproj.nuget.g.props
+
+llm/douczanie/dump

@@ -8,7 +8,9 @@ from command_line import parse_args
 from api.routers import (
     chat,
     classify,
+    faq,
     faq_like,
+    faq_upload,
     rag_docs_upload
 )
 
@@ -18,7 +20,9 @@ def create_app() -> FastAPI:
     routers = [
         chat.router,
         classify.router,
+        faq.router,
         faq_like.router,
+        faq_upload.router,
         rag_docs_upload.router
     ]
 
