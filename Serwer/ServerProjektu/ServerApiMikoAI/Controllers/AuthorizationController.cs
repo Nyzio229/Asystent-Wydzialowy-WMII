@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ServerApiMikoAI.Models;
 using Microsoft.EntityFrameworkCore;
+using ServerApiMikoAI.Models.Context;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers
+{
     [Route("[controller]")]
     [ApiController]
     public class AuthorizationController : ControllerBase {

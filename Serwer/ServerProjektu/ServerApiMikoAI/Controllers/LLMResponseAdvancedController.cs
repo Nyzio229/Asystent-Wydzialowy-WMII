@@ -1,13 +1,30 @@
 ﻿using DeepL;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using ServerApiMikoAI.Models;
+using ServerApiMikoAI.Models.Context;
+using ServerApiMikoAI.Models.LLM;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ServerApiMikoAI.Controllers
 {
+    public class RequireRequestBodyFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var isPostOrPutRequest = context.ApiDescription.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase)
+                || context.ApiDescription.HttpMethod.Equals("PUT", StringComparison.OrdinalIgnoreCase);
+
+            if (isPostOrPutRequest && operation.RequestBody != null)
+            {
+                operation.RequestBody.Required = true;
+            }
+        }
+    }
+
     [ApiController]
     [Route("[controller]")]
     public class LLMResponseAdvancedController : ControllerBase

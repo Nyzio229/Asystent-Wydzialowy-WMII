@@ -1,22 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ServerApiMikoAI.Models;
 using Microsoft.EntityFrameworkCore;
+using ServerApiMikoAI.Models.Context;
+using ServerApiMikoAI.Models.Verify;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers.Verify
+{
     [Route("[controller]")]
     [ApiController]
-    public class VerifyDeviceController : ControllerBase {
+    public class VerifyDeviceController : ControllerBase
+    {
         private readonly VerificationDataBaseContext _context;
 
-        public VerifyDeviceController(VerificationDataBaseContext context) {
+        public VerifyDeviceController(VerificationDataBaseContext context)
+        {
             _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request) {
+        public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request)
+        {
 
-            if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0) {
+            if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0)
+            {
                 return Ok("DeviceId and VerificationCode are required.");
             }
 
@@ -24,7 +30,8 @@ namespace ServerApiMikoAI.Controllers {
             var emailVerification = await _context.verification_table
                 .Where(ev => ev.device_id == request.DeviceId && ev.verify_code == request.VerificationCode).FirstOrDefaultAsync();
 
-            if (emailVerification == null) {
+            if (emailVerification == null)
+            {
                 return Ok("Invalid verification code or device id.");
             }
 
@@ -32,7 +39,8 @@ namespace ServerApiMikoAI.Controllers {
             var apiKey = Guid.NewGuid().ToString(); // Możesz użyć innego mechanizmu generowania klucza API
 
             // Zapisz klucz API w bazie danych
-            var apiAccess = new ApiAccessTableContext {
+            var apiAccess = new ApiAccessTableContext
+            {
                 device_id = request.DeviceId,
                 api_key = apiKey
             };
@@ -43,7 +51,7 @@ namespace ServerApiMikoAI.Controllers {
             return Ok(new { ApiKey = apiKey });
             //return null;
         }
-            
-        
+
+
     }
 }

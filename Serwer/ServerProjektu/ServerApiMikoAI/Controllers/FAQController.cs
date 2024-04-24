@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ServerApiMikoAI.Models;
+using ServerApiMikoAI.Models.Context;
+using ServerApiMikoAI.Models.FAQ;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Text;
 

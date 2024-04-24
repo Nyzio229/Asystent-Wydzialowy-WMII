@@ -4,10 +4,5 @@
         <name>ServerApiMikoAI</name>
     </assembly>
     <members>
-        <member name="T:ServerApiMikoAI.Models.LLMRequest">
-            <summary>
-            
-            </summary>
-        </member>
     </members>
 </doc>

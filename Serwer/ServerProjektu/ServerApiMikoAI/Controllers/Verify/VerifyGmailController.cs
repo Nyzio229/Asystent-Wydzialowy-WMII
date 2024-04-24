@@ -6,10 +6,12 @@ using MimeKit;
 using ServerApiMikoAI.Models;
 using MailKit.Net.Smtp;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers.Verify
+{
     [Route("api/[controller]")]
     [ApiController]
-    public class VerifyGmailController : ControllerBase {
+    public class VerifyGmailController : ControllerBase
+    {
         //private readonly VerificationDataBaseContext _context;
         //private readonly EmailSettings _email;
         //public VerifyGmailController(VerificationDataBaseContext context) {

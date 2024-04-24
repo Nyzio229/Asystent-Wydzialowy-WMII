@@ -6,51 +6,62 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;
 using MailKit.Security;
+using ServerApiMikoAI.Models.Context;
+using ServerApiMikoAI.Models.Verify;
 
-namespace ServerApiMikoAI.Controllers {
+namespace ServerApiMikoAI.Controllers.Verify
+{
     [Route("[controller]")]
     [ApiController]
-    public class VerifyEmailController : ControllerBase {
+    public class VerifyEmailController : ControllerBase
+    {
         private readonly VerificationDataBaseContext _context;
         private readonly EmailSettings _email;
-        public VerifyEmailController(VerificationDataBaseContext context) {
+        public VerifyEmailController(VerificationDataBaseContext context)
+        {
             _context = context;
         }
 
         [HttpPost]
-        public async Task<string> VerifyEmail([FromBody]VerifyEmailRequest request) {
-            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId)) {
+        public async Task<string> VerifyEmail([FromBody] VerifyEmailRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId))
+            {
                 return "Email and DeviceId are required.";
             }
             Random rnd = new Random();
             int verificationCode = rnd.Next(100000, 999999);
 
-            var emailVerifcation = new VerificationTableContext { 
-                device_id = request.DeviceId, 
-                verify_code = verificationCode 
+            var emailVerifcation = new VerificationTableContext
+            {
+                device_id = request.DeviceId,
+                verify_code = verificationCode
             };
-                
-        
+
+
             _context.verification_table.Add(emailVerifcation);
             await _context.SaveChangesAsync();
 
             // obsługa wysłania maila
-            try {
+            try
+            {
                 var mail = new MimeMessage();
                 mail.From.Add(MailboxAddress.Parse("mikolai@noreply.pl"));
                 mail.To.Add(MailboxAddress.Parse(request.Email));
                 mail.Subject = "!!!!!!!!!!!!Kod aktywacyjny TEST!!!!!!!!!!!!!";
                 mail.Body = new TextPart(TextFormat.Html) { Text = $"Kod weryfikacyjny do aplikacji to: {verificationCode}" };
 
-                using (var smtp = new SmtpClient()) {
+                using (var smtp = new SmtpClient())
+                {
                     smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
                     smtp.Authenticate("gayle.smitham@ethereal.email", "mTCWk2Fx1bj12vKXyF");
                     smtp.Send(mail);
                     smtp.Disconnect(true);
                 }
-                
+
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 return $"Erorr: {ex.Message}";
             }
             return $"Wysłano kod: {verificationCode}, na adres: {request.Email}";
