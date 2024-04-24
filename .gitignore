@@ -399,3 +399,5 @@ FodyWeavers.xsd
 Serwer/ServerProjektu/ServerApiMikoAI/obj/ServerApiMikoAI.csproj.nuget.g.props
 Serwer/ServerProjektu/ServerApiMikoAI/bin/Debug/
 Serwer/ServerProjektu/ServerApiMikoAI/obj/
+/Serwer/ServerProjektu/ServerApiMikoAI/bin
+/Serwer/ServerProjektu/ServerApiMikoAI/obj
