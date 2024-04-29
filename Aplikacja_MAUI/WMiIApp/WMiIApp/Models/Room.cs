@@ -15,6 +15,7 @@ namespace WMiIApp.Models
         public int Floor { get; set; }
         public List<Room> Neighbors { get; } = new List<Room>();
         public List<string> Residents { get; } = new List<string>();
+        public List<string> OtherNames { get; set; }
         public string ScheduleImagePath { get; set; }
 
         public Room(string id, string name, double positionX, double positionY, int floor)
@@ -24,8 +25,10 @@ namespace WMiIApp.Models
             PositionX = positionX;
             PositionY = positionY;
             Floor = floor;
+            OtherNames = new List<string>();
         }
 
+        // Funkcja do dodawania sasiadow
         public void AddNeighbor(Room neighbor)
         {
             if (!Neighbors.Contains(neighbor))
@@ -34,10 +37,18 @@ namespace WMiIApp.Models
             }
         }
 
+        // Funkcja do dodawania rezydentow
         public void AddResident(string resident)
         {
             Residents.Add(resident);
         }
+
+        // Funkcja do dodawania innych nazw
+        public void AddOtherName(string otherName)
+        {
+            OtherNames.Add(otherName);
+        }
+        
 
         // Metoda do wyswietlenia sasiadow w alercie
         public void PrintNeighbors()
