@@ -7,25 +7,78 @@
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
 
     <Shell.TitleView>
-        <Label
-          Text="Piwnica"
-          TextColor="#E7F6F2"
-          VerticalTextAlignment="Center"
-          VerticalOptions="Center"
-          FontSize="Medium"/>
+        <StackLayout Orientation="Horizontal">
+            <Label
+            Text="Piwnica"
+            TextColor="#E7F6F2"
+            VerticalTextAlignment="Center"
+            VerticalOptions="Center"
+            FontSize="Medium"/>
+            <AbsoluteLayout>
+                <Button 
+                    Clicked="OnShowMenuButtonClicked" 
+                    HeightRequest="40" 
+                    WidthRequest="40" 
+                    BackgroundColor="Transparent"
+                    AbsoluteLayout.LayoutFlags="None" 
+                    AbsoluteLayout.LayoutBounds="200,2,40,40"/>
+                <Image Source="map_icon.png" 
+                    HeightRequest="40" 
+                    WidthRequest="40" 
+                    AbsoluteLayout.LayoutBounds="200,2,40,40" 
+                    AbsoluteLayout.LayoutFlags="None"/>
+            </AbsoluteLayout>
+        </StackLayout>
     </Shell.TitleView>
-    
-    <local:PinchToZoomContainer>
-        <AbsoluteLayout x:Name="piwnicaFloor">
-            <!-- Mapa piwnicy -->
-            <Image x:Name="PiwnicaImage" 
+
+    <StackLayout>
+
+        <!-- <Button Text="Pokaż menu" Clicked="OnShowMenuButtonClicked" HeightRequest="40" WidthRequest="400"/> -->
+        <!-- Okno menu -->
+        
+        <Grid x:Name="menuGrid" BackgroundColor="White" IsVisible="False">
+            <StackLayout>
+                <!--<Entry x:Name="sourceEntry" TextChanged="OnSourceEntryTextChanged" Placeholder="Filtruj src..." />-->                
+                <!--<Picker x:Name="sourcePicker" Title="Żródło" SelectedIndexChanged="OnSourcePickerSelectedIndexChanged" />-->
+                <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" />
+                <CollectionView x:Name="sourceRoomListView" SelectionMode="Single" SelectionChanged="OnSourceRoomListViewSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding .}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!--<Entry x:Name="destinationEntry" TextChanged="OnDestinationEntryTextChanged" Placeholder="Filtruj dest..." />-->
+                <!--<Picker x:Name="destinationPicker" Title="Cel" SelectedIndexChanged="OnDestinationPickerSelectedIndexChanged" />-->
+                <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"/>
+                <CollectionView x:Name="destinationRoomListView" SelectionMode="Single" SelectionChanged="OnDestinationRoomListViewSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding .}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" />
+            </StackLayout>
+        </Grid>
+        
+        <local:PinchToZoomContainer>
+            <AbsoluteLayout x:Name="piwnicaFloor">
+                <!-- Mapa piwnicy -->
+                <Image x:Name="PiwnicaImage" 
                Source="piwnica.png" 
                Aspect="AspectFit" 
                AbsoluteLayout.LayoutBounds="0,0,300,400"
                AbsoluteLayout.LayoutFlags="None"/>
 
-            <!-- Pomieszczenia w piwnicy -->
-            <Button x:Name="lesk"
+                <!-- Pomieszczenia w piwnicy -->
+                <Button x:Name="lesk"
             ClassId="lesk"
             Text="LESK"
             Opacity="0.5"
@@ -36,14 +89,14 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_lesk"
+                <Button x:Name="draw_lesk"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="190,184,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Button x:Name="bar"
+                <Button x:Name="bar"
             ClassId="bar"
             Text="Bar"
             Opacity="0.5"
@@ -54,14 +107,14 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_bar"
+                <Button x:Name="draw_bar"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="135,150,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Button x:Name="wcPiwnica"
+                <Button x:Name="wcPiwnica"
             ClassId="wcPiwnica"
             Text="WC"
             Opacity="0.5"
@@ -72,14 +125,14 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_wc"
+                <Button x:Name="draw_wc"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="105,150,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Button x:Name="klubStudencki"
+                <Button x:Name="klubStudencki"
             ClassId="klubStudencki"
             Text="Klub Studencki"
             Opacity="0.5"
@@ -90,14 +143,14 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_klubStudencki"
+                <Button x:Name="draw_klubStudencki"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="94,150,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Button x:Name="schody_parter_piwnica"
+                <Button x:Name="schody_parter_piwnica"
             ClassId="schody_parter_piwnica"     
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
@@ -108,14 +161,14 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_schody_parter_piwnica"
+                <Button x:Name="draw_schody_parter_piwnica"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="182,140,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Button x:Name="schody_parter_kolo_wejscia"
+                <Button x:Name="schody_parter_kolo_wejscia"
             ClassId="schody_parter_kolo_wejscia"
             Text="Schody Parter-Piwnica"
             Opacity="0.5"
@@ -126,30 +179,19 @@
             Clicked="HandleRoomButtonClick"
             FontSize="8"/>
 
-            <Button x:Name="draw_schody_parter_kolo_wejscia"
+                <Button x:Name="draw_schody_parter_kolo_wejscia"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="215,184,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
-            <Label x:Name="RoomInfoLabel"
-            Text="Kliknij na pomieszczenie aby uzyskać więcej informacji..."
-            AbsoluteLayout.LayoutBounds="10,250,200,200"
-            AbsoluteLayout.LayoutFlags="None"
-            TextColor="#E7F6F2"/>
 
-            <Button x:Name="routeButton"
-            Text="Wyznacz trase"
-            Opacity="0.5"
-            BackgroundColor="Transparent"
-            TextColor="Transparent"
-            Clicked="routeButton_Clicked"
-            AbsoluteLayout.LayoutBounds="65,450,100,50"
-            AbsoluteLayout.LayoutFlags="None"
-            FontSize="6"/>
-        </AbsoluteLayout>
-    </local:PinchToZoomContainer>
-    
+            </AbsoluteLayout>
+        </local:PinchToZoomContainer>
+
+        
+    </StackLayout>
+
 
 </ContentPage>
