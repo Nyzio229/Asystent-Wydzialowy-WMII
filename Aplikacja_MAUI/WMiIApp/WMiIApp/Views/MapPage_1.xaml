@@ -70,6 +70,7 @@
         
         <local:PinchToZoomContainer>
             <AbsoluteLayout x:Name="piwnicaFloor">
+
                 <!-- Mapa piwnicy -->
                 <Image x:Name="PiwnicaImage" 
                Source="piwnica.png" 

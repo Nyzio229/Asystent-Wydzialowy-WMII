@@ -892,7 +892,49 @@
              AbsoluteLayout.LayoutBounds="248,240,3,3"
              AbsoluteLayout.LayoutFlags="None"
              />
-        </AbsoluteLayout>
+
+             <Button x:Name="draw_f303_f305_f306"
+             Opacity="0.5"
+             BackgroundColor="Transparent"
+             AbsoluteLayout.LayoutBounds="235,245,3,3"
+             AbsoluteLayout.LayoutFlags="None"
+             />
+                <Button x:Name="f403"
+                 Text="F403"
+                 ClassId="f403"
+                 Opacity="0.5"
+                 BackgroundColor="Transparent"
+                 TextColor="Transparent"
+                 AbsoluteLayout.LayoutBounds="252,264,18,24"
+                 AbsoluteLayout.LayoutFlags="None"
+                 Clicked="HandleRoomButtonClick"
+                 FontSize="8"/>
+            
+                <Button x:Name="draw_f403"
+                 Opacity="0.5"
+                 BackgroundColor="Transparent"
+                 AbsoluteLayout.LayoutBounds="255,260,3,3"
+                 AbsoluteLayout.LayoutFlags="None"
+                 />
+
+                <Button x:Name="f405"
+                 Text="F405"
+                 ClassId="f405"
+                 Opacity="0.5"
+                 BackgroundColor="Transparent"
+                 TextColor="Transparent"
+                 AbsoluteLayout.LayoutBounds="225,264,18,24"
+                 AbsoluteLayout.LayoutFlags="None"
+                 Clicked="HandleRoomButtonClick"
+                 FontSize="8"/>
+
+                <Button x:Name="draw_f405"
+                 Opacity="0.5"
+                 BackgroundColor="Transparent"
+                 AbsoluteLayout.LayoutBounds="235,260,3,3"
+                 AbsoluteLayout.LayoutFlags="None"
+                 />
+            </AbsoluteLayout>
     </local:PinchToZoomContainer>
     </StackLayout>
 

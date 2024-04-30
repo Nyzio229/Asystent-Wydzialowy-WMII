@@ -161,7 +161,7 @@ public partial class MapPage_1 : ContentPage
             return;
         }
 
-        // Znajdujemy najkrotsz¹ sciezke miêdzy pokojami
+        // Znajdujemy najkrotsza sciezke miêdzy pokojami
         List<Room> shortestPath = App.pathFinder.FindShortestPath(sourceRoom, destinationRoom);
 
         if (shortestPath == null)
@@ -179,6 +179,7 @@ public partial class MapPage_1 : ContentPage
             }
             DisplayAlert("Znaleziona droga", message, "OK");
         }
+
     }
 
     private void OnShowMenuButtonClicked(object sender, EventArgs e)
