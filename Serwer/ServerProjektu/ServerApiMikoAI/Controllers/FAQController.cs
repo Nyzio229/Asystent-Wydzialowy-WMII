@@ -12,33 +12,33 @@ namespace ServerApiMikoAI.Controllers
     [Route("[controller]")]
     public class FAQController : ControllerBase
     {
-        private readonly PostrgeSQLContext _context;
-        public FAQController(PostrgeSQLContext context)
-        {
-            _context = context;
-        }
 
         [HttpPost(Name = "FAQRequest")]
-        [ProducesResponseType(typeof(TableContext), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FAQResult), StatusCodes.Status200OK)]
         [SwaggerOperation(OperationId = "post")]
-        public async Task<TableContext[]> Post(FAQMessage FAQMessage)
+        public async Task<FAQResult> Post(FAQRequest faqRequest)
         {
-            return await FAQRequest(FAQMessage, _context);
+            return await FAQRequest(faqRequest);
         }
 
-        public static async Task<TableContext[]> FAQRequest(FAQMessage FAQMessage, PostrgeSQLContext postrgeSQLContext)
+        public static async Task<FAQResult> FAQRequest(FAQRequest faqRequest)
         {
-            string apiUrl = "http://158.75.112.151:9123/faq_like";
+            string apiUrl = "http://158.75.112.151:9123/faq";
 
-            var jsonPayload = JsonConvert.SerializeObject(FAQMessage);
+            var jsonPayload = JsonConvert.SerializeObject(faqRequest);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            TableContext[] tableContexts = new TableContext[FAQMessage.limit];
-            tableContexts[0] = new TableContext();
-            tableContexts[0].id_pytania = -1;
-            //tableContexts[0].id_pytania = 1;
-            //tableContexts[0].odpowiedz = "Odpowiedz ddddd";
-            //tableContexts[0].pytanie = "Pytanie pppppppp";
+
+            FAQResult FAQResult = new FAQResult();
+            FAQResult.faq = new List<FAQItem>();
+            
+            for (int i = 0; i < faqRequest.faq_ids.Length; i++)
+            {
+                FAQItem FAQItem = new FAQItem();
+                FAQItem.answer = "-1";
+                FAQItem.question = "-1";
+                FAQResult.faq.Add(FAQItem);
+            }
 
             using (var httpClient = new HttpClient())
             {
@@ -49,28 +49,18 @@ namespace ServerApiMikoAI.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        FAQResponse faqResponse = JsonConvert.DeserializeObject<FAQResponse>(responseContent);
+                        FAQResult faqResponse = JsonConvert.DeserializeObject<FAQResult>(responseContent);
 
-                        if (faqResponse.faq_ids != null && faqResponse.faq_ids.Length > 0)
-                        {
-                            PostgreConnectionController postgreConnectionController = new PostgreConnectionController(postrgeSQLContext);
-                            for (int i = 0; i < faqResponse.faq_ids.Length; i++)
-                            {
-                                tableContexts[i] = await postgreConnectionController.GetQueryById(faqResponse.faq_ids[i]);
-                            }
-                            return tableContexts;
-                        }
-                        return tableContexts;
+                        return faqResponse;
                     }
                     else
                     {
-                        return tableContexts;
+                        return FAQResult;
                     }
                 }
                 catch (Exception ex)
                 {
-                    tableContexts[0].id_pytania = -1;
-                    return tableContexts;
+                    return FAQResult;
                 }
             }
         }
