@@ -33,9 +33,19 @@ async def faq(
         ids=faq_ids
     )
 
-    docs = [next(record.payload
-                 for record in result if record.id == id)
-            for id in faq_ids]
+    docs: list[
+        dict[str, str | dict[str, str]]
+    ] = []
+
+    for faq_id in faq_ids:
+        try:
+            doc = next(record.payload
+                       for record in result
+                       if record.id == faq_id)
+        except StopIteration:
+            continue
+
+        docs.append(doc)
 
     result = FAQResult(faq=[FaqEntry(
         question=doc["page_content"],
