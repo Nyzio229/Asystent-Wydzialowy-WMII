@@ -1,3 +1,4 @@
+import os
 import re
 import json
 
@@ -415,7 +416,7 @@ def resolve_urls(sub_pages: dict[str, list]) -> list[str]:
 
     return urls
 
-def main():
+def main() -> None:
     sub_pages = {
         "web": [
             "samorzad",
@@ -499,7 +500,12 @@ def main():
 
     urls = resolve_urls(sub_pages)
 
-    save("dump", urls)
+    save_path = os.path.join(
+        "scrapowane_strony_wydzialowe",
+        "dump"
+    )
+
+    save(save_path, urls)
 
 if __name__ == "__main__":
     main()

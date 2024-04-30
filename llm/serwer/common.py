@@ -1,6 +1,6 @@
-from llama_cpp import Llama
+from typing import Optional
 
-from pydantic import BaseModel
+from llama_cpp import Llama
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
@@ -12,9 +12,9 @@ from langchain_core.retrievers import RetrieverOutputLike
 from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
+from langchain_community.docstore.document import Document
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain_community.docstore.document import Document as LangchainDocument
 
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 
@@ -168,27 +168,18 @@ def langchain_chat_completion(
 
     return response
 
-class Document(BaseModel):
-    text: str
-    metadata: dict[str, int | str]
-
 def upload_docs(
     vector_store: VectorStore,
-    docs: list[Document]
-) -> None:
+    docs: list[Document],
+    ids: Optional[list[str]] = None
+) -> list[str]:
     docs_upload_config = config.api.docs_upload
     text_splitter = CharacterTextSplitter(
         separator=docs_upload_config.separator,
         chunk_size=docs_upload_config.chunk_size
     )
 
-    docs = [
-        LangchainDocument(
-            page_content=doc.text,
-            metadata=doc.metadata
-        )
-        for doc in docs
-    ]
-
     docs = text_splitter.split_documents(docs)
-    vector_store.add_documents(docs)
+    ids = vector_store.add_documents(docs, ids=ids)
+
+    return ids

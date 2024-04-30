@@ -1,4 +1,4 @@
-from typing import Generic, Literal, Optional, Type, TypeVar
+from typing import Literal, Optional, Type, TypeVar
 
 import json
 
@@ -29,12 +29,33 @@ class CategoryNavigationMetadata(BaseModel):
         )
     )
 
-    destination: str = Field(
+    destination: Optional[str] = Field(
         description=(
             "Destination point for navigation. " +
             "MUST be ONLY the name of the destination place. "
         )
     )
+
+_rooms: list[str] = []
+
+def _format_room(room: str) -> str:
+    room = room.lower()
+
+    room = room.replace("classroom", "")
+    room = room.replace("room", "")
+    room = room.strip()
+
+    return room
+
+def _read_rooms() -> list[str]:
+    global _rooms
+
+    if not _rooms:
+        with open("rooms.txt", encoding="utf8") as file:
+            _rooms = file.readlines()
+            _rooms = list(map(_format_room, _rooms))
+
+    return _rooms
 
 class ClassificationLabel(BaseModel):
     label: Literal["navigation", "chat"] = Field(
@@ -131,16 +152,43 @@ async def classify(
         ClassificationLabel
     )
 
-    if result_label.label == "navigation":
+    label = result_label.label
+
+    if label == "navigation":
         metadata: CategoryNavigationMetadata = _json_classify(
             "extract information from",
             CategoryNavigationMetadata
         )
+
+        rooms = _read_rooms()
+
+        def _check_metadata_navigation_point(attr: str) -> bool:
+            room = getattr(metadata, attr)
+
+            if room is None:
+                return False
+
+            formatted_room = _format_room(room)
+
+            if formatted_room not in rooms:
+                formatted_room = None
+
+            if room != formatted_room:
+                setattr(metadata, attr, formatted_room)
+
+            return formatted_room is not None
+
+        has_source = _check_metadata_navigation_point("source")
+        has_destination = _check_metadata_navigation_point("destination")
+
+        if not has_source and not has_destination:
+            label = "chat"
+            metadata = None
     else:
         metadata = None
 
     result = ClassificationResult(
-        label=result_label.label,
+        label=label,
         metadata=metadata
     )
 

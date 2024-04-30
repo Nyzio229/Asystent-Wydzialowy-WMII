@@ -26,14 +26,20 @@ async def faq(
 ) -> FAQResult:
     collection_name = config.vector_store.faq_collection_name[request.lang]
 
+    faq_ids = request.faq_ids
+
     result = common.vector_store_client.retrieve(
         collection_name=collection_name,
-        ids=request.faq_ids
+        ids=faq_ids
     )
 
+    docs = [next(record.payload
+                 for record in result if record.id == id)
+            for id in faq_ids]
+
     result = FAQResult(faq=[FaqEntry(
-        question=doc.text,
-        answer=doc.metadata["answer"]
-    ) for doc in result])
+        question=doc["page_content"],
+        answer=doc["metadata"]["answer"]
+    ) for doc in docs])
 
     return result

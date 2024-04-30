@@ -31,7 +31,7 @@ def create_app() -> FastAPI:
 
     return app
 
-def main():
+def main() -> None:
     args = parse_args()
 
     init_common(args)

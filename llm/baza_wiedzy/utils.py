@@ -1,3 +1,10 @@
+import os
+import json
+
+from pathlib import Path
+
+from typing import Callable, TypeVar
+
 import requests
 
 from pydantic import BaseModel
@@ -8,7 +15,7 @@ class Config(BaseModel):
 
 _config = Config(
     docs_upload_url="http://158.75.112.151:9123",
-    translation_url="https://13ad-188-146-252-197.ngrok-free.app/Translation"
+    translation_url="https://6821-188-146-254-163.ngrok-free.app/Translation"
 )
 
 def translate(message: str, lang_from: str, lang_to: str) -> str:
@@ -28,39 +35,39 @@ def translate(message: str, lang_from: str, lang_to: str) -> str:
 
     return translated
 
+T = TypeVar("T")
+
+def get_cached_translation(
+    cache_path: Path,
+    translator: Callable[[], T],
+    serializer: Callable[[T], dict[str] | list],
+    deserializer: Callable[[dict[str] | list], T]
+) -> T:
+    if os.path.exists(cache_path):
+        print(f"      * Używanie tłumaczeń z cache'a: '{cache_path}'")
+
+        with open(cache_path, encoding="utf8") as file:
+            translated = json.load(file)
+
+        translated = deserializer(translated)
+    else:
+        translated = translator()
+
+        path = cache_path.parent
+        path.mkdir(parents=True, exist_ok=True)
+
+        with open(cache_path, "w", encoding="utf8") as file:
+            serialized = serializer(translated)
+            json.dump(serialized, file, ensure_ascii=False, indent=3)
+
+    return translated
+
 def upload_docs(api_path: str, **kwargs) -> None:
     url = f"{_config.docs_upload_url}/{api_path}"
 
-    def _maybe_serialize(
-        entry: int | str | dict | BaseModel | list[BaseModel]
-    ) -> int | str | dict | list:
-        if isinstance(entry, (int, str)):
-            return entry
-
-        if isinstance(entry, BaseModel):
-            return entry.model_dump()
-
-        if isinstance(entry, list):
-            serialized_list = []
-
-            for value in entry:
-                serialized = _maybe_serialize(value)
-                serialized_list.append(serialized)
-
-            return serialized_list
-
-        assert isinstance(entry, dict)
-
-        serialized_dict = {}
-
-        for key, value in entry.items():
-            serialized_dict[key] = _maybe_serialize(value)
-
-        return serialized_dict
-
     response = requests.post(
         url,
-        json=_maybe_serialize(kwargs),
+        json=kwargs,
         timeout=10
     )
 

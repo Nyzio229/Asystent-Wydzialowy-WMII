@@ -42,13 +42,13 @@ config = Config(
         host="0.0.0.0",
         port=9123,
         chat_format="chatml",
-        n_ctx=2048,
+        n_ctx=0,
         n_gpu_layers=-1
     ),
     vector_store=Config.VectorStore(
         client=Config.VectorStore.Client(
             url="http://158.75.112.151:6333",
-            api_key="mikoAI"
+            api_key="BsAH4N7HZ4sZ353ImgG1P0ZomqMxq5h4"
         ),
         faq_collection_name=dict(
             en="faq_en",
@@ -61,10 +61,10 @@ config = Config(
     ),
     api=Config.Api(
         faq_like=Config.Api.FaqLike(
-            score_threshold=0.75
+            score_threshold=0.6
         ),
         docs_upload=Config.Api.DocsUpload(
-            chunk_size=1024,
+            chunk_size=512,
             separator="\n\n"
         )
     )
