@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,14 @@ namespace WMiIApp.Models
 {
     public class PathFinder
     {
-        public List<Room> Path { get; private set; } = new List<Room>(); // Sciezka
+        public ObservableCollection<Room> Path { get; private set; } = new ObservableCollection<Room>(); // Sciezka
 
         // Metoda znajdujaca najkrotsza sciezke miedzy dwoma pokojami na podstawie ich obiektow
         public List<Room> FindShortestPath(Room sourceRoom, Room destinationRoom)
         {
-            Path.Clear(); // Wyczyszczenie sciezki przed znalezieniem nowej
-
             var visited = new HashSet<string>(); // Zbior odwiedzonych pokoi
             var queue = new Queue<(Room room, List<Room> path)>(); // Kolejka pokoi do odwiedzenia
+            ObservableCollection<Room> newPath = new ObservableCollection<Room>(); // Nowa ścieżka
 
             if (sourceRoom == null || destinationRoom == null)
             {
@@ -33,8 +33,9 @@ namespace WMiIApp.Models
 
                 if (currentRoom == destinationRoom)
                 {
-                    // Znaleziono docelowy pokoj, ustawiamy sciezke i zwracamy ją
-                    Path = path;
+                    // Znaleziono docelowy pokoj, ustawiamy sciezke i zwracamy ja
+                    newPath = new ObservableCollection<Room>(path);
+                    Path = newPath; // Aktualizacja sciezki w kolekcji obserwowanej
                     return path;
                 }
 
@@ -42,21 +43,22 @@ namespace WMiIApp.Models
                 {
                     visited.Add(currentRoom.Id); // Oznaczamy pokoj jako odwiedzony
 
-                    // Przechodzimy do sasiednich pokoi
+                    // Przechodzimy do sąsiednich pokoi
                     foreach (var neighbor in currentRoom.Neighbors)
                     {
                         if (!visited.Contains(neighbor.Id))
                         {
-                            var newPath = new List<Room>(path); // Tworzymy nowa kopię sciezki
-                            newPath.Add(neighbor); // Dodajemy sasiada do sciezki
-                            queue.Enqueue((neighbor, newPath)); // Dodajemy sasiada do kolejki do odwiedzenia
+                            var newRoomList = new List<Room>(path); // Tworzymy nowa kopie sciezki
+                            newRoomList.Add(neighbor); // Dodajemy sasiada do sciezki
+                            queue.Enqueue((neighbor, newRoomList)); // Dodajemy sasiada do kolejki do odwiedzenia
                         }
                     }
                 }
             }
 
-            // Jesli nie udalo się znalezc sciezki, zwracamy null
+            // Jesli nie udalo sie znalezc sciezki, zwracamy null
             return null;
         }
+
     }
 }
