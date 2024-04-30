@@ -9,6 +9,7 @@
     <ContentPage.Resources>
         <local:FromIsSentToHorizontalOptionConverter x:Key="FromIsSentToHorizontalOptionConverter" />
         <local:FromIsSentToMessageColorConverter x:Key="FromIsSentToMessageColorConverter" />
+        <local:FromIsFAQToIsEnabledConverter x:Key="FromIsFAQToIsEnabledConverter"/>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto" ColumnDefinitions=".75*, .1*, .15*"
@@ -19,28 +20,37 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Message">
                     <VerticalStackLayout MaximumWidthRequest="300" HorizontalOptions="{Binding IsSent, Converter={StaticResource FromIsSentToHorizontalOptionConverter}}">
-                        <Grid Padding="5,5">
+                        <Grid Padding="5,5" ColumnDefinitions=".5*, .5*">
                             <Frame BackgroundColor="{Binding IsSent, Converter={StaticResource FromIsSentToMessageColorConverter}}" 
-                                    BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30">
+                                   BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30"
+                                   Grid.ColumnSpan="2">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding TappedCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
                                                           NumberOfTapsRequired="2" CommandParameter="{Binding Content}"/>
                                 </Frame.GestureRecognizers>
                                 <Label Text="{Binding Content}" FontSize="16" TextColor="#E7F6F2"/>
                             </Frame>
+                            <Button x:Name="accept" BackgroundColor="Green" Grid.Column="0"  
+                                    IsVisible="{Binding IsFAQ}"
+                                    Command="{Binding AcceptFAQCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
+                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"/>
+                            <Button x:Name="reject" BackgroundColor="Red" Grid.Column="1" 
+                                    IsVisible="{Binding IsFAQ}"
+                                    Command="{Binding RejectFAQCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
+                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"/>
                         </Grid>
                     </VerticalStackLayout>
                     
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Entry Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1" Grid.Column="0"
+        
+        <Entry x:Name="entry" Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1" Grid.Column="0"
                TextColor="#E7F6F2"/>
         <ImageButton Source="microphone_icon.png" Grid.Row="1" Grid.Column="1" MaximumHeightRequest="30"
                      Command="{Binding SpeakCommand}"/>
         <ImageButton Source="send_icon.png" Command="{Binding SendCommand}" MaximumHeightRequest="40"
-                      Grid.Row="1" Grid.Column="2"/>
+                      Grid.Row="1" Grid.Column="2" Clicked="ImageButton_Clicked"/>
 
     </Grid>
 

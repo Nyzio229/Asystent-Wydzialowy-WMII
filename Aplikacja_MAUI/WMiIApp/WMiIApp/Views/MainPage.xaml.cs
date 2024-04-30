@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls.Internals;
+﻿using CommunityToolkit.Maui.Core.Platform;
 using WMiIApp.ViewModels;
 
 
@@ -11,6 +11,11 @@ namespace WMiIApp
         {
             InitializeComponent();
             BindingContext = vm;
+        }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            entry.HideKeyboardAsync();
         }
     }
 

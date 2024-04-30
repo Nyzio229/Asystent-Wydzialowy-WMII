@@ -34,19 +34,23 @@
     <FlyoutItem Title="Mapa" Icon="map_icon.png">
         <Tab Title="-1">
             <ShellContent
-                ContentTemplate="{DataTemplate local:MapPage_1}"/>
+                ContentTemplate="{DataTemplate local:MapPage_1}"
+                Route="MapPage_1"/>
         </Tab>
         <Tab Title="0">
             <ShellContent
-                ContentTemplate="{DataTemplate local:MapPage0}"/>
+                ContentTemplate="{DataTemplate local:MapPage0}"
+                Route="MapPage0"/>
         </Tab>
         <Tab Title="1">
             <ShellContent
-                ContentTemplate="{DataTemplate local:MapPage1}"/>
+                ContentTemplate="{DataTemplate local:MapPage1}"
+                Route="MapPage1"/>
         </Tab>
         <Tab Title="2">
             <ShellContent
-                ContentTemplate="{DataTemplate local:MapPage2}"/>
+                ContentTemplate="{DataTemplate local:MapPage2}"
+                Route="MapPage2"/>
         </Tab>
     </FlyoutItem>
 

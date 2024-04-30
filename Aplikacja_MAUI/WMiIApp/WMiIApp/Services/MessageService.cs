@@ -1,19 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json.Serialization;
 using WMiIApp.Models;
 
 namespace WMiIApp.Services
 {
     public class MessageService
     {
-        const string uriMain = "https://303a-188-146-252-197.ngrok-free.app/LLMResponseAdvanced"; //glowny
-        //const string uriMain = "https://5cbb-2a01-117f-440f-b00-a403-5fc6-f6d1-cb76.ngrok-free.app/LLMResponse"; //do testowania
-        const string uriFAQ = "https://303a-188-146-252-197.ngrok-free.app/FAQ";
-        const string uriTranslate = "https://303a-188-146-252-197.ngrok-free.app/Translation";
-        const string uriClassify = "https://303a-188-146-252-197.ngrok-free.app/Classify";
+        const string uri = "https://13ad-188-146-252-197.ngrok-free.app/";
+        const string uriMain = uri + "LLMResponseAdvanced";
+        const string uriFAQ = uri + "FAQ";
+        const string uriTranslate = uri + "Translation";
+        const string uriClassify = uri + "Classify";
         readonly HttpClient httpClient;
 
         public MessageService()
