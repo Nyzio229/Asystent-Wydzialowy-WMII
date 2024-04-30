@@ -31,11 +31,14 @@ namespace ServerApiMikoAI.Controllers.Verify
             }
             Random rnd = new Random();
             int verificationCode = rnd.Next(100000, 999999);
+            DateTime expirationDateLocal = DateTime.Now.AddMinutes(15);
+            DateTime expirationDateUtc = expirationDateLocal.ToUniversalTime();
 
             var emailVerifcation = new VerificationTableContext
             {
                 device_id = request.DeviceId,
-                verify_code = verificationCode
+                verification_code = verificationCode,
+                expiration_date = expirationDateUtc                                
             };
 
 
