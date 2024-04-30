@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, Type, TypeVar
 
 import json
 
@@ -29,25 +29,45 @@ class CategoryNavigationMetadata(BaseModel):
         )
     )
 
-    destination: str = Field(
+    destination: Optional[str] = Field(
         description=(
             "Destination point for navigation. " +
             "MUST be ONLY the name of the destination place. "
         )
     )
 
-class ClassificationResult(BaseModel):
+_rooms: list[str] = []
+
+def _format_room(room: str) -> str:
+    room = room.lower()
+
+    room = room.replace("classroom", "")
+    room = room.replace("room", "")
+    room = room.strip()
+
+    return room
+
+def _read_rooms() -> list[str]:
+    global _rooms
+
+    if not _rooms:
+        with open("rooms.txt", encoding="utf8") as file:
+            _rooms = file.readlines()
+            _rooms = list(map(_format_room, _rooms))
+
+    return _rooms
+
+class ClassificationLabel(BaseModel):
     label: Literal["navigation", "chat"] = Field(
         description=("The category of the user's prompt: " +
-                     "'navigation' for navigation queries (within the university campus only) or " + 
+                     "'navigation' for navigation queries (within the university campus) or " + 
                      "'chat' for general conversation or if you are unsure of the category.")
     )
 
-    metadata: Optional[CategoryNavigationMetadata] = Field(
-        description=("Additional metadata specific to the category of the user's prompt: " +
-                     "CategoryNavigationMetadata for 'navigation' category and " +
-                     "null for 'chat' category")
-    )
+class ClassificationResult(BaseModel):
+    label: Literal["navigation", "chat"]
+
+    metadata: Optional[CategoryNavigationMetadata] = None
 
 router = APIRouter()
 
@@ -61,10 +81,10 @@ async def classify(
         "Always answer as helpfully as possible, while being safe. " +
         "Your answers should not include any harmful, unethical, racist, " +
         "sexist, toxic, dangerous, or illegal content. " +
-        "Please ensure that your responses are socially unbiased and positive in nature.\n\n" +
+        "Please ensure that your responses are socially unbiased and positive in nature. " +
         "If a question does not make any sense, or is not factually coherent, explain why " +
-        "instead of answering something not correct. If you don't know the answer to a question, " +
-        "please don't share false information."
+        "instead of answering something not correct. " +
+        "If you don't know the answer to a question, please don't share false information."
     )
 
     def _get_prompt(
@@ -82,7 +102,11 @@ async def classify(
         logits_processors: Optional[LogitsProcessorList] = None
 
         if character_level_parser:
-            logits_processor = build_llamacpp_logits_processor(tokenizer_data, character_level_parser)
+            logits_processor = build_llamacpp_logits_processor(
+                tokenizer_data,
+                character_level_parser
+            )
+
             logits_processors = LogitsProcessorList([logits_processor])
 
         output = common.llm(
@@ -91,23 +115,81 @@ async def classify(
             max_tokens=100
         )
 
-        text = output["choices"][0]["text"]
+        response = output["choices"][0]["text"]
 
-        return text
+        print("[Classify]")
+        print(" * prompt:", prompt)
+        print(" * response:", response)
+        print("\n")
 
-    response_schema = ClassificationResult.model_json_schema()
-    response_schema_str = json.dumps(response_schema)
+        return response
 
-    prompt = (
-        "Please categorize the user's query (given at the end). " +
-        "You MUST answer using the following json schema:"
-        f"{response_schema_str}\n\n" +
-        "Here is the user's query to categorize:\n" +
-        f"{request.text}"
+    T = TypeVar("T", bound=BaseModel)
+
+    def _json_classify(
+        task: str,
+        response_type: Type[T],
+    ) -> T:
+        response_schema = response_type.model_json_schema()
+        response_schema_str = json.dumps(response_schema)
+
+        prompt = (
+            f"Please {task} the user's query (given at the end). " +
+            "You MUST answer using the following json schema:"
+            f"{response_schema_str}\n\n" +
+            "Here is the user's query:\n" +
+            request.text
+        )
+
+        prompt = _get_prompt(prompt)
+        response = _infer_with_character_level_parser(prompt, JsonSchemaParser(response_schema))
+        result = response_type.model_validate(json.loads(response))
+
+        return result
+
+    result_label: ClassificationLabel = _json_classify(
+        "categorize",
+        ClassificationLabel
     )
 
-    prompt = _get_prompt(prompt)
-    response = _infer_with_character_level_parser(prompt, JsonSchemaParser(response_schema))
-    result = ClassificationResult.model_validate(json.loads(response))
+    label = result_label.label
+
+    if label == "navigation":
+        metadata: CategoryNavigationMetadata = _json_classify(
+            "extract information from",
+            CategoryNavigationMetadata
+        )
+
+        rooms = _read_rooms()
+
+        def _check_metadata_navigation_point(attr: str) -> bool:
+            room = getattr(metadata, attr)
+
+            if room is None:
+                return False
+
+            formatted_room = _format_room(room)
+
+            if formatted_room not in rooms:
+                formatted_room = None
+
+            if room != formatted_room:
+                setattr(metadata, attr, formatted_room)
+
+            return formatted_room is not None
+
+        has_source = _check_metadata_navigation_point("source")
+        has_destination = _check_metadata_navigation_point("destination")
+
+        if not has_source and not has_destination:
+            label = "chat"
+            metadata = None
+    else:
+        metadata = None
+
+    result = ClassificationResult(
+        label=label,
+        metadata=metadata
+    )
 
     return result

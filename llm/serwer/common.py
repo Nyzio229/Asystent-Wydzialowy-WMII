@@ -1,13 +1,18 @@
+from typing import Optional
+
 from llama_cpp import Llama
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
+
+from langchain_text_splitters import CharacterTextSplitter
 
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.retrievers import RetrieverOutputLike
 from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
+from langchain_community.docstore.document import Document
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 
@@ -19,6 +24,7 @@ from config import config
 class Common:
     llm: Llama
     embedder: HuggingFaceEmbeddings
+    faq_vector_store: dict[str, VectorStore]
     rag_vector_store: VectorStore
     vector_store_client: QdrantClient
     rag_retriever: VectorStoreRetriever
@@ -47,25 +53,37 @@ def init_common(cmd_line_args):
         api_key=vector_store_client_config.api_key
     )
 
-    rag_collection_name = vector_store_config.rag_collection_name
-
-    try:
-        vector_store_client.get_collection(rag_collection_name)
-    except Exception:
-        vector_store_client.create_collection(
-            collection_name=rag_collection_name,
-            vectors_config=VectorParams(
-                size=384,
-                distance=Distance.COSINE
+    def _create_langchain_vector_store(collection_name: str) -> VectorStore:
+        try:
+            vector_store_client.get_collection(collection_name)
+        except Exception:
+            vector_store_client.create_collection(
+                collection_name=collection_name,
+                vectors_config=VectorParams(
+                    size=384,
+                    distance=Distance.COSINE
+                )
             )
+
+        vector_store = Qdrant(
+            client=vector_store_client,
+            collection_name=collection_name,
+            embeddings=common.embedder
         )
+
+        return vector_store
 
     common.vector_store_client = vector_store_client
 
-    common.rag_vector_store = Qdrant(
-        client=vector_store_client,
-        collection_name=rag_collection_name,
-        embeddings=common.embedder
+    common.faq_vector_store = {}
+
+    for lang, collection_name in vector_store_config.faq_collection_name.items():
+        common.faq_vector_store[lang] = _create_langchain_vector_store(
+            collection_name
+        )
+
+    common.rag_vector_store = _create_langchain_vector_store(
+        vector_store_config.rag_collection_name
     )
 
     common.rag_retriever = common.rag_vector_store.as_retriever()
@@ -92,6 +110,10 @@ def init_common(cmd_line_args):
         response = common.llm(prompt)
         response = response["choices"][0]["text"]
 
+        print("[History aware retriever]")
+        print(" * prompt:", prompt)
+        print(" * response:", response)
+
         return response
 
     common.history_aware_retriever = create_history_aware_retriever(
@@ -107,6 +129,10 @@ def chat_completion(
 ) -> str:
     response = llm.create_chat_completion(messages, **kwargs)
     response = response["choices"][0]["message"]["content"]
+
+    print("[Chat completion]")
+    print(" * messages:", messages)
+    print(" * response:", response)
 
     return response
 
@@ -141,3 +167,19 @@ def langchain_chat_completion(
     response = chat_completion(llm, messages, **kwargs)
 
     return response
+
+def upload_docs(
+    vector_store: VectorStore,
+    docs: list[Document],
+    ids: Optional[list[str]] = None
+) -> list[str]:
+    docs_upload_config = config.api.docs_upload
+    text_splitter = CharacterTextSplitter(
+        separator=docs_upload_config.separator,
+        chunk_size=docs_upload_config.chunk_size
+    )
+
+    docs = text_splitter.split_documents(docs)
+    ids = vector_store.add_documents(docs, ids=ids)
+
+    return ids

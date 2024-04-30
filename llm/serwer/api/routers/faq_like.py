@@ -1,3 +1,5 @@
+from typing import Literal
+
 from fastapi import APIRouter
 
 from pydantic import BaseModel
@@ -9,8 +11,10 @@ class FAQLikeRequest(BaseModel):
     text: str
     limit: int
 
+    lang: Literal["en", "pl"] = "en"
+
 class FAQLikeResult(BaseModel):
-    faq_ids: list[int]
+    faq_ids: list[str]
 
 router = APIRouter()
 
@@ -18,17 +22,13 @@ router = APIRouter()
 async def faq_like(
     request: FAQLikeRequest
 ) -> FAQLikeResult:
-    faq_like_config = config.api.faq_like
-
-    query_embedding = common.embedder.embed_query(request.text)
-
-    result = common.vector_store_client.search(
-        collection_name=faq_like_config.collection_name,
-        query_vector=query_embedding,
-        limit=request.limit,
-        score_threshold=faq_like_config.score_threshold
+    result = common.faq_vector_store[request.lang].similarity_search(
+        query=request.text,
+        k=request.limit,
+        score_threshold=config.api.faq_like.score_threshold
     )
 
-    result = FAQLikeResult(faq_ids=[x.id for x in result])
+    faq_ids = [x.metadata["_id"] for x in result]
+    result = FAQLikeResult(faq_ids=faq_ids)
 
     return result

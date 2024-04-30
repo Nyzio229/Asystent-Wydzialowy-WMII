@@ -7,15 +7,67 @@
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
 
     <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
         <Label
           Text="I piętro"
           TextColor="#E7F6F2"
           VerticalTextAlignment="Center"
           VerticalOptions="Center"
           FontSize="Medium"/>
+            <AbsoluteLayout>
+                <Button 
+                Clicked="OnShowMenuButtonClicked" 
+                HeightRequest="40" 
+                WidthRequest="40" 
+                BackgroundColor="Transparent"
+                AbsoluteLayout.LayoutFlags="None" 
+                AbsoluteLayout.LayoutBounds="200,2,40,40"/>
+                <Image Source="map_icon.png" 
+                HeightRequest="40" 
+                WidthRequest="40" 
+                AbsoluteLayout.LayoutBounds="200,2,40,40" 
+                AbsoluteLayout.LayoutFlags="None"/>
+            </AbsoluteLayout>
+        </StackLayout>
     </Shell.TitleView>
-    
-    <local:PinchToZoomContainer>
+    <StackLayout>
+
+        <!-- <Button Text="Pokaż menu" Clicked="OnShowMenuButtonClicked" HeightRequest="40" WidthRequest="400"/> -->
+        <!-- Okno menu -->
+
+        <Grid x:Name="menuGrid" BackgroundColor="White" IsVisible="False">
+            <StackLayout>
+                <!--<Entry x:Name="sourceEntry" TextChanged="OnSourceEntryTextChanged" Placeholder="Filtruj src..." />-->
+                <!--<Picker x:Name="sourcePicker" Title="Żródło" SelectedIndexChanged="OnSourcePickerSelectedIndexChanged" />-->
+                <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" />
+                <CollectionView x:Name="sourceRoomListView" SelectionMode="Single" SelectionChanged="OnSourceRoomListViewSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding .}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!--<Entry x:Name="destinationEntry" TextChanged="OnDestinationEntryTextChanged" Placeholder="Filtruj dest..." />-->
+                <!--<Picker x:Name="destinationPicker" Title="Cel" SelectedIndexChanged="OnDestinationPickerSelectedIndexChanged" />-->
+                <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"/>
+                <CollectionView x:Name="destinationRoomListView" SelectionMode="Single" SelectionChanged="OnDestinationRoomListViewSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding .}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" />
+            </StackLayout>
+        </Grid>
+
+        <local:PinchToZoomContainer>
         <AbsoluteLayout x:Name="pierwszePietroFloor">
             <!-- Mapa pierwszego pietra -->
             <Image x:Name="PierwszePietroImage" 
@@ -913,12 +965,8 @@
              AbsoluteLayout.LayoutFlags="None"
              />
 
-            <Label x:Name="RoomInfoLabel"
-            Text="Kliknij na pomieszczenie aby uzyskać więcej informacji..."
-            AbsoluteLayout.LayoutBounds="10,307,200,200"
-            AbsoluteLayout.LayoutFlags="None"
-            TextColor="#E7F6F2"/>
         </AbsoluteLayout>
     </local:PinchToZoomContainer>
+    </StackLayout>
 
 </ContentPage>

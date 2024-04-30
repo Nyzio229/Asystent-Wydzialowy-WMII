@@ -14,22 +14,23 @@ class Config(BaseModel):
             api_key: str
 
         client: Client
+
         rag_collection_name: str
+        faq_collection_name: dict[str, str]
 
     class Embed(BaseModel):
         model: str
 
     class Api(BaseModel):
         class FaqLike(BaseModel):
-            collection_name: str
             score_threshold: float
 
-        class RagDocsUpload(BaseModel):
+        class DocsUpload(BaseModel):
             separator: str
             chunk_size: int
 
         faq_like: FaqLike
-        rag_docs_upload: RagDocsUpload
+        docs_upload: DocsUpload
 
     command_line: CommandLine
     vector_store: VectorStore
@@ -41,14 +42,17 @@ config = Config(
         host="0.0.0.0",
         port=9123,
         chat_format="chatml",
-        n_ctx=2048,
+        n_ctx=0,
         n_gpu_layers=-1
     ),
     vector_store=Config.VectorStore(
         client=Config.VectorStore.Client(
             url="http://158.75.112.151:6333",
-            # @TODO: trudniejszy api key
-            api_key="MikoAI"
+            api_key="BsAH4N7HZ4sZ353ImgG1P0ZomqMxq5h4"
+        ),
+        faq_collection_name=dict(
+            en="faq_en",
+            pl="faq_pl"
         ),
         rag_collection_name="rag_docs"
     ),
@@ -57,12 +61,11 @@ config = Config(
     ),
     api=Config.Api(
         faq_like=Config.Api.FaqLike(
-            collection_name="asystent_FAQ",
-            score_threshold=0.75
+            score_threshold=0.6
         ),
-        rag_docs_upload=Config.Api.RagDocsUpload(
-            chunk_size=1024,
-            separator="\n"
+        docs_upload=Config.Api.DocsUpload(
+            chunk_size=512,
+            separator="\n\n"
         )
     )
 )

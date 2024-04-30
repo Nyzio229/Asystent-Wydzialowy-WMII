@@ -1,16 +1,14 @@
+from typing import Optional
+
 from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from langchain_text_splitters import CharacterTextSplitter
-from langchain_community.docstore.document import Document as LangchainDocument
-
-from common import common
-from config import config
+from common import common, upload_docs
 
 class Document(BaseModel):
-    text: str
-    metadata: dict[str, int | str]
+    page_content: str
+    metadata: Optional[dict[str, str | int]] = dict()
 
 class RAGDocsUploadRequest(BaseModel):
     docs: list[Document]
@@ -21,19 +19,15 @@ router = APIRouter()
 async def rag_docs_upload(
     request: RAGDocsUploadRequest
 ) -> None:
-    rag_docs_upload_config = config.api.rag_docs_upload
-    text_splitter = CharacterTextSplitter(
-        separator=rag_docs_upload_config.separator,
-        chunk_size=rag_docs_upload_config.chunk_size
-    )
-
     docs = [
-        LangchainDocument(
-            page_content=doc.text,
-            **doc.metadata
+        Document(
+            page_content=doc.page_content,
+            metadata=doc.metadata
         )
         for doc in request.docs
     ]
 
-    docs = text_splitter.split_documents(docs)
-    common.rag_vector_store.add_documents(docs)
+    upload_docs(
+        common.rag_vector_store,
+        docs
+    )
