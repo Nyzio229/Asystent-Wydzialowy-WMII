@@ -31,6 +31,11 @@ namespace WMiIApp.Models
             return rooms;
         }
 
+        // Metoda znajdująca pokój na podstawie jego nazwy
+        public Room FindByName(string name)
+        {
+            return rooms.FirstOrDefault(r => r.Name == name);
+        }
 
     }
 
