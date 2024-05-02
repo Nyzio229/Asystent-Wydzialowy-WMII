@@ -1,6 +1,8 @@
-from typing import Literal, Optional, Type, TypeVar
-
 import json
+
+import logging
+
+from typing import Literal, Optional, Type, TypeVar
 
 from fastapi import APIRouter
 
@@ -8,32 +10,38 @@ from pydantic import BaseModel, Field
 
 from llama_cpp import LogitsProcessorList
 
-from lmformatenforcer import JsonSchemaParser
-from lmformatenforcer import CharacterLevelParser
-from lmformatenforcer.integrations.llamacpp import build_llamacpp_logits_processor, build_token_enforcer_tokenizer_data
+from lmformatenforcer import CharacterLevelParser, JsonSchemaParser
+from lmformatenforcer.integrations.llamacpp import (
+    build_llamacpp_logits_processor,
+    build_token_enforcer_tokenizer_data
+)
 
-from common import common
+from common import common, log_endpoint_call
 
 class ClassificationRequest(BaseModel):
     text: str
 
-class CategoryNavigationMetadata(BaseModel):
-    source: Optional[str] = Field(
-        description=(
-            "Starting point for navigation. " +
-            "MUST be ONLY the name of the starting place and "
-            "MUST be specified explicitly " +
-            "(by saying e.g. " +
-            "'How to get from <the source> to (...)?'" +
-            ")."
-        )
+def _get_navigation_point_description(preposition: str, point: str) -> str:
+    return (
+        f"{point.capitalize()} point for navigation. "
+        "The navigation query may be incomplete, so "
+        f"leave this field blank if the {point.lower()} point for navigation "
+        "isn't explicitly specified within the query. "
+        "When specified, it is assumed to be a place on a university campus. "
+        "It can be a coded room name (such as A5); "
+        "it doesn't have to be a valid name of an existing room/place. "
+        f"It's IMPORTANT that the {point.lower()} point must come right after "
+        f"the following preposition: '{preposition.lower()}'"
     )
 
+class CategoryNavigationMetadataSource(BaseModel):
+    source: Optional[str] = Field(
+        description=_get_navigation_point_description("from", "starting")
+    )
+
+class CategoryNavigationMetadataDestination(BaseModel):
     destination: Optional[str] = Field(
-        description=(
-            "Destination point for navigation. " +
-            "MUST be ONLY the name of the destination place. "
-        )
+        description=_get_navigation_point_description("to", "destination")
     )
 
 _rooms: list[str] = []
@@ -57,12 +65,18 @@ def _read_rooms() -> list[str]:
 
     return _rooms
 
-class ClassificationLabel(BaseModel):
-    label: Literal["navigation", "chat"] = Field(
-        description=("The category of the user's prompt: " +
-                     "'navigation' for navigation queries (within the university campus) or " + 
-                     "'chat' for general conversation or if you are unsure of the category.")
+class ClassificationIfNavigation(BaseModel):
+    is_navigation: bool = Field(
+        description=("Whether the user's query is a navigation query. "
+                     "A navigation query is a question which asks "
+                     "how to get from/to a certain place within a university campus. "
+                     "The source/destination of navigation can be a coded room name (such as A5); "
+                     "it doesn't have to be a valid name of an existing room/place.")
     )
+
+class CategoryNavigationMetadata(BaseModel):
+    source: Optional[str] = None
+    destination: Optional[str] = None
 
 class ClassificationResult(BaseModel):
     label: Literal["navigation", "chat"]
@@ -77,27 +91,30 @@ async def classify(
 ) -> ClassificationResult:
     # https://github.com/noamgat/lm-format-enforcer/blob/main/samples/colab_llamacpppython_integration.ipynb
     _DEFAULT_SYSTEM_PROMPT = (
-        "You are a helpful, respectful and honest assistant. " +
-        "Always answer as helpfully as possible, while being safe. " +
-        "Your answers should not include any harmful, unethical, racist, " +
-        "sexist, toxic, dangerous, or illegal content. " +
-        "Please ensure that your responses are socially unbiased and positive in nature. " +
-        "If a question does not make any sense, or is not factually coherent, explain why " +
-        "instead of answering something not correct. " +
+        "You are a helpful, respectful and honest assistant. "
+        "Always answer as helpfully as possible, while being safe. "
+        "Your answers should not include any harmful, unethical, racist, "
+        "sexist, toxic, dangerous, or illegal content. "
+        "Please ensure that your responses are socially unbiased and positive in nature. "
+        "If a question does not make any sense, or is not factually coherent, explain why "
+        "instead of answering something not correct. "
         "If you don't know the answer to a question, please don't share false information."
     )
 
     def _get_prompt(
         message: str,
-        system_prompt: str = _DEFAULT_SYSTEM_PROMPT
+        system_prompt: Optional[str] = _DEFAULT_SYSTEM_PROMPT
     ) -> str:
         return f"<s>[INST] <<SYS>>\n{system_prompt}\n<</SYS>>\n\n{message} [/INST]"
 
     tokenizer_data = build_token_enforcer_tokenizer_data(common.llm)
 
+    logger = logging.getLogger("mikolAI")
+    logger.setLevel(logging.DEBUG)
+
     def _infer_with_character_level_parser(
         prompt: str,
-        character_level_parser: Optional[CharacterLevelParser]
+        character_level_parser: Optional[CharacterLevelParser] = None
     ) -> str:
         logits_processors: Optional[LogitsProcessorList] = None
 
@@ -112,23 +129,25 @@ async def classify(
         output = common.llm(
             prompt,
             logits_processor=logits_processors,
-            max_tokens=100
+            max_tokens=100,
+            temperature=0.2
         )
 
         response = output["choices"][0]["text"]
 
-        print("[Classify]")
-        print(" * prompt:", prompt)
-        print(" * response:", response)
-        print("\n")
+        logger.debug("[Classify]")
+        logger.debug(" * prompt: %s", prompt)
+        logger.debug(" * response: %s", response)
 
         return response
 
     T = TypeVar("T", bound=BaseModel)
 
-    def _json_classify(
+    request_text = request.text
+
+    def _invoke_llm_for_task(
         task: str,
-        response_type: Type[T],
+        response_type: Type[T]
     ) -> T:
         response_schema = response_type.model_json_schema()
         response_schema_str = json.dumps(response_schema)
@@ -138,7 +157,7 @@ async def classify(
             "You MUST answer using the following json schema:"
             f"{response_schema_str}\n\n" +
             "Here is the user's query:\n" +
-            request.text
+            request_text
         )
 
         prompt = _get_prompt(prompt)
@@ -147,23 +166,66 @@ async def classify(
 
         return result
 
-    result_label: ClassificationLabel = _json_classify(
+    result_if_navigation = _invoke_llm_for_task(
         "categorize",
-        ClassificationLabel
+        ClassificationIfNavigation
     )
 
-    label = result_label.label
+    label = "navigation" if result_if_navigation.is_navigation else "chat"
 
     if label == "navigation":
-        metadata: CategoryNavigationMetadata = _json_classify(
-            "extract information from",
-            CategoryNavigationMetadata
+        doc = common.nlp(request_text)
+
+        adps_texts = []
+
+        for token in doc:
+            if token.pos_ == "ADP":
+                adps_texts.append(token.text.lower())
+
+        def _log_no_preposition_in_query_skip_point_extraction(
+            preposition: str,
+            point: str
+        ) -> None:
+            logger.debug(
+                "Navigation query doesn't contain the '%s' word (POS: preposition/ADP), "
+                "so skipping '%s' point extraction.",
+                preposition,
+                point
+            )
+
+        if "from" in adps_texts:
+            result_source = _invoke_llm_for_task(
+                "extract information from",
+                CategoryNavigationMetadataSource
+            )
+
+            source = result_source.source
+        else:
+            source = None
+
+            _log_no_preposition_in_query_skip_point_extraction("from", "source")
+
+        if "to" in adps_texts:
+            result_destination = _invoke_llm_for_task(
+                "extract information from",
+                CategoryNavigationMetadataDestination
+            )
+
+            destination = result_destination.destination
+        else:
+            destination = None
+
+            _log_no_preposition_in_query_skip_point_extraction("to", "destination")
+
+        metadata = dict(
+            source=source,
+            destination=destination
         )
 
         rooms = _read_rooms()
 
-        def _check_metadata_navigation_point(attr: str) -> bool:
-            room = getattr(metadata, attr)
+        def _check_metadata_navigation_point(key: str) -> bool:
+            room = metadata.get(key, None)
 
             if room is None:
                 return False
@@ -174,7 +236,10 @@ async def classify(
                 formatted_room = None
 
             if room != formatted_room:
-                setattr(metadata, attr, formatted_room)
+                logger.debug("Invalid navigation place name -> updating metadata['%s']: '%s' -> '%s'",
+                             key, room, formatted_room)
+
+                metadata[key] = formatted_room
 
             return formatted_room is not None
 
@@ -184,6 +249,11 @@ async def classify(
         if not has_source and not has_destination:
             label = "chat"
             metadata = None
+
+            logger.debug(
+                "Navigation metadata: no 'source' and 'destination' fields -> setting label to '%s'",
+                label
+            )
     else:
         metadata = None
 
@@ -191,5 +261,7 @@ async def classify(
         label=label,
         metadata=metadata
     )
+
+    log_endpoint_call("classify", request, result)
 
     return result

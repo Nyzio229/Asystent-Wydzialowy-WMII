@@ -11,13 +11,19 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from common import common, chat_completion, langchain_chat_completion
+from common import (
+    common,
+    chat_completion,
+    convert_langchain_message_role_to_llama,
+    langchain_chat_completion,
+    log_endpoint_call
+)
 
 class Message(BaseModel):
     role: str
     content: str
 
-class ChatCompletionRequest(BaseModel):
+class ChatRequest(BaseModel):
     messages: list[Message]
     rag: bool = True
     temperature: float = 0.2
@@ -34,7 +40,7 @@ class ChatCompletionRequest(BaseModel):
     mirostat_eta: float = 0.1
     max_tokens: Optional[int] = None
 
-def _get_llm_params_kwargs(request: ChatCompletionRequest) -> dict[str]:
+def _get_llm_params_kwargs(request: ChatRequest) -> dict[str]:
     kwargs = dict(
         temperature=request.temperature,
         top_p=request.top_p,
@@ -53,23 +59,23 @@ def _get_llm_params_kwargs(request: ChatCompletionRequest) -> dict[str]:
 
     return kwargs
 
+_SYSTEM_MESSAGE = (
+    "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students "
+    "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. "
+    "Your main task is responding to students' questions regarding their studies, but you can also engage "
+    "in a friendly informal chat. Always answer as helpfully as possible, while being safe. "
+    "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, "
+    "or illegal content. If a question does not make any sense, or is not factually coherent, "
+    "explain why instead of answering something not correct. "
+    "Please ensure that your responses are socially unbiased and positive in nature. "
+    "If you don't know the answer to a question, please don't share false information."
+)
+
 def _rag(
     llm: Llama,
-    request: ChatCompletionRequest
+    request: ChatRequest
 ) -> str:
-    system_message = (
-        "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students " +
-        "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. " +
-        "Your main task is responding to students' questions regarding their studies, but you can also engage " +
-        "in a friendly informal chat. Always answer as helpfully as possible, while being safe. " +
-        "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, " +
-        "or illegal content. If a question does not make any sense, or is not factually coherent, " +
-        "explain why instead of answering something not correct. " +
-        "Please ensure that your responses are socially unbiased and positive in nature. " +
-        "If you don't know the answer to a question, please don't share false information."
-    )
-
-    system_message += "\n\n{context}"
+    system_message = f"{_SYSTEM_MESSAGE}\n\n{{context}}"
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),
@@ -101,15 +107,15 @@ def _rag(
 
     return response
 
-class ChatCompletionResponse(BaseModel):
+class ChatResponse(BaseModel):
     text: str
 
 router = APIRouter()
 
 @router.post("/chat")
 async def chat(
-    request: ChatCompletionRequest
-) -> ChatCompletionResponse:
+    request: ChatRequest
+) -> ChatResponse:
     if request.rag:
         response = _rag(
             llm=common.llm,
@@ -117,11 +123,29 @@ async def chat(
         )
     else:
         kwargs = _get_llm_params_kwargs(request)
-        messages = list(map(dict, request.messages))
+
+        def _message_mapping(message: Message) -> dict[str, str]:
+            role = convert_langchain_message_role_to_llama(message.role)
+
+            return dict(
+                role=role,
+                content=message.content
+            )
+
+        system_message = Message(
+            role="system",
+            content=_SYSTEM_MESSAGE
+        )
+
+        messages = [system_message] + request.messages
+        messages = list(map(_message_mapping, messages))
+
         response = chat_completion(common.llm, messages, **kwargs)
 
-    result = ChatCompletionResponse(
+    result = ChatResponse(
         text=response
     )
+
+    log_endpoint_call("chat", request, result)
 
     return result

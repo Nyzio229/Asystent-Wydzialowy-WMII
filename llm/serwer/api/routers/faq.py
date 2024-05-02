@@ -4,8 +4,8 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from common import common
 from config import config
+from common import common, log_endpoint_call
 
 class FAQRequest(BaseModel):
     faq_ids: list[str]
@@ -51,5 +51,7 @@ async def faq(
         question=doc["page_content"],
         answer=doc["metadata"]["answer"]
     ) for doc in docs])
+
+    log_endpoint_call("faq", request, result)
 
     return result

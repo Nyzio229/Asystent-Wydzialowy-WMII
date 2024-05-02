@@ -15,7 +15,7 @@ class Config(BaseModel):
 
 _config = Config(
     docs_upload_url="http://158.75.112.151:9123",
-    translation_url="https://6821-188-146-254-163.ngrok-free.app/Translation"
+    translation_url="https://521c-188-146-254-163.ngrok-free.app/Translation"
 )
 
 def translate(message: str, lang_from: str, lang_to: str) -> str:

@@ -1,6 +1,12 @@
+import logging
+
 from typing import Optional
 
+import spacy
+
 from llama_cpp import Llama
+
+from pydantic import BaseModel
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
@@ -20,9 +26,9 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 
 from config import config
 
-# @TODO: rename Common
 class Common:
     llm: Llama
+    nlp: spacy.language.Language
     embedder: HuggingFaceEmbeddings
     faq_vector_store: dict[str, VectorStore]
     rag_vector_store: VectorStore
@@ -32,8 +38,9 @@ class Common:
 
 common: Common = Common()
 
-# @TODO: change initialization? i czy `common` jest za każdym importowaniem innym czy tym samym obiektem?
 def init_common(cmd_line_args):
+    common.nlp = spacy.load("en_core_web_md")
+
     common.llm = Llama(
         model_path=cmd_line_args.model,
         chat_format=cmd_line_args.chat_format,
@@ -110,9 +117,11 @@ def init_common(cmd_line_args):
         response = common.llm(prompt)
         response = response["choices"][0]["text"]
 
-        print("[History aware retriever]")
-        print(" * prompt:", prompt)
-        print(" * response:", response)
+        logger = logging.getLogger("mikolAI")
+        logger.setLevel(logging.DEBUG)
+        logger.debug("[History aware retriever]")
+        logger.debug(" * prompt: %s", prompt)
+        logger.debug(" * response: %s", response)
 
         return response
 
@@ -130,27 +139,30 @@ def chat_completion(
     response = llm.create_chat_completion(messages, **kwargs)
     response = response["choices"][0]["message"]["content"]
 
-    print("[Chat completion]")
-    print(" * messages:", messages)
-    print(" * response:", response)
+    logger = logging.getLogger("mikolAI")
+    logger.setLevel(logging.DEBUG)
+    logger.debug("[Chat completion]")
+    logger.debug(" * messages: %s", messages)
+    logger.debug(" * response: %s", response)
 
     return response
 
-def _langchain_chat_prompt_to_llama_messages(
-    prompt: ChatPromptValue
-) -> list[dict[str, str]]:
+def convert_langchain_message_role_to_llama(role: str) -> str:
     # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     _message_role_mapping = dict(
         ai="assistant",
         human="user"
     )
 
-    def _convert_message_role(role: str) -> str:
-        return _message_role_mapping.get(role, role)
+    return _message_role_mapping.get(role, role)
 
+def _langchain_chat_prompt_to_llama_messages(
+    prompt: ChatPromptValue
+) -> list[dict[str, str]]:
+    # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     messages = [
         dict(
-            role=_convert_message_role(message.type),
+            role=convert_langchain_message_role_to_llama(message.type),
             content=message.content
         )
         for message in prompt.messages
@@ -183,3 +195,23 @@ def upload_docs(
     ids = vector_store.add_documents(docs, ids=ids)
 
     return ids
+
+def log_endpoint_call(
+    endpoint: str,
+    request: BaseModel,
+    result: BaseModel
+) -> None:
+    logger = logging.getLogger("mikolAI")
+    logger.setLevel(logging.DEBUG)
+
+    logger.debug("[endpoint '/%s']", endpoint)
+
+    def _log_model(name: str, model: BaseModel) -> str:
+        logger.debug(
+            "-> %s:\n%s",
+            name,
+            model.model_dump_json(indent=3)
+        )
+
+    _log_model("request", request)
+    _log_model("result", result)
