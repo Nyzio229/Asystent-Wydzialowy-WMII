@@ -1,3 +1,5 @@
+import json
+
 import logging
 
 from typing import Optional
@@ -26,6 +28,21 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 
 from config import config
 
+class LLMInferenceParams(BaseModel):
+    temperature: float
+    top_p: float
+    top_k: int
+    min_p: float
+    typical_p: float
+    presence_penalty: float
+    frequency_penalty: float
+    repeat_penalty: float
+    tfs_z: float
+    mirostat_mode: int
+    mirostat_tau: float
+    mirostat_eta: float
+    max_tokens: Optional[int] = None
+
 class Common:
     llm: Llama
     nlp: spacy.language.Language
@@ -35,6 +52,22 @@ class Common:
     vector_store_client: QdrantClient
     rag_retriever: VectorStoreRetriever
     history_aware_retriever: RetrieverOutputLike
+
+    llm_inference_params = LLMInferenceParams(
+        temperature=0.2,
+        top_p=0.95,
+        top_k=40,
+        min_p=0.05,
+        typical_p=1,
+        presence_penalty=0,
+        frequency_penalty=0,
+        repeat_penalty=1.1,
+        tfs_z=1,
+        mirostat_mode=0,
+        mirostat_tau=5,
+        mirostat_eta=0.1,
+        max_tokens=None
+    )
 
 common: Common = Common()
 
@@ -111,10 +144,15 @@ def init_common(cmd_line_args):
         messages = _langchain_chat_prompt_to_llama_messages(prompt)
         messages = [f'{message["role"]}: {message["content"]}'
                     for message in messages]
-        prompt = "\n".join(messages)
 
+        prompt = "\n".join(messages)
         prompt = f"{system_prompt}\n\n{prompt}\n\nReformulated question:"
-        response = common.llm(prompt)
+
+        response = common.llm(
+            prompt,
+            **common.llm_inference_params.model_dump()
+        )
+
         response = response["choices"][0]["text"]
 
         logger = logging.getLogger("mikolAI")
@@ -134,20 +172,35 @@ def init_common(cmd_line_args):
 def chat_completion(
     llm: Llama,
     messages: list[dict[str, str]],
-    **kwargs
+    llm_inference_params: LLMInferenceParams
 ) -> str:
-    response = llm.create_chat_completion(messages, **kwargs)
+    response = llm.create_chat_completion(
+        messages,
+        **llm_inference_params.model_dump()
+    )
+
     response = response["choices"][0]["message"]["content"]
 
     logger = logging.getLogger("mikolAI")
     logger.setLevel(logging.DEBUG)
     logger.debug("[Chat completion]")
-    logger.debug(" * messages: %s", messages)
+    logger.debug(
+        " * messages: %s",
+        json.dumps([
+            message.copy() | dict(
+                content=list(filter(
+                    lambda x: x,
+                    message["content"].splitlines()
+                ))
+            )
+            for message in messages
+        ], ensure_ascii=False, indent=3)
+    )
     logger.debug(" * response: %s", response)
 
     return response
 
-def convert_langchain_message_role_to_llama(role: str) -> str:
+def _convert_langchain_message_role_to_llama(role: str) -> str:
     # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     _message_role_mapping = dict(
         ai="assistant",
@@ -162,7 +215,7 @@ def _langchain_chat_prompt_to_llama_messages(
     # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     messages = [
         dict(
-            role=convert_langchain_message_role_to_llama(message.type),
+            role=_convert_langchain_message_role_to_llama(message.type),
             content=message.content
         )
         for message in prompt.messages
@@ -170,13 +223,58 @@ def _langchain_chat_prompt_to_llama_messages(
 
     return messages
 
+class Message(BaseModel):
+    role: str
+    content: str
+
+SYSTEM_MESSAGE = (
+    "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students "
+    "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. "
+    "Your main task is responding to students' questions regarding their studies, but you can also engage "
+    "in a friendly informal chat. Always answer as helpfully as possible, while being safe. "
+    "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, "
+    "or illegal content. If a question does not make any sense, or is not factually coherent, "
+    "explain why instead of answering something not correct. "
+    "Please ensure that your responses are socially unbiased and positive in nature. "
+    "If you don't know the answer to a question, please don't share false information."
+)
+
+def chat_with_default_system_message(
+    llm: Llama,
+    messages: list[Message],
+    llm_inference_params: LLMInferenceParams
+) -> str:
+    def _message_mapping(message: Message) -> dict[str, str]:
+        role = _convert_langchain_message_role_to_llama(message.role)
+
+        return dict(
+            role=role,
+            content=message.content
+        )
+
+    system_message = Message(
+        role="system",
+        content=SYSTEM_MESSAGE
+    )
+
+    messages = [system_message] + messages
+    messages = list(map(_message_mapping, messages))
+
+    response = chat_completion(
+        llm,
+        messages,
+        llm_inference_params
+    )
+
+    return response
+
 def langchain_chat_completion(
     llm: Llama,
     prompt: ChatPromptValue,
-    **kwargs
+    llm_inference_params: LLMInferenceParams
 ) -> str:
     messages = _langchain_chat_prompt_to_llama_messages(prompt)
-    response = chat_completion(llm, messages, **kwargs)
+    response = chat_completion(llm, messages, llm_inference_params)
 
     return response
 

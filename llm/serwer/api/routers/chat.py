@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter
 
 from pydantic import BaseModel
@@ -13,69 +11,25 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from common import (
     common,
-    chat_completion,
-    convert_langchain_message_role_to_llama,
+    chat_with_default_system_message,
     langchain_chat_completion,
-    log_endpoint_call
+    log_endpoint_call,
+    LLMInferenceParams,
+    Message,
+    SYSTEM_MESSAGE
 )
-
-class Message(BaseModel):
-    role: str
-    content: str
 
 class ChatRequest(BaseModel):
     messages: list[Message]
     rag: bool = True
-    temperature: float = 0.2
-    top_p: float = 0.95
-    top_k: int = 40
-    min_p: float = 0.05
-    typical_p: float = 1.0
-    presence_penalty: float = 0.0
-    frequency_penalty: float = 0.0
-    repeat_penalty: float = 1.1
-    tfs_z: float = 1.0
-    mirostat_mode: int = 0
-    mirostat_tau: float = 5.0
-    mirostat_eta: float = 0.1
-    max_tokens: Optional[int] = None
-
-def _get_llm_params_kwargs(request: ChatRequest) -> dict[str]:
-    kwargs = dict(
-        temperature=request.temperature,
-        top_p=request.top_p,
-        top_k=request.top_k,
-        min_p=request.min_p,
-        typical_p=request.typical_p,
-        presence_penalty=request.presence_penalty,
-        frequency_penalty=request.frequency_penalty,
-        repeat_penalty=request.repeat_penalty,
-        tfs_z=request.tfs_z,
-        mirostat_mode=request.mirostat_mode,
-        mirostat_tau=request.mirostat_tau,
-        mirostat_eta=request.mirostat_eta,
-        max_tokens=request.max_tokens
-    )
-
-    return kwargs
-
-_SYSTEM_MESSAGE = (
-    "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students "
-    "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. "
-    "Your main task is responding to students' questions regarding their studies, but you can also engage "
-    "in a friendly informal chat. Always answer as helpfully as possible, while being safe. "
-    "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, "
-    "or illegal content. If a question does not make any sense, or is not factually coherent, "
-    "explain why instead of answering something not correct. "
-    "Please ensure that your responses are socially unbiased and positive in nature. "
-    "If you don't know the answer to a question, please don't share false information."
-)
+    llm_inference_params: LLMInferenceParams = common.llm_inference_params
 
 def _rag(
     llm: Llama,
-    request: ChatRequest
+    messages: list[Message],
+    llm_inference_params: LLMInferenceParams
 ) -> str:
-    system_message = f"{_SYSTEM_MESSAGE}\n\n{{context}}"
+    system_message = f"{SYSTEM_MESSAGE}\n\n{{context}}"
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),
@@ -83,9 +37,12 @@ def _rag(
         ("user", "{input}")
     ])
 
-    kwargs = _get_llm_params_kwargs(request)
     chat_chain = create_stuff_documents_chain(
-        llm=lambda prompt: langchain_chat_completion(llm, prompt, **kwargs),
+        llm=lambda prompt: langchain_chat_completion(
+            llm,
+            prompt,
+            llm_inference_params
+        ),
         prompt=prompt
     )
 
@@ -95,7 +52,7 @@ def _rag(
     )
 
     messages = [(message.role, message.content)
-                for message in request.messages]
+                for message in messages]
 
     prompt_template_input = dict(
         input=messages[-1][1],
@@ -118,29 +75,16 @@ async def chat(
 ) -> ChatResponse:
     if request.rag:
         response = _rag(
-            llm=common.llm,
-            request=request
+            common.llm,
+            request.messages,
+            request.llm_inference_params
         )
     else:
-        kwargs = _get_llm_params_kwargs(request)
-
-        def _message_mapping(message: Message) -> dict[str, str]:
-            role = convert_langchain_message_role_to_llama(message.role)
-
-            return dict(
-                role=role,
-                content=message.content
-            )
-
-        system_message = Message(
-            role="system",
-            content=_SYSTEM_MESSAGE
+        response = chat_with_default_system_message(
+            common.llm,
+            request.messages,
+            request.llm_inference_params
         )
-
-        messages = [system_message] + request.messages
-        messages = list(map(_message_mapping, messages))
-
-        response = chat_completion(common.llm, messages, **kwargs)
 
     result = ChatResponse(
         text=response

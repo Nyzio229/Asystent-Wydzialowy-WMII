@@ -1,0 +1,92 @@
+[
+    [
+        "WC",
+        "toilet",
+        "restroom",
+        "lavatory",
+        "bathroom",
+        "urinal",
+        "latrine",
+        "water closet",
+        "public convenience"
+    ],
+    [
+        "stairs",
+        "staircase",
+        "escalator"
+    ],
+    [
+        "basement",
+        "cellar"
+    ],
+    [
+        "student",
+        "students"
+    ],
+    [
+        "near",
+        "by",
+        "next to",
+        "beside",
+        "close to",
+        "nearby",
+        "not far off of",
+        "not far away of",
+        "in the neighbourhood of",
+        "in the vicinity of",
+        "within reach of",
+        "within close range of"
+    ],
+    [
+        "operation",
+        "operations"
+    ],
+    [
+        "laboratory",
+        "lab"
+    ],
+    [
+        "building",
+        "faculty building",
+        "faculty",
+        "university",
+        "premises",
+        "faculty premises",
+        "establishment",
+        "faculty establishment",
+        "place",
+        "faculty place"
+    ],
+    [
+        "library",
+        "faculty library"
+    ],
+    [
+        "elevator",
+        "lift",
+        "hoist"
+    ],
+    [
+        "locker room",
+        "checkroom",
+        "lobby",
+        "changing room",
+        "dressing room",
+        "cloakroom"
+    ],
+    [
+        "auditorium",
+        "lecture hall",
+        "assembly hall",
+        "assembly room"
+    ],
+    [
+        "deanery",
+        "dean's office",
+        "dean office"
+    ],
+    [
+        "groundfloor",
+        "ground floor"
+    ]
+]

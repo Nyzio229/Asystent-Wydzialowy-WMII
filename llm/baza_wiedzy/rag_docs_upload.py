@@ -1,16 +1,19 @@
 import os
 import glob
-import json
 
 from pathlib import Path
 
 from typing import Optional
 
-from langchain_community.docstore.document import Document
+from pydantic import BaseModel
 
 from faq_upload import fetch_faq
 
 from utils import get_cached_translation, upload_docs, translate
+
+class Document(BaseModel):
+    page_content: str
+    metadata: Optional[dict[str, str | int]] = None
 
 def doc_translate(
     doc: dict[str, str | list],
@@ -52,6 +55,8 @@ def doc_translate(
     page_content: list[
         dict[str, str | dict | list]
     ] = doc["page_content"]
+
+    print(f"   * Tłumaczenie ('{lang_from}' -> '{lang_to}')...")
 
     for entry in page_content:
         keys = entry.keys()
@@ -121,48 +126,25 @@ def fetch_translated_rag_docs() -> list[dict[str, str]]:
     if not file_paths:
         raise ValueError(f"No dump files at '{glob_path}'. Run 'scrap.py' first")
 
-    def _serialize_docs(
-        docs: list[Document]
-    ) -> list[dict[str, str]]:
-        return [
-            dict(
-                page_content=doc.page_content,
-                metadata=doc.metadata
-            )
-            for doc in docs
-        ]
+    lang_from = "pl"
+    lang_to = "en-US"
 
     translated_docs: list[Document] = []
 
     for i, file_path in enumerate(file_paths):
         print(">", f"[{i+1}/{len(file_paths)}]", file_path)
 
-        with open(file_path, encoding="utf8") as file:
-            data = json.load(file)
-
-        lang_from = "pl"
-        lang_to = "en-US"
-
-        print(f"   * Tłumaczenie ({lang_from} -> {lang_to})...")
-
         file_path = Path(file_path)
-        cache_path = file_path.parent.parent / "translated" / file_path.name
         translated = get_cached_translation(
-            cache_path=cache_path,
-            translator=lambda: doc_translate(data, lang_from, lang_to),
-            serializer=_serialize_docs,
-            deserializer=lambda serialized: [
-                Document(
-                    page_content=doc["page_content"],
-                    metadata=doc["metadata"]
-                )
-                for doc in serialized
-            ]
+            pl_path=file_path,
+            cache_path=file_path.parent.parent / "translated" / file_path.name,
+            translator=lambda doc: doc_translate(doc, lang_from, lang_to),
+            model_type=Document,
+            deserialize_pl=False,
+            serialize=True
         )
 
         translated_docs += translated
-
-    translated_docs = list(map(_serialize_docs, translated_docs))
 
     return translated_docs
 

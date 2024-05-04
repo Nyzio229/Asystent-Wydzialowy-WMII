@@ -31,6 +31,6 @@ async def faq_like(
     faq_ids = [x.metadata["_id"] for x in result]
     result = FAQLikeResult(faq_ids=faq_ids)
 
-    log_endpoint_call("faq_like", result)
+    log_endpoint_call("faq_like", request, result)
 
     return result
