@@ -5,6 +5,7 @@ using ServerApiMikoAI.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using System.Data;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ServerApiMikoAI.Controllers.WMiI {
     [Route("[controller]")]
@@ -15,6 +16,8 @@ namespace ServerApiMikoAI.Controllers.WMiI {
             _context = context;
         }
         [HttpGet]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [SwaggerOperation(OperationId = "get")]
         public async Task<IActionResult> GetEmployeesStatus() {
 
             try {
