@@ -344,8 +344,6 @@ async def classify(
 
         return response
 
-    T = TypeVar("T", bound=BaseModel)
-
     def _invoke_llm_for_task_2(
         query: str,
         task: str,
@@ -385,6 +383,8 @@ async def classify(
         logger.debug(" * response: %s", response)
 
         return response
+
+    T = TypeVar("T", bound=BaseModel)
 
     def _invoke_llm_for_task(
         query: str,

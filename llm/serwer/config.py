@@ -64,7 +64,7 @@ config = Config(
             score_threshold=0.6
         ),
         docs_upload=Config.Api.DocsUpload(
-            chunk_size=512,
+            chunk_size=1024,
             separator="\n\n"
         )
     )

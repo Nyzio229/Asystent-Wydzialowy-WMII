@@ -29,7 +29,14 @@ def _rag(
     messages: list[Message],
     llm_inference_params: LLMInferenceParams
 ) -> str:
-    system_message = f"{SYSTEM_MESSAGE}\n\n{{context}}"
+    doc_sep = f"\n{'-'*15}\nDocument with additional context:\n\n"
+
+    system_message = (
+        f"{SYSTEM_MESSAGE}\n\n"
+        "Here are documents that contain reliable facts that may help you "
+        "provide a better (and factually correct) answer:"
+        f"{doc_sep}{{context}}"
+    )
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),
@@ -43,7 +50,8 @@ def _rag(
             prompt,
             llm_inference_params
         ),
-        prompt=prompt
+        prompt=prompt,
+        document_separator=doc_sep
     )
 
     rag_chain = create_retrieval_chain(

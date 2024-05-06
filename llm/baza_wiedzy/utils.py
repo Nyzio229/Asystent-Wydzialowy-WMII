@@ -82,6 +82,10 @@ def get_cached_translation(
         with open(cache_path, "w", encoding="utf8") as file:
             json.dump(serialized, file, ensure_ascii=False, indent=3)
 
+    assert len(pl_data) == len(translated), (
+        "[PL data] <-> [translated data] size mismatch."
+    )
+
     if serialize:
         if with_pl and deserialize_pl:
             pl_data = _serialize(pl_data)

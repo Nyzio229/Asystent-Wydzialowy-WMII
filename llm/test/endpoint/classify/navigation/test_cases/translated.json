@@ -7,7 +7,7 @@
         }
     },
     {
-        "text": "Can you give me directions to L3?",
+        "text": "I want to get into L3!",
         "metadata": {
             "source": null,
             "destination": "L3"
@@ -18,6 +18,13 @@
         "metadata": {
             "source": "WC piwnica",
             "destination": "lesk"
+        }
+    },
+    {
+        "text": "Can you give me directions to L11?",
+        "metadata": {
+            "source": null,
+            "destination": "L11"
         }
     },
     {
