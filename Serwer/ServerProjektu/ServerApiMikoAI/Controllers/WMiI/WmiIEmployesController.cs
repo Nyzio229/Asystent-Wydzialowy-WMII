@@ -11,8 +11,8 @@ namespace ServerApiMikoAI.Controllers.WMiI {
     [Route("[controller]")]
     [ApiController]
     public class WmiIEmployesController : ControllerBase {
-        private readonly WMiIDataBase _context;
-        public WmiIEmployesController(WMiIDataBase context) {
+        private readonly WMiIEmployeesDatabase _context;
+        public WmiIEmployesController(WMiIEmployeesDatabase context) {
             _context = context;
         }
         [HttpGet]

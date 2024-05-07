@@ -13,11 +13,15 @@ builder.Services.AddHttpClient();
 builder.Services.AddDbContext<PostrgeSQLContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("QuestionDB")));
 builder.Services.AddDbContext<VerificationDataBaseContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("VerificationDB")));
 
-var connString = builder.Configuration.GetConnectionString("MySqlConnection");
-builder.Services.AddDbContext<WMiIDataBase>(opt => {
-    opt.UseMySql(connString, ServerVersion.AutoDetect(connString));
+var connStringEmp = builder.Configuration.GetConnectionString("EmployeesDB");
+builder.Services.AddDbContext<WMiIEmployeesDatabase>(opt => {
+    opt.UseMySql(connStringEmp, ServerVersion.AutoDetect(connStringEmp));
 });
 
+var connStringPln = builder.Configuration.GetConnectionString("PlansDB");
+builder.Services.AddDbContext<WMiIPlansDatabase>(opt => {
+    opt.UseMySql(connStringPln, ServerVersion.AutoDetect(connStringPln));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

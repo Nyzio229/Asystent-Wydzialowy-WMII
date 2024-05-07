@@ -56,8 +56,8 @@ namespace ServerApiMikoAI.Controllers.Verify
 
                 using (var smtp = new SmtpClient())
                 {
-                    smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
-                    smtp.Authenticate("gayle.smitham@ethereal.email", "mTCWk2Fx1bj12vKXyF");
+                    smtp.Connect("poczta1.mat.umk.pl", 587, SecureSocketOptions.StartTls);
+                    smtp.Authenticate("przybysz_mailer", "CY5Y8esWOgiQn7Z");
                     smtp.Send(mail);
                     smtp.Disconnect(true);
                 }
