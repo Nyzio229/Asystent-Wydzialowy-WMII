@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawable="clr-namespace:WMiIApp.Models"
              x:Class="WMiIApp.MapPage0"
              Title="Parter"
              BackgroundColor="#2C3333"
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
+    <ContentPage.Resources>
+        <drawable:GraphicsDrawable0 x:Key="drawable" />
+    </ContentPage.Resources>
 
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
@@ -65,14 +69,20 @@
     
     <local:PinchToZoomContainer>
         <AbsoluteLayout x:Name="parterFloor">
-            <!-- Mapa parteru -->
+                
+             <!-- Mapa parteru -->
             <Image x:Name="ParterImage" 
                Source="parter.png" 
                Aspect="AspectFit" 
                AbsoluteLayout.LayoutBounds="0,0,300,400"
                AbsoluteLayout.LayoutFlags="None"/>
+             
+            <GraphicsView Drawable="{StaticResource drawable}"
+            AbsoluteLayout.LayoutBounds="0,0,300,400"
+            AbsoluteLayout.LayoutFlags="None"
+            x:Name="graphics0"/>
 
-            <Button x:Name="ss1"                    
+                <Button x:Name="ss1"                    
             Text="SS1"
             ClassId="ss1"
             Opacity="0.5"

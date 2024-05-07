@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawable="clr-namespace:WMiIApp.Models"
              x:Class="WMiIApp.MapPage1"
              Title="I piętro"
              BackgroundColor="#2C3333"
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
-
+    <ContentPage.Resources>
+        <drawable:GraphicsDrawable1 x:Key="drawable" />
+    </ContentPage.Resources>
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
         <Label
@@ -69,14 +72,20 @@
 
         <local:PinchToZoomContainer>
         <AbsoluteLayout x:Name="pierwszePietroFloor">
-            <!-- Mapa pierwszego pietra -->
+                
+                <!-- Mapa pierwszego pietra -->
             <Image x:Name="PierwszePietroImage" 
                Source="pierwsze_pietro.png"  
                Aspect="AspectFit"
                AbsoluteLayout.LayoutBounds="0,0,300,400"
                AbsoluteLayout.LayoutFlags="None"/>
+               
+            <GraphicsView Drawable="{StaticResource drawable}"
+            AbsoluteLayout.LayoutBounds="0,0,300,400"
+            AbsoluteLayout.LayoutFlags="None"
+            x:Name="graphics1"/>
 
-            <Button x:Name="ss2"
+                <Button x:Name="ss2"
             Text="SS2"
             ClassId="ss2"
             Opacity="0.5"

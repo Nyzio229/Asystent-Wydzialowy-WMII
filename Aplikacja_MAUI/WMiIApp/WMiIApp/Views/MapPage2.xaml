@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawable="clr-namespace:WMiIApp.Models"
              x:Class="WMiIApp.MapPage2"
              Title="II piętro"
              BackgroundColor="#2C3333"
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
-
+    <ContentPage.Resources>
+        <drawable:GraphicsDrawable2 x:Key="drawable" />
+    </ContentPage.Resources>
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
         <Label
@@ -74,6 +77,11 @@
                Aspect="AspectFit" 
                AbsoluteLayout.LayoutBounds="0,0,300,400"
                AbsoluteLayout.LayoutFlags="None"/>
+
+            <GraphicsView Drawable="{StaticResource drawable}"
+            AbsoluteLayout.LayoutBounds="0,0,300,400"
+            AbsoluteLayout.LayoutFlags="None"
+            x:Name="graphics2"/>
 
             <Button x:Name="ss3"
             Text="SS3"

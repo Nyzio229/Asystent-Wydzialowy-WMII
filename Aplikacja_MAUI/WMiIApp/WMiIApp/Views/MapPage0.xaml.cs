@@ -13,6 +13,8 @@ public partial class MapPage0 : ContentPage
         // Inicjalizacja listy nazw pokojow
         allRoomNames = App.GlobalRooms.GetRooms().Select(room => room.Name).OrderBy(name => name).ToList();
         filteredRoomNames = allRoomNames;
+
+        App.pathFinder.Path.CollectionChanged += Path_CollectionChanged;
     }
 
     private void HandleRoomButtonClick(object sender, EventArgs e)
@@ -186,4 +188,9 @@ public partial class MapPage0 : ContentPage
         else menuGrid.IsVisible = false;
     }
 
+    private void Path_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        graphics0.Invalidate();
+
+    }
 }
