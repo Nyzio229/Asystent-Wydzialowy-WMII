@@ -53,6 +53,11 @@
                 Route="MapPage2"/>
         </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="Pracownicy" Icon="chat_icon.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate local:EmployeesPage}"
+            Route="EmployeesPage"/>
+    </FlyoutItem>
 
 
 </Shell>

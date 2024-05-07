@@ -25,6 +25,8 @@ namespace WMiIApp
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MessageService>();
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<EmployeesPage>();
+            builder.Services.AddSingleton<EmployeesViewModel>();
             return builder.Build();
         }
     }

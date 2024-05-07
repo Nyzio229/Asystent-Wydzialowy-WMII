@@ -7,7 +7,7 @@ namespace WMiIApp.Services
 {
     public class MessageService
     {
-        const string uri = "https://13ad-188-146-252-197.ngrok-free.app/";
+        const string uri = "https://521c-188-146-254-163.ngrok-free.app/";
         const string uriMain = uri + "LLMResponseAdvanced";
         const string uriFAQ = uri + "FAQ";
         const string uriTranslate = uri + "Translation";

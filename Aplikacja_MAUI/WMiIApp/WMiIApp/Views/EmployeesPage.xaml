@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WMiIApp"
+             x:Class="WMiIApp.EmployeesPage"
+             xmlns:viewmodel="clr-namespace:WMiIApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <ContentPage.Resources>
+        <local:FromIsWorkingToColorConverter x:Key="FromIsWorkingToColorConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodel:EmployeesViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *"
+          Padding="10"
+          RowSpacing="10">
+        <SearchBar x:Name="MySearchBar" Placeholder="Wybierz osobę..." Grid.Row="0">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior 
+                    EventName="TextChanged"
+                    Command="{Binding TextUpdatedCommand}"
+                    CommandParameter="{Binding Text, Source={x:Reference MySearchBar}}"/>
+            </SearchBar.Behaviors>
+        </SearchBar>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding EmployeesVisible}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0,5"
+                          ColumnDefinitions="0.5*, 0.3*, 0.2*">
+                        <Frame>
+                            <Label  Text="{Binding Name}" FontSize="24"/>
+                        </Frame>
+                        <Frame Grid.Column="1">
+                            <Label  Text="{Binding Office}" FontSize="24"/>
+                        </Frame>
+                        <Frame Grid.Column="2">
+                            <Ellipse Fill="{Binding IsWorking, Converter={StaticResource FromIsWorkingToColorConverter}}"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     Aspect="Uniform"
+                                      />           
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+    
+</ContentPage>

@@ -40,14 +40,14 @@ namespace WMiIApp.ViewModels
             Message message = new()
             {
                 Content = "Cześć! Jestem MikoAI i chętnie odpowiem na wszystkie twoje pytania...",
-                Role = "system",
+                Role = "assistant",
                 IsSent = false
             };
             Items.Add(message);
             Message message2 = new()
             {
                 Content = "Hi, I'm MikoAI and I'm happy to answer all your questions...",
-                Role = "system",
+                Role = "assistant",
                 IsSent = false
             };
             ItemsEN.Add(message2);
@@ -80,7 +80,7 @@ namespace WMiIApp.ViewModels
 
         //    Message messageReceived = new Message();
         //    messageReceived.Content = Text;
-        //    messageReceived.Role = "system";
+        //    messageReceived.Role = "assistant";
         //    messageReceived.IsSent = false;
 
         //    messageReceived.IsFAQ = true;
@@ -182,6 +182,7 @@ namespace WMiIApp.ViewModels
                         break;
                     case "navigation":
                         await Shell.Current.GoToAsync("///MapPage_1");
+                        await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
                         return;
                     case "chat":
                         //ogólne
@@ -204,91 +205,91 @@ namespace WMiIApp.ViewModels
                 Text = string.Empty;
             }
 
-            //FAQ
-            try
-            {
-                List<TableContext> tableContexts = new List<TableContext>();
-                tableContexts = await messageService.GetMessageFromFAQ(ItemsEN);
-                if (tableContexts[0].id_pytania != -1)
-                {
-                    Message messageFAQ = new()
-                    {
-                        Content = "Did you mean...\n" + tableContexts[0].pytanie,
-                        IsSent = false,
-                        Role = "system"
-                    };
-                    ItemsEN.Add(messageFAQ);
-                    try
-                    {
-                        Message faqTranslatedFromEN = new()
-                        {
-                            Role = "user",
-                            IsSent = false,
-                            Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
-                        };
-                        Items.Add(faqTranslatedFromEN);
-                    }
-                    catch (HttpRequestException e)
-                    {
-                        await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
-                    }
-                    catch (Exception ex)
-                    {
-                        await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
-                    }
-                    Message messageFAQ2 = new()
-                    {
-                        Content = "Answer: \n" + tableContexts[0].odpowiedz,
-                        IsSent = false,
-                        Role = "system"
-                    };
-                    ItemsEN.Add(messageFAQ2);
-                    try
-                    {
-                        Message faq2TranslatedFromEN = new()
-                        {
-                            Role = "user",
-                            IsSent = false,
-                            Content = await messageService.TranslateMessage(ItemsEN, "en", "pl"),
-                            IsFAQ = true
-                        };
-                        Items.Add(faq2TranslatedFromEN);
-                    }
-                    catch (HttpRequestException e)
-                    {
-                        await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
-                    }
-                    catch (Exception ex)
-                    {
-                        await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
-                    }
-                    IsEnabled = true;
-                    AcceptFAQCommand.NotifyCanExecuteChanged();
-                    RejectFAQCommand.NotifyCanExecuteChanged();
-                    CanBeSent = false;
-                    SendCommand.NotifyCanExecuteChanged();
-                    return;
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                await Shell.Current.DisplayAlert("Error!", e.Message + " FAQ", "OK");
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message + " FAQ", "OK");
-            }
-            finally
-            {
-                Text = string.Empty;
-            }
+            ////FAQ
+            //try
+            //{
+            //    List<TableContext> tableContexts = new List<TableContext>();
+            //    tableContexts = await messageService.GetMessageFromFAQ(ItemsEN);
+            //    if (tableContexts[0].id_pytania != -1)
+            //    {
+            //        Message messageFAQ = new()
+            //        {
+            //            Content = "Did you mean...\n" + tableContexts[0].pytanie,
+            //            IsSent = false,
+            //            Role = "assistant"
+            //        };
+            //        ItemsEN.Add(messageFAQ);
+            //        try
+            //        {
+            //            Message faqTranslatedFromEN = new()
+            //            {
+            //                Role = "user",
+            //                IsSent = false,
+            //                Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
+            //            };
+            //            Items.Add(faqTranslatedFromEN);
+            //        }
+            //        catch (HttpRequestException e)
+            //        {
+            //            await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
+            //        }
+            //        Message messageFAQ2 = new()
+            //        {
+            //            Content = "Answer: \n" + tableContexts[0].odpowiedz,
+            //            IsSent = false,
+            //            Role = "assistant"
+            //        };
+            //        ItemsEN.Add(messageFAQ2);
+            //        try
+            //        {
+            //            Message faq2TranslatedFromEN = new()
+            //            {
+            //                Role = "user",
+            //                IsSent = false,
+            //                Content = await messageService.TranslateMessage(ItemsEN, "en", "pl"),
+            //                IsFAQ = true
+            //            };
+            //            Items.Add(faq2TranslatedFromEN);
+            //        }
+            //        catch (HttpRequestException e)
+            //        {
+            //            await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
+            //        }
+            //        IsEnabled = true;
+            //        AcceptFAQCommand.NotifyCanExecuteChanged();
+            //        RejectFAQCommand.NotifyCanExecuteChanged();
+            //        CanBeSent = false;
+            //        SendCommand.NotifyCanExecuteChanged();
+            //        return;
+            //    }
+            //}
+            //catch (HttpRequestException e)
+            //{
+            //    await Shell.Current.DisplayAlert("Error!", e.Message + " FAQ", "OK");
+            //}
+            //catch (Exception ex)
+            //{
+            //    await Shell.Current.DisplayAlert("Error!", ex.Message + " FAQ", "OK");
+            //}
+            //finally
+            //{
+            //    Text = string.Empty;
+            //}
 
             //LLM
             try
             {
                 Message messageReceived = new()
                 {
-                    Role = "system",
+                    Role = "assistant",
                     IsSent = false,
                     Content = await messageService.GetMessageFromMain(ItemsEN)
                 };
