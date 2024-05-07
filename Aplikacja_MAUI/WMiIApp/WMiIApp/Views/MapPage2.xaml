@@ -72,16 +72,26 @@
         <local:PinchToZoomContainer>
         <AbsoluteLayout x:Name="drugiePietroFloor">
             <!-- Mapa drugiego pietra -->
-            <Image x:Name="DrugiePietroImage" 
-               Source="drugie_pietro.png"  
-               Aspect="AspectFit" 
-               AbsoluteLayout.LayoutBounds="0,0,300,400"
-               AbsoluteLayout.LayoutFlags="None"/>
+            <AbsoluteLayout>
+                  <Image x:Name="DrugiePietroImage" 
+                       Source="drugie_pietro.png"  
+                       Aspect="AspectFit" 
+                       AbsoluteLayout.LayoutBounds="0,0,300,400"
+                       AbsoluteLayout.LayoutFlags="None"/>  
+            </AbsoluteLayout>
 
-            <GraphicsView Drawable="{StaticResource drawable}"
-            AbsoluteLayout.LayoutBounds="0,0,300,400"
-            AbsoluteLayout.LayoutFlags="None"
-            x:Name="graphics2"/>
+            <AbsoluteLayout>
+                    <GraphicsView Drawable="{StaticResource drawable}"
+                        AbsoluteLayout.LayoutBounds="0,0,300,400"
+                        AbsoluteLayout.LayoutFlags="None"
+                        x:Name="graphics2">
+                        <GraphicsView.GestureRecognizers>
+                            <PanGestureRecognizer PanUpdated="OnPanUpdated"/>
+                            <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                        </GraphicsView.GestureRecognizers>
+                    </GraphicsView>
+                </AbsoluteLayout>
+            
 
             <Button x:Name="ss3"
             Text="SS3"

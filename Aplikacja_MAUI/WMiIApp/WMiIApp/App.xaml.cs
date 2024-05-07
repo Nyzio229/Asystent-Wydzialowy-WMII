@@ -39,9 +39,9 @@ namespace WMiIApp
         Room d107 = new Room("d107", "D107 (Parter)", 250, 49, 0);
         Room schody3 = new Room("schody3", "Schody Koło Biblioteki (Parter)", 241, 74, 0);
         Room biblioteka = new Room("biblioteka", "Biblioteka/C114 (Parter)", 205, 98, 0);
-        Room patio2 = new Room("patio2", "Winda (Parter)", 205, 77, 0);
+        Room patio2 = new Room("patio2", "Winda (Parter)", 207, 74, 0);
         Room galeria = new Room("galeria", "Galeria (Parter)", 186, 139, 0);
-        Room patio = new Room("patio", "Patio Wejście Koło Szatni", 186, 139, 0);
+        Room patio = new Room("patio", "Patio Wejście Koło Szatni", 85, 144, 0);
         Room b124 = new Room("b124", "B124 (Parter)", 55, 134, 0);
         Room b123 = new Room("b123", "B123 (Parter)", 55, 114, 0);
         Room b122 = new Room("b122", "B122 (Parter)", 55, 105, 0);

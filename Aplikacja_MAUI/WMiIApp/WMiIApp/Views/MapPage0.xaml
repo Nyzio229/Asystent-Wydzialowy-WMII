@@ -71,16 +71,26 @@
         <AbsoluteLayout x:Name="parterFloor">
                 
              <!-- Mapa parteru -->
-            <Image x:Name="ParterImage" 
-               Source="parter.png" 
-               Aspect="AspectFit" 
-               AbsoluteLayout.LayoutBounds="0,0,300,400"
-               AbsoluteLayout.LayoutFlags="None"/>
-             
-            <GraphicsView Drawable="{StaticResource drawable}"
-            AbsoluteLayout.LayoutBounds="0,0,300,400"
-            AbsoluteLayout.LayoutFlags="None"
-            x:Name="graphics0"/>
+            <AbsoluteLayout>
+                   <Image x:Name="ParterImage" 
+                       Source="parter.png" 
+                       Aspect="AspectFit" 
+                       AbsoluteLayout.LayoutBounds="0,0,300,400"
+                       AbsoluteLayout.LayoutFlags="None"/> 
+            </AbsoluteLayout>
+
+            <AbsoluteLayout>
+                    <GraphicsView Drawable="{StaticResource drawable}"
+                        AbsoluteLayout.LayoutBounds="0,0,300,400"
+                        AbsoluteLayout.LayoutFlags="None"
+                        x:Name="graphics0">
+                        <GraphicsView.GestureRecognizers>
+                            <PanGestureRecognizer PanUpdated="OnPanUpdated"/>
+                            <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                        </GraphicsView.GestureRecognizers>
+                    </GraphicsView>
+                </AbsoluteLayout>
+            
 
                 <Button x:Name="ss1"                    
             Text="SS1"
@@ -528,7 +538,7 @@
             <Button x:Name="draw_patio"
             Opacity="0.5"
             BackgroundColor="Transparent"
-            AbsoluteLayout.LayoutBounds="85,139,3,3"
+            AbsoluteLayout.LayoutBounds="85,144,3,3"
             AbsoluteLayout.LayoutFlags="None"
             />
 
@@ -571,7 +581,7 @@
             <Button x:Name="draw_patio_wyjscie"
             Opacity="0.5"
             BackgroundColor="Transparent"
-            AbsoluteLayout.LayoutBounds="205,77,3,3"
+            AbsoluteLayout.LayoutBounds="207,74,3,3"
             AbsoluteLayout.LayoutFlags="None"
             />
 

@@ -70,25 +70,33 @@
                 <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" />
             </StackLayout>
         </Grid>
-        
+
         <local:PinchToZoomContainer>
             <AbsoluteLayout x:Name="piwnicaFloor">
-
-
                 <!-- Mapa piwnicy -->
-                <Image x:Name="PiwnicaImage" 
-               Source="piwnica.png" 
-               Aspect="AspectFit" 
-               AbsoluteLayout.LayoutBounds="0,0,300,400"
-               AbsoluteLayout.LayoutFlags="None"/>
+                <AbsoluteLayout>
+                    <Image x:Name="PiwnicaImage" 
+                       Source="piwnica.png" 
+                       Aspect="AspectFit" 
+                       AbsoluteLayout.LayoutBounds="0,0,300,400"
+                       AbsoluteLayout.LayoutFlags="None"/>
+                </AbsoluteLayout>
                 
-                <GraphicsView Drawable="{StaticResource drawable}"
-                AbsoluteLayout.LayoutBounds="0,0,300,400"
-                AbsoluteLayout.LayoutFlags="None"
-                x:Name="graphics_1"/>
+                <AbsoluteLayout>
+                    <GraphicsView Drawable="{StaticResource drawable}"
+                            AbsoluteLayout.LayoutBounds="0,0,300,400"
+                            AbsoluteLayout.LayoutFlags="None"
+                            x:Name="graphics_1">
+                        <GraphicsView.GestureRecognizers>
+                            <PanGestureRecognizer PanUpdated="OnPanUpdated"/>
+                            <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                        </GraphicsView.GestureRecognizers>
+                    </GraphicsView>
+                </AbsoluteLayout>
+
 
                 <!-- Pomieszczenia w piwnicy -->
-                <Button x:Name="lesk"
+            <Button x:Name="lesk"
             ClassId="lesk"
             Text="LESK"
             Opacity="0.5"
@@ -200,7 +208,7 @@
             </AbsoluteLayout>
         </local:PinchToZoomContainer>
 
-        
+
     </StackLayout>
 
 

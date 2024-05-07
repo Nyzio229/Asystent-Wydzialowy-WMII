@@ -47,8 +47,8 @@ namespace WMiIApp.ViewModels
                     await Task.Delay(2000);
                 }
             });
-
             
+
 
             //Employee emp1 = new Employee();
             //emp1.Name = "Janusz Czarny";

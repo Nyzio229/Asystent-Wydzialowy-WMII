@@ -7,6 +7,12 @@ public partial class MapPage1 : ContentPage
 {
     private List<string> allRoomNames; // Lista wszystkich nazw pokoi
     private List<string> filteredRoomNames; // Lista nazw pokoi startowych po zastosowaniu filtru
+    double currentScale = 1;
+    double startScale = 1;
+    double xOffset = 0;
+    double yOffset = 0;
+    double previousWidth = 0;
+    double previousHeight = 0;
     public MapPage1()
 	{
 		InitializeComponent();
@@ -193,5 +199,67 @@ public partial class MapPage1 : ContentPage
     {
         graphics1.Invalidate();
 
+    }
+
+    void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+    {
+        if (currentScale > 1 && (e.StatusType == GestureStatus.Running || e.StatusType == GestureStatus.Completed))
+        {
+            // Interpolacja pozycji obrazka z u¿yciem mnoznika
+            double multiplier = 0.5; // Mnoznik interpolacji
+            double deltaX = e.TotalX * multiplier;
+            double deltaY = e.TotalY * multiplier;
+
+            // Przesun obraz o przesuniecie z uwzglednieniem interpolacji
+            Content.TranslationX = Math.Clamp(Content.TranslationX + deltaX, -Content.Width * (currentScale - 1), 0);
+            Content.TranslationY = Math.Clamp(Content.TranslationY + deltaY, -Content.Height * (currentScale - 1), 0);
+        }
+    }
+
+    void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+    {
+
+        if (e.Status == GestureStatus.Started)
+        {
+            // Zapisujemy biezacy wspolczynnik skalowania zerujemy sk³adowe dla punktu centralnego transformacji
+            startScale = Content.Scale;
+            Content.AnchorX = 0;
+            Content.AnchorY = 0;
+        }
+        if (e.Status == GestureStatus.Running)
+        {
+            // Oblicz wspolczynnik skalowania
+            currentScale += (e.Scale - 1) * startScale;
+            currentScale = Math.Max(1, currentScale);
+
+            // Wspolrzedna X
+            double renderedX = Content.X + xOffset;
+            double deltaX = renderedX / Width;
+            double deltaWidth = Width / (Content.Width * startScale);
+            double originX = (e.ScaleOrigin.X - deltaX) * deltaWidth;
+
+            // Wspolrzedna Y.
+            double renderedY = Content.Y + yOffset;
+            double deltaY = renderedY / Height;
+            double deltaHeight = Height / (Content.Height * startScale);
+            double originY = (e.ScaleOrigin.Y - deltaY) * deltaHeight;
+
+            // Oblicz przekszta³cone wspolrzedne elementu
+            double targetX = xOffset - (originX * Content.Width) * (currentScale - startScale);
+            double targetY = yOffset - (originY * Content.Height) * (currentScale - startScale);
+
+            // Zastosuj translacje na podstawie zmiany pochodzenia
+            Content.TranslationX = Math.Clamp(targetX, -Content.Width * (currentScale - 1), 0);
+            Content.TranslationY = Math.Clamp(targetY, -Content.Height * (currentScale - 1), 0);
+
+            // Zastosuj wspolczynnik skalowania
+            Content.Scale = currentScale;
+        }
+        if (e.Status == GestureStatus.Completed)
+        {
+            // Zapisz delte translacji elementu
+            xOffset = Content.TranslationX;
+            yOffset = Content.TranslationY;
+        }
     }
 }

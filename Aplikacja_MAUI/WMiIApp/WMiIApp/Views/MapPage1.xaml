@@ -74,16 +74,26 @@
         <AbsoluteLayout x:Name="pierwszePietroFloor">
                 
                 <!-- Mapa pierwszego pietra -->
-            <Image x:Name="PierwszePietroImage" 
-               Source="pierwsze_pietro.png"  
-               Aspect="AspectFit"
-               AbsoluteLayout.LayoutBounds="0,0,300,400"
-               AbsoluteLayout.LayoutFlags="None"/>
-               
-            <GraphicsView Drawable="{StaticResource drawable}"
-            AbsoluteLayout.LayoutBounds="0,0,300,400"
-            AbsoluteLayout.LayoutFlags="None"
-            x:Name="graphics1"/>
+            <AbsoluteLayout>
+                  <Image x:Name="PierwszePietroImage" 
+                       Source="pierwsze_pietro.png"  
+                       Aspect="AspectFit"
+                       AbsoluteLayout.LayoutBounds="0,0,300,400"
+                       AbsoluteLayout.LayoutFlags="None"/>  
+            </AbsoluteLayout>
+
+            <AbsoluteLayout>
+                    <GraphicsView Drawable="{StaticResource drawable}"
+                        AbsoluteLayout.LayoutBounds="0,0,300,400"
+                        AbsoluteLayout.LayoutFlags="None"
+                        x:Name="graphics1">
+                        <GraphicsView.GestureRecognizers>
+                            <PanGestureRecognizer PanUpdated="OnPanUpdated"/>
+                            <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                        </GraphicsView.GestureRecognizers>
+                    </GraphicsView>
+            </AbsoluteLayout>
+            
 
                 <Button x:Name="ss2"
             Text="SS2"
