@@ -90,7 +90,7 @@ namespace WMiIApp
         Room schodyPierwszeDrugiePietroPierwsze = new Room("schody_pierwsze_drugie_pietro", "Schody I piętro - II piętro (I piętro)", 252, 192, 1);
         Room dziekanat = new Room("dziekanat", "Dziekanat/D214/D210/D208 (I piętro)", 252, 152, 1);
         Room dziekanatStudencki = new Room("dziekanat_studencki", "Dziekanat studencki/D219/D221 (I piętro)", 240, 120, 1);
-        Room s5 = new Room("s5", "S5/D206; (I piętro)", 252, 118, 1);
+        Room s5 = new Room("s5", "S5/D206 (I piętro)", 252, 118, 1);
         Room s6 = new Room("s6", "S6/D204 (I piętro)", 252, 92, 1);
         Room s7 = new Room("s7", "S7/D203 (I piętro)", 252, 71, 1);
         Room s8 = new Room("s8", "S8/D202 (I piętro)", 248, 46, 1);
@@ -182,6 +182,8 @@ namespace WMiIApp
             InitializeComponent();
 
             addNeighborsToRooms();
+
+            addOtherNamesToRooms();
 
             addRoomsToVector();
 
