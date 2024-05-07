@@ -22,6 +22,11 @@ public partial class MapPage1 : ContentPage
         filteredRoomNames = allRoomNames;
 
         App.pathFinder.Path.CollectionChanged += Path_CollectionChanged;
+        Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+        {
+            graphics1.Invalidate();
+            return true;
+        });
     }
 
     private void HandleRoomButtonClick(object sender, EventArgs e)
