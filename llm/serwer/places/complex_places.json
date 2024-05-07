@@ -1,0 +1,188 @@
+[
+    {
+        "pl": "WC piwnica",
+        "en": [
+            "WC basement",
+            "basement WC"
+        ]
+    },
+    {
+        "pl": "klub studencki",
+        "en": "student club"
+    },
+    {
+        "pl": "bar",
+        "en": [
+            "bar",
+            "eatery",
+            "diner",
+            "canteen",
+            "cafeteria"
+        ]
+    },
+    {
+        "pl": "schody do piwnicy",
+        "en": [
+            "stairs to the basement",
+            "basement stairs",
+            "stairs leading to the basement"
+        ]
+    },
+    {
+        "pl": "lesk",
+        "en": [
+            "lesk",
+            "computer system operation laboratory"
+        ]
+    },
+    {
+        "pl": "portiernia",
+        "en": [
+            "gatehouse",
+            "gatekeeper",
+            "porterhouse",
+            "porter's lodge",
+            "portacabin",
+            "reception"
+        ]
+    },
+    {
+        "pl": "wejście",
+        "en": [
+            "entrance",
+            "entrance of the building",
+            "building entrance"
+        ]
+    },
+    {
+        "pl": "schody I piętro - II piętro (I piętro)",
+        "en": [
+            "stairs I floor to II floor (I floor)",
+            "stairs from I floor to II floor (I floor)",
+            "stairs leading from I floor to II floor (I floor)"
+        ]
+    },
+    {
+        "pl": "schody I piętro - II piętro (II piętro)",
+        "en": [
+            "stairs I floor to II floor (II floor)",
+            "stairs from I floor to II floor (II floor)",
+            "stairs leading from I floor to II floor (II floor)"
+        ]
+    },
+    {
+        "pl": "schody piwnica/parter/I piętro",
+        "en": "stairs basement/groundfloor/I floor"
+    },
+    {
+        "pl": "WC koło S3",
+        "en": "WC near S3"
+    },
+    {
+        "pl": "schody koło wejścia",
+        "en": "stairs near the entrance"
+    },
+    {
+        "pl": "schody koło biblioteki",
+        "en": "stairs near the library"
+    },
+    {
+        "pl": "biblioteka",
+        "en": "library"
+    },
+    {
+        "pl": "Winda (Parter)",
+        "en": "elevator (groundfloor)"
+    },
+    {
+        "pl": "Winda (I piętro)",
+        "en": "elevator (I floor)"
+    },
+    {
+        "pl": "Winda (II piętro)",
+        "en": "elevator (II floor)"
+    },
+    {
+        "pl": "galeria",
+        "en": "gallery"
+    },
+    {
+        "pl": "patio wejście koło szatni",
+        "en": "patio entrance near the locker room"
+    },
+    {
+        "pl": "aula",
+        "en": "auditorium"
+    },
+    {
+        "pl": "sala konferencyjna",
+        "en": "conference room"
+    },
+    {
+        "pl": "Schody koło auli (parter)",
+        "en": "stairs near the auditorium (groundfloor)"
+    },
+    {
+        "pl": "schody koło auli (I piętro)",
+        "en": "stairs near the auditorium (I floor)"
+    },
+    {
+        "pl": "schody koło auli (II piętro)",
+        "en": "stairs near the auditorium (II floor)"
+    },
+    {
+        "pl": "WC koło auli",
+        "en": "WC near the auditorium"
+    },
+    {
+        "pl": "WC koło L3",
+        "en": "WC near L3"
+    },
+    {
+        "pl": "WC koło L12",
+        "en": "WC near L12"
+    },
+    {
+        "pl": "WC koło L13",
+        "en": "WC near L13"
+    },
+    {
+        "pl": "schody koło PM1",
+        "en": "stairs near PM1"
+    },
+    {
+        "pl": "schody koło PM2",
+        "en": "stairs near PM2"
+    },
+    {
+        "pl": "schody koło PM3",
+        "en": "stairs near PM3"
+    },
+    {
+        "pl": "WC koło S4",
+        "en": "WC near S4"
+    },
+    {
+        "pl": "sala spotkań",
+        "en": "meeting room"
+    },
+    {
+        "pl": "dziekanat",
+        "en": "dean's office"
+    },
+    {
+        "pl": "dziekanat studencki",
+        "en": [
+            "student dean's office",
+            "dean office of students"
+        ]
+    },
+    {
+        "pl": "schody obok S8",
+        "en": "stairs near S8"
+    },
+    {
+        "pl": "schody obok S9",
+        "en": "stairs near S9"
+    }
+]

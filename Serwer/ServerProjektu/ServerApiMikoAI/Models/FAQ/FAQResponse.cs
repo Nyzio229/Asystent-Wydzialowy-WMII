@@ -2,6 +2,6 @@
 {
     public class FAQResponse
     {
-        public int[] faq_ids { get; set; }
+        public string[] faq_ids { get; set; }
     }
 }

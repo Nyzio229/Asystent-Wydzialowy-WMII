@@ -965,7 +965,14 @@
              AbsoluteLayout.LayoutFlags="None"
              />
 
-        </AbsoluteLayout>
+                <Button x:Name="draw_schody_f105_f107_f108"
+                 Opacity="0.5"
+                 BackgroundColor="Transparent"
+                 AbsoluteLayout.LayoutBounds="230,250,3,3"
+                 AbsoluteLayout.LayoutFlags="None"
+                 />
+
+            </AbsoluteLayout>
     </local:PinchToZoomContainer>
     </StackLayout>
 

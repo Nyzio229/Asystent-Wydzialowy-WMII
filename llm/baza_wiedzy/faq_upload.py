@@ -1,90 +1,90 @@
-import re
+from pathlib import Path
 
 from pydantic import BaseModel
 
-from utils import translate, upload_docs
+from utils import get_cached_translation, translate, upload_docs
 
 class FaqEntry(BaseModel):
     answer: str
     question: str
 
-faq_question_re_pattern = r"[0-9]+\. (.*\?$)"
-faq_answer_re_pattern = r"\s*\->\s*(.*\.$)"
+def fetch_faq() -> tuple[
+    list[dict[str]],
+    list[dict[str]]
+]:
+    print("Czytanie FAQ...")
 
-def parse_faq_file(lines: list[str]) -> list[FaqEntry]:
-    question: str = None
+    faq_dir = Path("faq")
 
-    faq: list[FaqEntry] = []
-
-    for line in lines:
-        match = re.search(faq_question_re_pattern, line)
-
-        if match:
-            question = match.group(1)
-
-            continue
-
-        match = re.search(faq_answer_re_pattern, line)
-
-        if match:
-            answer = match.group(1)
-
-            faq.append(FaqEntry(
-                question=question,
-                answer=answer
-            ))
-
-    return faq
-
-def main() -> None:
-    faq_file_path = "../../Bazy_Danych/Ankieta"
-
-    with open(faq_file_path, encoding="utf8") as file:
-        lines = file.readlines()
-
-    lines = filter(lambda line: not line.isspace(), lines)
-
-    faq = parse_faq_file(lines)
+    lang_from = "pl"
+    lang_to = "en-US"
 
     def _translate(message: str) -> str:
-        return translate(message, "pl", "en-US")
+        return translate(message, lang_from, lang_to)
 
     def _print_head(char: str, message: str, n_chars: int) -> None:
-        print(f"   {char}:", f'{message[:n_chars]}{"..." if len(message) > n_chars else ""}')
-
-    translated_faq: list[FaqEntry] = []
-
-    for i, faq_entry in enumerate(faq):
-        print(">", f"[{i+1}/{len(faq)}]:")
-
-        n_chars = 100
-        _print_head("Q", faq_entry.question, n_chars)
-        _print_head("A", faq_entry.answer, n_chars)
-
-        print()
-
-        translated_faq_entry = FaqEntry(
-            question=_translate(faq_entry.question),
-            answer=_translate(faq_entry.answer)
+        print(
+            f"   {char}:",
+            f"{message[:n_chars]}"
+            f'{"..." if len(message) > n_chars else ""}'
         )
 
-        translated_faq.append(translated_faq_entry)
+    def _translate_faq(faq: list[FaqEntry]) -> list[FaqEntry]:
+        translated_faq: list[FaqEntry] = []
 
-        _print_head("TQ", translated_faq_entry.question, n_chars)
-        _print_head("TA", translated_faq_entry.answer, n_chars)
+        for i, faq_entry in enumerate(faq):
+            print(">", f"[{i+1}/{len(faq)}]:")
 
-        print("-" * int(n_chars*1.25))
+            n_chars = 100
+            _print_head("Q", faq_entry.question, n_chars)
+            _print_head("A", faq_entry.answer, n_chars)
 
-    upload_docs(
-        "faq_upload",
-        faq=translated_faq,
-        lang="en"
+            print(f"   * Tłumaczenie ('{lang_from}' -> '{lang_to}')...")
+
+            translated_faq_entry = FaqEntry(
+                question=_translate(faq_entry.question),
+                answer=_translate(faq_entry.answer)
+            )
+
+            translated_faq.append(translated_faq_entry)
+
+            _print_head("Tł_Q", translated_faq_entry.question, n_chars)
+            _print_head("Tł_A", translated_faq_entry.answer, n_chars)
+
+            print("-" * int(n_chars*1.25))
+
+        return translated_faq
+
+    faq, translated_faq = get_cached_translation(
+        pl_path=faq_dir / "pl.json",
+        cache_path=faq_dir / "translated.json",
+        translator=_translate_faq,
+        model_type=FaqEntry,
+        serialize=True
     )
 
+    return faq, translated_faq
+
+def main() -> None:
+    faq, translated_faq = fetch_faq()
+
+    def _make_lang_faq(
+        faq: list[dict[str]],
+        lang: str
+    ) -> dict[str]:
+        return dict(
+            faq=faq,
+            lang=lang
+        )
+
+    print("\nPrzesyłanie do bazy wektorowej...")
+
     upload_docs(
         "faq_upload",
-        faq=faq,
-        lang="pl"
+        lang_faqs=[
+            _make_lang_faq(faq, "pl"),
+            _make_lang_faq(translated_faq, "en")
+        ]
     )
 
 if __name__ == "__main__":

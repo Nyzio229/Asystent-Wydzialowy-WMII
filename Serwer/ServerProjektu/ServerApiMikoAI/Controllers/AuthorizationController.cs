@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ServerApiMikoAI.Models;
 using Microsoft.EntityFrameworkCore;
 using ServerApiMikoAI.Models.Context;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ServerApiMikoAI.Controllers
 {
@@ -21,11 +23,11 @@ namespace ServerApiMikoAI.Controllers
             }
 
             // Oblicz hash dla otrzymanego klucza API
-            string hashedApiKey = CalculateHash(request.api_key);
+            string encryptedApiKey = EncryptApiKey(request.api_key);
             string apiKey = request.api_key;
 
             // Sprawdź, czy istnieje pasujący wpis w bazie danych
-            var apiAccess = await _context.api_access.Where(aa => aa.device_id == request.device_id && aa.api_key == apiKey).FirstOrDefaultAsync();
+            var apiAccess = await _context.api_access.Where(aa => aa.device_id == request.device_id && aa.api_key == encryptedApiKey).FirstOrDefaultAsync();
 
             if (apiAccess == null) {
                 return Unauthorized("Invalid DeviceId or ApiKey.");
@@ -33,12 +35,17 @@ namespace ServerApiMikoAI.Controllers
 
             return Ok("Device authenticated successfully.");
         }
-        private string CalculateHash(string apiKey) {
-            // Tutaj możesz użyć dowolnego algorytmu haszowania, np. SHA256
-            // Poniżej znajduje się przykładowa implementacja z użyciem SHA256
-            using (var sha256 = System.Security.Cryptography.SHA256.Create()) {
-                byte[] hashBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(apiKey));
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        
+        // Metoda do szyfrowania klucza API
+        private string EncryptApiKey(string apiKey) {
+            using (Aes aesAlg = Aes.Create()) {
+                byte[] key = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Klucz szyfrowania (musi być taki sam jak używany do szyfrowania w VerificationController)
+                byte[] iv = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Wektor inicjalizacyjny (musi być taki sam jak używany do szyfrowania w VerificationController)
+
+                using (ICryptoTransform encryptor = aesAlg.CreateEncryptor(key, iv)) {
+                    byte[] encryptedBytes = encryptor.TransformFinalBlock(Encoding.UTF8.GetBytes(apiKey), 0, apiKey.Length);
+                    return Convert.ToBase64String(encryptedBytes);
+                }
             }
         }
     }

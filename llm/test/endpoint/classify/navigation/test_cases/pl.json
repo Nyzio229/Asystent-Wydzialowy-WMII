@@ -1,0 +1,156 @@
+[
+    {
+        "text": "Jak się mogę dostać do windy na pierwszym piętrze? Obecnie znajduję się w auli.",
+        "metadata": {
+            "source": "Aula",
+            "destination": "Winda (I piętro)"
+        }
+    },
+    {
+        "text": "Chcę się dostać do L3!",
+        "metadata": {
+            "source": null,
+            "destination": "L3"
+        }
+    },
+    {
+        "text": "Jestem w WC w piwnicy. Jak się stąd dostać do lesku?",
+        "metadata": {
+            "source": "WC piwnica",
+            "destination": "lesk"
+        }
+    },
+    {
+        "text": "Czy możesz wskazać mi kierunek do L11?",
+        "metadata": {
+            "source": null,
+            "destination": "L11"
+        }
+    },
+    {
+        "text": "Jak mogę dotrzeć do windy na pierwszym piętrze, aby odwiedzić moje koleżanki w Auli?",
+        "metadata": {
+            "source": null,
+            "destination": "Winda (I piętro)"
+        }
+    },
+    {
+        "text": "Chcę dojść z C114 do ...",
+        "metadata": {
+            "source": "C114",
+            "destination": null
+        }
+    },
+    {
+        "text": "Czy mógłbyś mnie poprowadzić do L3? Mam bardzo ważne spotkanie!",
+        "metadata": {
+            "source": null,
+            "destination": "L3"
+        }
+    },
+    {
+        "text": "Znajduję się w klasie L1, a muszę dotrzeć do lesku. Możesz mi pomóc?",
+        "metadata": {
+            "source": "L1",
+            "destination": "lesk"
+        }
+    },
+    {
+        "text": "Bardzo chciałbym dojść do pokoju D114. Czy to możliwe?",
+        "metadata": {
+            "source": null,
+            "destination": "D114"
+        }
+    },
+    {
+        "text": "Czy jest jakaś możliwość dostania się do sali konferencyjnej na drugim piętrze? Potrzebuję przeprowadzić prezentację.",
+        "metadata": {
+            "source": null,
+            "destination": "sala konferencyjna"
+        }
+    },
+    {
+        "text": "Gdzie znajduje się wejście? Potrzebuję jak najszybciej wyjść na zewnątrz.",
+        "metadata": {
+            "source": null,
+            "destination": "wejście"
+        }
+    },
+    {
+        "text": "Mam spotkanie w sali spotkań. Czy możesz mi powiedzieć, jak tam dotrzeć?",
+        "metadata": {
+            "source": null,
+            "destination": "sala spotkań"
+        }
+    },
+    {
+        "text": "Witam! Jestem tu na uczelni pierwszy raz. Możesz mi powiedzieć, gdzie znajduje się Klub studencki?",
+        "metadata": {
+            "source": null,
+            "destination": "Klub studencki"
+        }
+    },
+    {
+        "text": "Szukam portierni, bo zgubiłem swoją kartę dostępu. Czy wiesz, gdzie to jest?",
+        "metadata": {
+            "source": null,
+            "destination": "portiernia"
+        }
+    },
+    {
+        "text": "Czy jest możliwość dojścia do galerii? Chcę obejrzeć nową wystawę sztuki.",
+        "metadata": {
+            "source": null,
+            "destination": "galeria"
+        }
+    },
+    {
+        "text": "Jestem koło wejścia. Gdzie jest winda na parterze?",
+        "metadata": {
+          "source": "wejście",
+          "destination": "winda (parter)"
+        }
+    },
+    {
+        "text": "Chcę dojść gdzieś daleko. Znajduję się przy schodach przy sali PM1",
+        "metadata": {
+            "source": "schody koło PM1",
+            "destination": null
+        }
+    },
+    {
+        "text": "Gdzie są schody koło s9?",
+        "metadata": {
+            "source": null,
+            "destination": "schody obok s9"
+        }
+    },
+    {
+        "text": "Chcę się dostać do portierni.",
+        "metadata": {
+            "source": null,
+            "destination": "portiernia"
+        }
+    },
+    {
+        "text": "Jestem koło s3. Gdzie jest s9?",
+        "metadata": {
+            "source": "s3",
+            "destination": "s9"
+        }
+    },
+    {
+        "text": "Gdzie jest bar?",
+        "metadata": {
+            "source": null,
+            "destination": "bar"
+        }
+    },
+    {
+        "text": "Jak się dostać z E310?",
+        "metadata": {
+            "source": "E310",
+            "destination": null
+        }
+    }
+]

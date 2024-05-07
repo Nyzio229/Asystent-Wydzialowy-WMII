@@ -4,8 +4,8 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from common import common
 from config import config
+from common import common, log_endpoint_call
 
 class FAQLikeRequest(BaseModel):
     text: str
@@ -30,5 +30,7 @@ async def faq_like(
 
     faq_ids = [x.metadata["_id"] for x in result]
     result = FAQLikeResult(faq_ids=faq_ids)
+
+    log_endpoint_call("faq_like", request, result)
 
     return result

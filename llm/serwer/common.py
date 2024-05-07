@@ -1,3 +1,11 @@
+import json
+
+import logging
+
+from typing import Optional
+
+import spacy
+
 from llama_cpp import Llama
 
 from pydantic import BaseModel
@@ -12,17 +20,32 @@ from langchain_core.retrievers import RetrieverOutputLike
 from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
+from langchain_community.docstore.document import Document
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain_community.docstore.document import Document as LangchainDocument
 
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 
 from config import config
 
-# @TODO: rename Common
+class LLMInferenceParams(BaseModel):
+    temperature: float
+    top_p: float
+    top_k: int
+    min_p: float
+    typical_p: float
+    presence_penalty: float
+    frequency_penalty: float
+    repeat_penalty: float
+    tfs_z: float
+    mirostat_mode: int
+    mirostat_tau: float
+    mirostat_eta: float
+    max_tokens: Optional[int] = None
+
 class Common:
     llm: Llama
+    nlp: spacy.language.Language
     embedder: HuggingFaceEmbeddings
     faq_vector_store: dict[str, VectorStore]
     rag_vector_store: VectorStore
@@ -30,10 +53,27 @@ class Common:
     rag_retriever: VectorStoreRetriever
     history_aware_retriever: RetrieverOutputLike
 
+    llm_inference_params = LLMInferenceParams(
+        temperature=0.2,
+        top_p=0.95,
+        top_k=40,
+        min_p=0.05,
+        typical_p=1,
+        presence_penalty=0,
+        frequency_penalty=0,
+        repeat_penalty=1.1,
+        tfs_z=1,
+        mirostat_mode=0,
+        mirostat_tau=5,
+        mirostat_eta=0.1,
+        max_tokens=None
+    )
+
 common: Common = Common()
 
-# @TODO: change initialization? i czy `common` jest za każdym importowaniem innym czy tym samym obiektem?
 def init_common(cmd_line_args):
+    common.nlp = spacy.load("en_core_web_md")
+
     common.llm = Llama(
         model_path=cmd_line_args.model,
         chat_format=cmd_line_args.chat_format,
@@ -104,15 +144,22 @@ def init_common(cmd_line_args):
         messages = _langchain_chat_prompt_to_llama_messages(prompt)
         messages = [f'{message["role"]}: {message["content"]}'
                     for message in messages]
-        prompt = "\n".join(messages)
 
+        prompt = "\n".join(messages)
         prompt = f"{system_prompt}\n\n{prompt}\n\nReformulated question:"
-        response = common.llm(prompt)
+
+        response = common.llm(
+            prompt,
+            **common.llm_inference_params.model_dump()
+        )
+
         response = response["choices"][0]["text"]
 
-        print("[History aware retriever]")
-        print(" * prompt:", prompt)
-        print(" * response:", response)
+        logger = logging.getLogger("mikolAI")
+        logger.setLevel(logging.DEBUG)
+        logger.debug("[History aware retriever]")
+        logger.debug(" * prompt: %s", prompt)
+        logger.debug(" * response: %s", response)
 
         return response
 
@@ -125,32 +172,50 @@ def init_common(cmd_line_args):
 def chat_completion(
     llm: Llama,
     messages: list[dict[str, str]],
-    **kwargs
+    llm_inference_params: LLMInferenceParams
 ) -> str:
-    response = llm.create_chat_completion(messages, **kwargs)
+    response = llm.create_chat_completion(
+        messages,
+        **llm_inference_params.model_dump()
+    )
+
     response = response["choices"][0]["message"]["content"]
 
-    print("[Chat completion]")
-    print(" * messages:", messages)
-    print(" * response:", response)
+    logger = logging.getLogger("mikolAI")
+    logger.setLevel(logging.DEBUG)
+    logger.debug("[Chat completion]")
+    logger.debug(
+        " * messages: %s",
+        json.dumps([
+            message.copy() | dict(
+                content=list(filter(
+                    lambda x: x,
+                    message["content"].splitlines()
+                ))
+            )
+            for message in messages
+        ], ensure_ascii=False, indent=3)
+    )
+    logger.debug(" * response: %s", response)
 
     return response
 
-def _langchain_chat_prompt_to_llama_messages(
-    prompt: ChatPromptValue
-) -> list[dict[str, str]]:
+def _convert_langchain_message_role_to_llama(role: str) -> str:
     # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     _message_role_mapping = dict(
         ai="assistant",
         human="user"
     )
 
-    def _convert_message_role(role: str) -> str:
-        return _message_role_mapping.get(role, role)
+    return _message_role_mapping.get(role, role)
 
+def _langchain_chat_prompt_to_llama_messages(
+    prompt: ChatPromptValue
+) -> list[dict[str, str]]:
+    # mapping from langchain to llama2 role (without it the LLM doesn't work properly)
     messages = [
         dict(
-            role=_convert_message_role(message.type),
+            role=_convert_langchain_message_role_to_llama(message.type),
             content=message.content
         )
         for message in prompt.messages
@@ -158,37 +223,93 @@ def _langchain_chat_prompt_to_llama_messages(
 
     return messages
 
-def langchain_chat_completion(
+class Message(BaseModel):
+    role: str
+    content: str
+
+SYSTEM_MESSAGE = (
+    "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students "
+    "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. "
+    "Your main task is responding to students' questions regarding their studies, but you can also engage "
+    "in a friendly informal chat. Always answer as helpfully as possible, while being safe. "
+    "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, "
+    "or illegal content. If a question does not make any sense, or is not factually coherent, "
+    "explain why instead of answering something not correct. "
+    "Please ensure that your responses are socially unbiased and positive in nature. "
+    "If you don't know the answer to a question, please don't share false information."
+)
+
+def chat_with_default_system_message(
     llm: Llama,
-    prompt: ChatPromptValue,
-    **kwargs
+    messages: list[Message],
+    llm_inference_params: LLMInferenceParams
 ) -> str:
-    messages = _langchain_chat_prompt_to_llama_messages(prompt)
-    response = chat_completion(llm, messages, **kwargs)
+    def _message_mapping(message: Message) -> dict[str, str]:
+        role = _convert_langchain_message_role_to_llama(message.role)
+
+        return dict(
+            role=role,
+            content=message.content
+        )
+
+    system_message = Message(
+        role="system",
+        content=SYSTEM_MESSAGE
+    )
+
+    messages = [system_message] + messages
+    messages = list(map(_message_mapping, messages))
+
+    response = chat_completion(
+        llm,
+        messages,
+        llm_inference_params
+    )
 
     return response
 
-class Document(BaseModel):
-    text: str
-    metadata: dict[str, int | str]
+def langchain_chat_completion(
+    llm: Llama,
+    prompt: ChatPromptValue,
+    llm_inference_params: LLMInferenceParams
+) -> str:
+    messages = _langchain_chat_prompt_to_llama_messages(prompt)
+    response = chat_completion(llm, messages, llm_inference_params)
+
+    return response
 
 def upload_docs(
     vector_store: VectorStore,
-    docs: list[Document]
-) -> None:
+    docs: list[Document],
+    ids: Optional[list[str]] = None
+) -> list[str]:
     docs_upload_config = config.api.docs_upload
     text_splitter = CharacterTextSplitter(
         separator=docs_upload_config.separator,
         chunk_size=docs_upload_config.chunk_size
     )
 
-    docs = [
-        LangchainDocument(
-            page_content=doc.text,
-            metadata=doc.metadata
-        )
-        for doc in docs
-    ]
-
     docs = text_splitter.split_documents(docs)
-    vector_store.add_documents(docs)
+    ids = vector_store.add_documents(docs, ids=ids)
+
+    return ids
+
+def log_endpoint_call(
+    endpoint: str,
+    request: BaseModel,
+    result: BaseModel
+) -> None:
+    logger = logging.getLogger("mikolAI")
+    logger.setLevel(logging.DEBUG)
+
+    logger.debug("[endpoint '/%s']", endpoint)
+
+    def _log_model(name: str, model: BaseModel) -> str:
+        logger.debug(
+            "-> %s:\n%s",
+            name,
+            model.model_dump_json(indent=3)
+        )
+
+    _log_model("request", request)
+    _log_model("result", result)

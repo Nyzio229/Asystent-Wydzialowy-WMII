@@ -4,8 +4,8 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from common import common
 from config import config
+from common import common, log_endpoint_call
 
 class FAQRequest(BaseModel):
     faq_ids: list[str]
@@ -26,14 +26,32 @@ async def faq(
 ) -> FAQResult:
     collection_name = config.vector_store.faq_collection_name[request.lang]
 
+    faq_ids = request.faq_ids
+
     result = common.vector_store_client.retrieve(
         collection_name=collection_name,
-        ids=request.faq_ids
+        ids=faq_ids
     )
 
+    docs: list[
+        dict[str, str | dict[str, str]]
+    ] = []
+
+    for faq_id in faq_ids:
+        try:
+            doc = next(record.payload
+                       for record in result
+                       if record.id == faq_id)
+        except StopIteration:
+            continue
+
+        docs.append(doc)
+
     result = FAQResult(faq=[FaqEntry(
-        question=doc.text,
-        answer=doc.metadata["answer"]
-    ) for doc in result])
+        question=doc["page_content"],
+        answer=doc["metadata"]["answer"]
+    ) for doc in docs])
+
+    log_endpoint_call("faq", request, result)
 
     return result
