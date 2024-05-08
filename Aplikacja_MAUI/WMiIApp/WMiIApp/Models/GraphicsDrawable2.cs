@@ -17,21 +17,21 @@ namespace WMiIApp.Models
             canvas.StrokeColor = Colors.Chocolate;
             canvas.StrokeSize = 3;
 
-            // Tworzymy listę par (x, y) dla punktów na ścieżce
+            // Tworzymy liste par (x, y) dla punktow na ścieżce
             var points = new List<Tuple<float, float>>();
 
-            // Przechodzimy po każdym pokoju w ścieżce
+            // Przechodzimy po kazdym pokoju w sciezce
             foreach (var room in (App.pathFinder.Path))
             {
-                // Sprawdzamy, czy pokój należy do poziomu 2
+                // Sprawdzamy, czy pokoj należy do poziomu 2
                 if (room.Floor == 2)
                 {
-                    // Dodajemy parę (x, y) do listy punktów
+                    // Dodajemy pare (x, y) do listy punktow
                     points.Add(new Tuple<float, float>((float)room.PositionX, (float)room.PositionY));
                 }
             }
 
-            // Rysujemy linie łączące punkty na ścieżce
+            // Rysujemy linie laczace punkty na sciezce
             for (int i = 0; i < points.Count - 1; i++)
             {
                 var startPoint = points[i];
