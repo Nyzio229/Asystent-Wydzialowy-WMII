@@ -66,7 +66,8 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" />
+                <Button Text="Wyczyść trasę" Clicked="OnClearRouteClicked" Margin="5"/>
+                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" Margin="5"/>
             </StackLayout>
         </Grid>
 

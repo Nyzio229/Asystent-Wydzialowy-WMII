@@ -66,7 +66,9 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" />
+                <Button Text="Wyczyść trasę" Clicked="OnClearRouteClicked" Margin="5"/>
+                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" Margin="5"/>
+                
             </StackLayout>
         </Grid>
         <local:PinchToZoomContainer>
@@ -923,7 +925,7 @@
                  Opacity="0.5"
                  BackgroundColor="Transparent"
                  TextColor="Transparent"
-                 AbsoluteLayout.LayoutBounds="252,264,18,24"
+                 AbsoluteLayout.LayoutBounds="252,264,18,25"
                  AbsoluteLayout.LayoutFlags="None"
                  Clicked="HandleRoomButtonClick"
                  FontSize="8"/>
