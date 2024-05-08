@@ -8,10 +8,10 @@ class FaqEntry(BaseModel):
     answer: str
     question: str
 
-def fetch_faq() -> tuple[
-    list[dict[str]],
-    list[dict[str]]
-]:
+def fetch_faq(
+    with_pl: bool,
+    serialize: bool
+):
     print("Czytanie FAQ...")
 
     faq_dir = Path("faq")
@@ -55,18 +55,22 @@ def fetch_faq() -> tuple[
 
         return translated_faq
 
-    faq, translated_faq = get_cached_translation(
+    faq = get_cached_translation(
         pl_path=faq_dir / "pl.json",
         cache_path=faq_dir / "translated.json",
         translator=_translate_faq,
         model_type=FaqEntry,
-        serialize=True
+        with_pl=with_pl,
+        serialize=serialize
     )
 
-    return faq, translated_faq
+    return faq
 
 def main() -> None:
-    faq, translated_faq = fetch_faq()
+    faq, translated_faq = fetch_faq(
+        with_pl=True,
+        serialize=True
+    )
 
     def _make_lang_faq(
         faq: list[dict[str]],

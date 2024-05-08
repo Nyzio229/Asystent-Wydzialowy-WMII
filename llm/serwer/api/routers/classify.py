@@ -14,7 +14,7 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel, Field
 
-from llama_cpp import LogitsProcessorList
+from llama_cpp import LlamaGrammar, LogitsProcessorList
 
 from lmformatenforcer import CharacterLevelParser, JsonSchemaParser
 from lmformatenforcer.integrations.llamacpp import (
@@ -29,34 +29,46 @@ from common import (
     Message
 )
 
-class ClassificationRequest(BaseModel):
-    text: str
-
 _NAVIGATION_DESCRIPTION_WHEN_SPECIFIED = (
     "When specified, it is assumed to be a place on a university campus. "
-    "It can be a coded room name (the code is: a letter followed by a few digits); "
-    "it doesn't have to be a valid name of an existing room/place."
+    "If it is a letter followed by a few digits (example: B202) then consider it "
+    "a correctly coded room name; "
+    "it doesn't have to be a valid name of an existing room/place. "
+    "The place may also consist of a few words, like 'toilet near <a room>', "
+    "or 'stairs next to <a room>'"
 )
 
-def _get_navigation_point_description(preposition: str, point: str) -> str:
+def _get_navigation_point_description(
+    description: str,
+    preposition: str,
+    point: str
+) -> str:
     return (
-        f"{point.capitalize()} point for navigation. "
+        f"{point.capitalize()} point for navigation. " +
+        f"{description}\n"
         "The navigation query may be incomplete, so "
-        f"leave this field blank if the {point.lower()} point for navigation "
+        f"leave this field blank if the {point} point for navigation "
         "isn't explicitly specified within the query. "
         f"{_NAVIGATION_DESCRIPTION_WHEN_SPECIFIED} "
-        f"It's IMPORTANT that the {point.lower()} point must come right after "
-        f"the following preposition: '{preposition.lower()}'"
+        f"The {point} point usually comes right after "
+        f"the following preposition: '{preposition}'"
     )
 
 class CategoryNavigationMetadataSource(BaseModel):
     source: Optional[str] = Field(
-        description=_get_navigation_point_description("from", "starting")
+        description=_get_navigation_point_description(
+            "The starting point is the location that the user wants to go from, "
+            "where he is currently located or where he is starting from.",
+            "from", "starting"
+        )
     )
 
 class CategoryNavigationMetadataDestination(BaseModel):
     destination: Optional[str] = Field(
-        description=_get_navigation_point_description("to", "destination")
+        description=_get_navigation_point_description(
+            "The destination point is the location that the user wants to go to.",
+            "to", "destination"
+        )
     )
 
 class Place(BaseModel):
@@ -238,27 +250,9 @@ def _get_places() -> list[Place]:
 
     return _places
 
-class ClassificationIfNavigation(BaseModel):
-    is_navigation: bool = Field(
-        description=(
-            "Whether the user's query is a navigation query. "
-            "A navigation query is a question which asks "
-            "how to get from/to a certain place/location within a university campus. "
-            "It can also be phrased in various ways, like asking for directions. "
-            "The source/destination of navigation can be a coded room name (such as A5); "
-            "it doesn't have to be a valid name of an existing room/place. "
-            "A navigation query may consist of multiple sentences/questions.\n"
-            "It's also possible that the user provides additional, irrelevant information or context;"
-            "in such case, consider his query as a navigation query if ANY of his questions/sentences "
-            "regard in some way: navigating/wanting to get somewhere/looking for directions/"
-            "asking how the user the can get somewhere/reaching a certain place or location/"
-            "asking if there's a way to get somewhere/where a place/room is located/"
-            "asking to tell the user how to get somewhere/"
-            "asking if it's possible to get to a place.\n"
-            "In short, a navigation query is most of the times a text "
-            "that contains any mention of a location/place."
-        )
-    )
+_GRAMMAR_TRUE_FALSE = LlamaGrammar.from_string(
+    '''root ::= "true" | "false"'''
+)
 
 class CategoryNavigationMetadata(BaseModel):
     source: Optional[str] = None
@@ -275,6 +269,9 @@ class CategoryNavigationRephraseQuery(BaseModel):
             _NAVIGATION_DESCRIPTION_WHEN_SPECIFIED
         )
     )
+
+class ClassificationRequest(BaseModel):
+    text: str
 
 class ClassificationResult(BaseModel):
     label: Literal["navigation", "chat"]
@@ -344,10 +341,11 @@ async def classify(
 
         return response
 
-    def _invoke_llm_for_task_2(
+    def _chat_with_llm_for_task(
         query: str,
         task: str,
-        suffix: Optional[str] = None
+        suffix: Optional[str] = None,
+        grammar: Optional[LlamaGrammar] = None
     ) -> str:
         if suffix:
             suffix = f"\n\n{suffix}"
@@ -373,7 +371,8 @@ async def classify(
         response = chat_with_default_system_message(
             common.llm,
             [prompt_message],
-            llm_inference_params
+            llm_inference_params,
+            grammar
         )
 
         response = response.lower()
@@ -410,17 +409,7 @@ async def classify(
 
     request_text = request.text
 
-    """
-    result_if_navigation = _invoke_llm_for_task(
-        request_text,
-        "categorize",
-        ClassificationIfNavigation
-    )
-
-    label = "navigation" if result_if_navigation.is_navigation else "chat"
-    """
-
-    is_navigation = _invoke_llm_for_task_2(
+    is_navigation = _chat_with_llm_for_task(
         request_text,
         "Please decide whether the user's query (given at the end) is a navigation query. "
         "A navigation query is a question which asks "
@@ -431,15 +420,17 @@ async def classify(
         "A navigation query may consist of multiple sentences/questions.\n"
         "It's also possible that the user provides additional, irrelevant information or context;"
         "in such case, consider his query as a navigation query if ANY of his questions/sentences "
-        "regard in some way: navigating/wanting to get somewhere/looking for directions/"
+        "regard in some way: navigating/wanting or needing to get to, in or into somewhere/looking for directions/"
         "asking how the user the can get somewhere/reaching a certain place or location/"
         "asking if there's a way to get somewhere/where a place/room is located/"
         "asking to tell the user how to get somewhere/"
-        "asking if it's possible to get to a place.\n"
+        "asking if it's possible to get to a place. "
+        "Keep in mind that many room/place names are coded, like B302 or L5 (a letter and a few digits).\n"
         "In short, a navigation query is most of the times a text "
         "that contains any mention of a location/place.\n",
-        "If you think the query is a navigation query then answer with 'yes', otherwise with 'no'."
-    ) == "yes"
+        "If you think the query is a navigation query then answer with 'true', otherwise with 'false'.",
+        _GRAMMAR_TRUE_FALSE
+    ) == "true"
 
     label = "navigation" if is_navigation else "chat"
 
@@ -456,13 +447,15 @@ async def classify(
                     adps_texts.append(token.text.lower())
 
             def _log_no_preposition_in_query_skip_point_extraction(
-                preposition: str,
-                point: str
+                preposition: str | tuple[str, ...],
+                point: str,
+                additional_check: Optional[str] = None
             ) -> None:
                 logger.debug(
-                    "Navigation query doesn't contain the '%s' word (POS: preposition/ADP), "
+                    "Navigation query doesn't contain the '%s' word (POS: preposition/ADP)%s, "
                     "so skipping '%s' point extraction.",
                     preposition,
+                    f" (in addition: {additional_check})" if additional_check else "",
                     point
                 )
 
@@ -474,17 +467,46 @@ async def classify(
 
             source = result_source.source
 
+            if source and "from" in source:
+                source = source.replace("from", "")
+
+            has_from_adp = "from" in adps_texts
+
             if (
-                "from" not in adps_texts and source and
+                not has_from_adp and source and
                 _format_place_name(source) not in _format_place_name(navigation_query)
             ):
-                source = None
+                if has_from_adp:
+                    if source:
+                        additional_check = (
+                            f"'source' value ('{_format_place_name(source)}') "
+                             "wasn't found in the query"
+                        )
+                    else:
+                        additional_check = "'source' value is `None`"
+                else:
+                    additional_check = None
 
                 _log_no_preposition_in_query_skip_point_extraction(
-                    "from", "source"
+                    "from", "source", additional_check
                 )
 
-            if "to" in adps_texts:
+                source = None
+
+            words_to = ("where", "there")
+            prepositions_to = ("to", "into")
+
+            if (
+                any(
+                    word in navigation_query.lower()
+                    for word in words_to
+                )
+                or
+                any(
+                    preposition in adps_texts
+                    for preposition in prepositions_to
+                )
+            ):
                 result_destination = _invoke_llm_for_task(
                     navigation_query,
                     "extract information from",
@@ -496,7 +518,7 @@ async def classify(
                 destination = None
 
                 _log_no_preposition_in_query_skip_point_extraction(
-                    "to", "destination"
+                    prepositions_to, "destination", f"it doesn't contain any of the words: {words_to}"
                 )
 
             metadata_str = dict(
@@ -510,6 +532,8 @@ async def classify(
 
             for key, value in metadata_str.items():
                 if not value:
+                    metadata_places[key] = None
+
                     continue
 
                 name = _format_place_name(value)
@@ -573,7 +597,7 @@ async def classify(
                     )
                 else:
                     logger.debug(
-                        "metadata['%s']: no such place '%s'. Setting to None",
+                        "metadata['%s']: no such place '%s'. Setting to `None`",
                         key, name
                     )
 
@@ -598,7 +622,7 @@ async def classify(
         def _set_metadata(navigation_query: str):
             nonlocal metadata
             metadata = _get_navigation_metadata(navigation_query)
-            
+
         def _check_metadata() -> bool:
             if metadata:
                 return True

@@ -74,17 +74,13 @@ class TestModuleDescriptor(BaseModel):
 def get_test_module_descriptors(
     dir_paths: list[Path]
 ) -> list[TestModuleDescriptor]:
-    dir_paths = dir_paths.copy()
-
-    for dir_path in dir_paths:
-        for other in dir_paths:
-            if dir_path == other:
-                continue
-
-            if dir_path == other.parent:
-                dir_paths.remove(dir_path)
-
-                break
+    dir_paths = list(filter(
+        lambda dir_path: not any(
+            other
+            for other in dir_paths
+            if dir_path == other.parent
+        ), dir_paths
+    ))
 
     test_module_descriptors: list[TestModuleDescriptor] = []
 
@@ -143,7 +139,8 @@ def run_tests(
             test_module_descriptors
         ))
 
-    print(f"Found {len(test_module_descriptors)} test(s):")
+    n_tests = len(test_module_descriptors)
+    print(f"Found {n_tests} test{'' if n_tests == 1 else 's'}:")
 
     for descriptor in test_module_descriptors:
         print(f"   * {descriptor.module_name}.py ('{descriptor.dir_path}')")
@@ -155,6 +152,7 @@ def run_tests(
     for descriptor in test_module_descriptors:
         test_class = descriptor.get_test_class()
 
+        # change cwd in order to see the "test_cases" dir
         os.chdir(descriptor.dir_path)
 
         run_test(test_class)
@@ -162,7 +160,7 @@ def run_tests(
         os.chdir(base_cwd)
 
 def main() -> None:
-    run_tests(lambda path: "navigation" in path.parts)
+    run_tests()#lambda path: "navigation" in path.parts)
 
 if __name__ == "__main__":
     main()

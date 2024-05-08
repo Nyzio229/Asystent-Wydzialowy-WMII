@@ -6,14 +6,14 @@ from typing import Optional
 
 import spacy
 
-from llama_cpp import Llama
-
 from pydantic import BaseModel
+
+from llama_cpp import Llama, LlamaGrammar
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
 
-from langchain_text_splitters import CharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.retrievers import RetrieverOutputLike
@@ -126,7 +126,11 @@ def init_common(cmd_line_args):
         vector_store_config.rag_collection_name
     )
 
-    common.rag_retriever = common.rag_vector_store.as_retriever()
+    common.rag_retriever = common.rag_vector_store.as_retriever(
+        search_kwargs=dict(
+            k=8
+        )
+    )
 
     prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder("chat_history"),
@@ -138,7 +142,8 @@ def init_common(cmd_line_args):
             "Given a chat history and the latest user question " +
             "which might reference context in the chat history, formulate a standalone question " +
             "which can be FULLY understood without the chat history. Do NOT answer the question, " +
-            "just reformulate it if needed and otherwise return it as is (you act like the user asking the question):"
+            "just reformulate it if needed and otherwise return it as is "
+            "(you act like the user asking the question):"
         )
 
         messages = _langchain_chat_prompt_to_llama_messages(prompt)
@@ -172,10 +177,12 @@ def init_common(cmd_line_args):
 def chat_completion(
     llm: Llama,
     messages: list[dict[str, str]],
-    llm_inference_params: LLMInferenceParams
+    llm_inference_params: LLMInferenceParams,
+    grammar: Optional[LlamaGrammar] = None
 ) -> str:
     response = llm.create_chat_completion(
         messages,
+        grammar=grammar,
         **llm_inference_params.model_dump()
     )
 
@@ -236,13 +243,16 @@ SYSTEM_MESSAGE = (
     "or illegal content. If a question does not make any sense, or is not factually coherent, "
     "explain why instead of answering something not correct. "
     "Please ensure that your responses are socially unbiased and positive in nature. "
-    "If you don't know the answer to a question, please don't share false information."
+    "If you don't know the answer to a question, please don't share false information.\n"
+    "Please try to keep your answers as concise and short as possible, unless you are "
+    "specifically asked for a detailed answer."
 )
 
 def chat_with_default_system_message(
     llm: Llama,
     messages: list[Message],
-    llm_inference_params: LLMInferenceParams
+    llm_inference_params: LLMInferenceParams,
+    grammar: Optional[LlamaGrammar] = None
 ) -> str:
     def _message_mapping(message: Message) -> dict[str, str]:
         role = _convert_langchain_message_role_to_llama(message.role)
@@ -263,7 +273,8 @@ def chat_with_default_system_message(
     response = chat_completion(
         llm,
         messages,
-        llm_inference_params
+        llm_inference_params,
+        grammar
     )
 
     return response
@@ -283,10 +294,9 @@ def upload_docs(
     docs: list[Document],
     ids: Optional[list[str]] = None
 ) -> list[str]:
-    docs_upload_config = config.api.docs_upload
-    text_splitter = CharacterTextSplitter(
-        separator=docs_upload_config.separator,
-        chunk_size=docs_upload_config.chunk_size
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1024,
+        chunk_overlap=100
     )
 
     docs = text_splitter.split_documents(docs)

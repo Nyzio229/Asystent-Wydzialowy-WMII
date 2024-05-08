@@ -1,29 +1,26 @@
-import unittest
-
 from typing import Literal, Type, TypeVar, Optional
 
 from pydantic import BaseModel
 
-from endpoint_tester import EndpointTester
+from test_endpoint import TestEndpoint
 
 class MinimalClassifyTestCase(BaseModel):
     text: str
 
 T = TypeVar("T", bound=MinimalClassifyTestCase)
 
-class TestEndpointClassify(EndpointTester, unittest.TestCase):
+class TestEndpointClassify(TestEndpoint):
     def __init__(
         self,
-        method_name: str,
         label: Literal["chat", "navigation"],
-        test_case_type: Type[T]
+        test_case_type: Type[T],
+        *args, **kwargs
     ) -> None:
-        unittest.TestCase.__init__(self, method_name)
-
         self._label = label
 
-        EndpointTester.__init__(
-            self, "classify", test_case_type
+        super().__init__(
+            "classify", test_case_type, None,
+            *args, **kwargs
         )
 
     def _assert_api_response(

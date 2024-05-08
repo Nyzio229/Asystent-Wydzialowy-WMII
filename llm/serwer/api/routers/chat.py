@@ -29,12 +29,14 @@ def _rag(
     messages: list[Message],
     llm_inference_params: LLMInferenceParams
 ) -> str:
-    doc_sep = f"\n{'-'*15}\nDocument with additional context:\n\n"
+    doc_sep = f"\n{'-'*15}\nInformation with additional context:\n\n"
 
     system_message = (
         f"{SYSTEM_MESSAGE}\n\n"
-        "Here are documents that contain reliable facts that may help you "
-        "provide a better (and factually correct) answer:"
+        "Here is information fetched from the faculty websites that contains "
+        "reliable facts that may help you provide a better (and factually correct) answer "
+        "(if some information is missing then let the user know that you don't know the answer or "
+        "don't have access to the specific data):"
         f"{doc_sep}{{context}}"
     )
 

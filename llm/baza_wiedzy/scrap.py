@@ -254,6 +254,8 @@ def soup_for(url: str) -> bs4.BeautifulSoup:
         timeout=30
     )
 
+    response.raise_for_status()
+
     soup = bs4.BeautifulSoup(response.content, "html.parser")
 
     return soup
