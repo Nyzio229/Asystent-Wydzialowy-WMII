@@ -8,11 +8,15 @@ namespace WMiIApp
 
         public static PathFinder pathFinder = new PathFinder();
 
+        public static string sourceRoom = "";
+
+        public static string destinationRoom = "";
+
         //Piwnica
         Room klubStudencki = new Room("klubStudencki", "Klub Studencki/A015 (Piwnica)", 94, 150, -1);
         Room wcPiwnica = new Room("wcPiwnica", "WC Piwnica/A013/A014 (Piwnica)", 105, 150, -1);
         Room bar = new Room("bar", "Bar/A002 (Piwnica)", 135, 150, -1);
-        Room schodyParterPiwnica = new Room("schody_parter_piwnica", "Schody do piwnicy (Piwnica)", 170, 149, -1);
+        Room schodyParterPiwnica = new Room("schody_parter_piwnica", "Schody do Piwnicy (Piwnica)", 170, 149, -1);
         Room schodyParterPiwnicaLesk = new Room("schody_parter_kolo_wejscia", "Schody Piwnica/Parter/I piętro (Piwnica)", 215, 184, -1);
         Room lesk = new Room("lesk", "LESK (Piwnica)", 190, 184, -1);
 
@@ -40,7 +44,7 @@ namespace WMiIApp
         Room schody3 = new Room("schody3", "Schody Koło Biblioteki (Parter)", 241, 74, 0);
         Room biblioteka = new Room("biblioteka", "Biblioteka/C114 (Parter)", 205, 98, 0);
         Room patio2 = new Room("patio2", "Winda (Parter)", 207, 74, 0);
-        Room galeria = new Room("galeria", "Galeria (Parter)", 186, 139, 0);
+        Room galeria = new Room("galeria", "Galeria (Parter)", 187, 141, 0);
         Room patio = new Room("patio", "Patio Wejście Koło Szatni", 85, 144, 0);
         Room b124 = new Room("b124", "B124 (Parter)", 55, 134, 0);
         Room b123 = new Room("b123", "B123 (Parter)", 55, 114, 0);
@@ -171,9 +175,9 @@ namespace WMiIApp
         Room schodyKoloPM3 = new Room("schody_kolo_pm3", "Schody koło PM3 (II piętro)", 82, 74, 2);
         Room pm3 = new Room("pm3", "PM3/B313 (II piętro)", 54, 74, 2);
         Room ss3 = new Room("ss3", "SS3/B311 (II piętro)", 48, 74, 2);
-        Room f303 = new Room("f303", "F303 (I piętro/II piętro) Zejdź na dół schodami", 235, 245, 2);
-        Room f305 = new Room("f305", "F305 (I piętro/II piętro) Zejdź na dół schodami", 235, 245, 2);
-        Room f306 = new Room("f306", "F306 (I piętro/II piętro) Zejdź na dół schodami", 235, 245, 2);
+        Room f303 = new Room("f303", "Zejście schodami do F303 (I piętro/II piętro)", 235, 245, 2);
+        Room f305 = new Room("f305", "Zejście schodami do F305 (I piętro/II piętro)", 235, 245, 2);
+        Room f306 = new Room("f306", "Zejście schodami do F306 (I piętro/II piętro)", 235, 245, 2);
         Room f403 = new Room("f403", "F403 (II piętro)", 255, 260, 2);
         Room f405 = new Room("f405", "F405 (II piętro)", 235, 260, 2);
 
