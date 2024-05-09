@@ -58,7 +58,9 @@ def get_cached_translation(
         if not as_list:
             data = [data]
 
-        serialized = list(map(lambda entry: entry.model_dump(), data))
+        serialized = list(map(
+            lambda entry: entry.model_dump(), data
+        ))
 
         if not as_list:
             serialized = serialized[0]

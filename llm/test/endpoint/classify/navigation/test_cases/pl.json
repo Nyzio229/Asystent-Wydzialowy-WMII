@@ -208,5 +208,26 @@
             "source": "sala konferencyjna",
             "destination": "biblioteka"
         }
+    },
+    {
+        "text": "Jak się dostać z S9 do SS2?",
+        "metadata": {
+            "source": "s9",
+            "destination": "ss2"
+        }
+    },
+    {
+        "text": "Gdzie jest S9?",
+        "metadata": {
+            "source": null,
+            "destination": "s9"
+        }
+    },
+    {
+        "text": "Jak się dostać z toalety w piwnicy do sali spotkań?",
+        "metadata": {
+            "source": "WC piwnica",
+            "destination": "sala spotkań"
+        }
     }
 ]

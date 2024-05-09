@@ -106,7 +106,11 @@ def get_script_subdirs_paths() -> list[Path]:
     dir_paths = [Path(x[0]) for x in os.walk(".") if x[0] != "."]
 
     skipped_dirs = {"test_cases", "__pycache__"}
-    dir_paths = list(filter(lambda path: path.name not in skipped_dirs, dir_paths))
+
+    dir_paths = list(filter(
+        lambda path: path.name not in skipped_dirs,
+        dir_paths
+    ))
 
     return dir_paths
 
@@ -160,7 +164,9 @@ def run_tests(
         os.chdir(base_cwd)
 
 def main() -> None:
-    run_tests()#lambda path: "navigation" in path.parts)
+    run_tests(
+        lambda path: "navigation" in path.parts
+    )
 
 if __name__ == "__main__":
     main()

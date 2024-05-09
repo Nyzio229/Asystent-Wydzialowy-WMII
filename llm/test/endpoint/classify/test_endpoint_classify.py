@@ -55,16 +55,22 @@ class TestEndpointClassify(TestEndpoint):
         self,
         test_cases: list[T]
     ) -> list[T]:
-        translated = list(map(lambda test_case: test_case.model_copy(
-            update=dict(
-                text=self._translate(test_case.text)
-            )
-        ), test_cases))
+        translated = list(map(
+            lambda test_case: test_case.model_copy(
+                update=dict(
+                    text=self._translate(test_case.text)
+                )
+            ),
+            test_cases
+        ))
 
         return translated
 
     def _get_expected_responses(self) -> list[dict[str]]:
-        return list(map(lambda test_case: dict(
-            label=self._label,
-            metadata=getattr(test_case, "metadata", None)
-        ), self._test_cases))
+        return list(map(
+            lambda test_case: dict(
+                label=self._label,
+                metadata=getattr(test_case, "metadata", None)
+            ),
+            self._test_cases
+        ))

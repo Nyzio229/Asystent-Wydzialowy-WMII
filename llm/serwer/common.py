@@ -4,6 +4,8 @@ import logging
 
 from typing import Optional
 
+from datetime import datetime
+
 import spacy
 
 from pydantic import BaseModel
@@ -128,7 +130,7 @@ def init_common(cmd_line_args):
 
     common.rag_retriever = common.rag_vector_store.as_retriever(
         search_kwargs=dict(
-            k=8
+            k=10
         )
     )
 
@@ -234,7 +236,7 @@ class Message(BaseModel):
     role: str
     content: str
 
-SYSTEM_MESSAGE = (
+_SYSTEM_MESSAGE = (
     "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students "
     "at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. "
     "Your main task is responding to students' questions regarding their studies, but you can also engage "
@@ -248,10 +250,24 @@ SYSTEM_MESSAGE = (
     "specifically asked for a detailed answer."
 )
 
+def get_extended_system_message() -> str:
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_date = now.strftime("%A, %d %B %Y")
+
+    system_message = (
+        f"{_SYSTEM_MESSAGE}\n\n"
+        f"Today's date: {current_date}\n"
+        f"Current time: {current_time}"
+    )
+
+    return system_message
+
 def chat_with_default_system_message(
     llm: Llama,
     messages: list[Message],
     llm_inference_params: LLMInferenceParams,
+    extend_system_message: bool = False,
     grammar: Optional[LlamaGrammar] = None
 ) -> str:
     def _message_mapping(message: Message) -> dict[str, str]:
@@ -262,9 +278,14 @@ def chat_with_default_system_message(
             content=message.content
         )
 
+    system_message = (
+        get_extended_system_message()
+        if extend_system_message else _SYSTEM_MESSAGE
+    )
+
     system_message = Message(
         role="system",
-        content=SYSTEM_MESSAGE
+        content=system_message
     )
 
     messages = [system_message] + messages
