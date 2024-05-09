@@ -49,28 +49,15 @@ namespace ServerApiMikoAI.Controllers
         {
             string apiUrl = "http://158.75.112.151:9123/chat";
 
-            const string initialMessage = "Your name is MikołAI and you are a helpful, respectful, friendly and honest personal for students at Nicolaus Copernicus University (faculty of Mathematics and Computer Science) in Toruń, Poland. Your main task is responding to students' questions regarding their studies, but you can also engage in a friendly informal chat. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. Please ensure that your responses are socially unbiased and positive in nature. If you don't know the answer to a question, please don't share false information.";
+            var messages = new List<Message>();
 
-
-            var messages = new[]
+            foreach (Message simpleMassage in requestAdvanced)
             {
-                new
-                {
-                    content = initialMessage,
-                    role = "system"
-                }
-            };
-
-            foreach (Message previousMessage in requestAdvanced)
-            {
-                var newItem = new
-                {
-                    content = previousMessage.Content,
-                    role = previousMessage.Role,
-                };
-                messages = messages.Concat(new[] { newItem }).ToArray();
+                Message newItem = new Message();
+                newItem.content = simpleMassage.content;
+                newItem.role = simpleMassage.role;
+                messages.Add(newItem);
             }
-
             /*var translatedQuestion = await translator.TranslateTextAsync(
               messages.Last().content,
               LanguageCode.Polish,
