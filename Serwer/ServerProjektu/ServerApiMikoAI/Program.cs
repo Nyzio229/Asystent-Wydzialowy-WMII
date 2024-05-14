@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ServerApiMikoAI;
 using ServerApiMikoAI.Controllers;
 using ServerApiMikoAI.Models.Context;
 using System.Reflection;
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<PostrgeSQLContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("QuestionDB")));
 builder.Services.AddDbContext<VerificationDataBaseContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("VerificationDB")));
+builder.Services.AddScoped<AuthorizationService>();
 
 var connStringEmp = builder.Configuration.GetConnectionString("EmployeesDB");
 builder.Services.AddDbContext<WMiIEmployeesDatabase>(opt => {
