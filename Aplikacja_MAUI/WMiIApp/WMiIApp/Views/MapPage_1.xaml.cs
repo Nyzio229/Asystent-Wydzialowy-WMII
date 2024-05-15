@@ -49,6 +49,11 @@ public partial class MapPage_1 : ContentPage
         }
     }
 
+    private void HandleRoomButtonClickStairsOneWayUp(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("///MapPage0");
+    }
+
     private async void DisplayRoomInfo(Room room)
     {
         string message = $"Nazwa sali: {room.Name}\n" +
@@ -56,10 +61,10 @@ public partial class MapPage_1 : ContentPage
 
         if (room.Residents.Any())
         {
-            message += "Rezydenci: ";
+            message += "Rezydenci: \n";
             foreach (string resident in room.Residents)
             {
-                message += $" {resident} ";
+                message += $" -> {resident}\n";
             }
 
             message += "\n";
@@ -180,13 +185,36 @@ public partial class MapPage_1 : ContentPage
         }
         else
         {
+            menuGrid.IsVisible = false;
+
             // Znaleziono sciezke, wyswietlamy alert z lista pokoi
-            string message = "Znaleziona droga:\n";
+            string message = "Aby dotrzeæ do celu musisz przejœæ przez nastêpuj¹ce punkty:\n";
             foreach (var room in shortestPath)
             {
-                message += room.Name + "\n";
+                if(room.Name != "Korytarz")
+                {
+                    message += "-> " + room.Name + "\n";
+                }               
             }
-            DisplayAlert("Znaleziona droga", message, "OK");
+            message += "Dla u³atwienia wyœwietli³em Ci trasê na mapie \n";
+            DisplayAlert("Znaleziono trasê", message, "OK");
+        }
+
+        if(sourceRoom.Floor == -1)
+        {
+            Shell.Current.GoToAsync("///MapPage_1");
+        }
+        else if(sourceRoom.Floor == 0)
+        {
+            Shell.Current.GoToAsync("///MapPage0");
+        }
+        else if (sourceRoom.Floor == 1)
+        {
+            Shell.Current.GoToAsync("///MapPage1");
+        }
+        else if (sourceRoom.Floor == 2)
+        {
+            Shell.Current.GoToAsync("///MapPage2");
         }
 
     }

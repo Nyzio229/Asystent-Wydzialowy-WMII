@@ -177,14 +177,14 @@
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="161,138,30,21"
             AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
+            Clicked="HandleRoomButtonClickStairsOneWayUp"
             FontSize="8"/>
 
                 <Button x:Name="draw_schody_parter_piwnica"
             Opacity="0.5"
             BackgroundColor="Transparent"
             TextColor="Transparent"
-            AbsoluteLayout.LayoutBounds="182,140,5,5"
+            AbsoluteLayout.LayoutBounds="170,143,5,5"
             AbsoluteLayout.LayoutFlags="None"/>
 
                 <Button x:Name="schody_parter_kolo_wejscia"
@@ -195,7 +195,7 @@
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="196,171,32,25"
             AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
+            Clicked="HandleRoomButtonClickStairsOneWayUp"
             FontSize="8"/>
 
                 <Button x:Name="draw_schody_parter_kolo_wejscia"

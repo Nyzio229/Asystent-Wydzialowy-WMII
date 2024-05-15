@@ -140,7 +140,7 @@
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="77,11,18,28"
             AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
+            Clicked="HandleRoomButtonClickStairsTwoWay"
             FontSize="8"/>
 
             <Button x:Name="draw_schody_pierwsze"
@@ -356,7 +356,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="21,122,25,10"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsTwoWay"
              FontSize="8"/>
 
             <Button x:Name="draw_schody_kolo_auli_pierwsze"
@@ -518,7 +518,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="222,46,20,30"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsTwoWay"
              FontSize="8"/>
 
             <Button x:Name="draw_schody2"
@@ -651,7 +651,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="254,173,12,27"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsOneWayUp"
              FontSize="8"/>
 
             <Button x:Name="draw_schody_pierwsze_drugie_pietro"
@@ -669,7 +669,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="198,188,26,10"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsOneWayDown"
              FontSize="8"/>
                       
             <Button x:Name="draw_schody_parter_kolo_wejscia_pierwsze_pietro"

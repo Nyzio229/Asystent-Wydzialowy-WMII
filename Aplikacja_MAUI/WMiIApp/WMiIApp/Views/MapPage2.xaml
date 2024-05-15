@@ -139,7 +139,7 @@
             TextColor="Transparent"
             AbsoluteLayout.LayoutBounds="76,41,18,28"
             AbsoluteLayout.LayoutFlags="None"
-            Clicked="HandleRoomButtonClick"
+            Clicked="HandleRoomButtonClickStairsOneWayDown"
             FontSize="8"/>
 
             <Button x:Name="draw_schody_kolo_pm3"
@@ -355,7 +355,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="20,151,25,10"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsOneWayDown"
              FontSize="8"/>
 
             <Button x:Name="draw_schody_kolo_auli_drugie"
@@ -524,7 +524,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="222,76,18,29"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsOneWayDown"
              FontSize="8"/>
 
             <Button x:Name="draw_schody_kolo_s9"
@@ -849,7 +849,7 @@
              TextColor="Transparent"
              AbsoluteLayout.LayoutBounds="252,152,8,40"
              AbsoluteLayout.LayoutFlags="None"
-             Clicked="HandleRoomButtonClick"
+             Clicked="HandleRoomButtonClickStairsOneWayDown"
              FontSize="8"/>
 
             <Button x:Name="draw_schody_pierwsze_drugie_pietro_drugie"
