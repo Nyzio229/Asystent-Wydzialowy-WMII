@@ -7,11 +7,11 @@ namespace WMiIApp.Services
 {
     public class MessageService
     {
-        const string uri = "https://521c-188-146-254-163.ngrok-free.app/";
-        const string uriMain = uri + "LLMResponseAdvanced";
-        const string uriFAQ = uri + "FAQ";
-        const string uriTranslate = uri + "Translation";
-        const string uriClassify = uri + "Classify";
+        //const string uri = "https://174b-188-146-254-12.ngrok-free.app/";
+        const string uriMain = App.uri + "LLMResponseAdvanced";
+        const string uriFAQ = App.uri + "FAQLike";
+        const string uriTranslate = App.uri + "Translation";
+        const string uriClassify = App.uri + "Classify";
         readonly HttpClient httpClient;
 
         public MessageService()
@@ -34,7 +34,8 @@ namespace WMiIApp.Services
             var message = new
             {
                 text = messages.Last().Content,
-                limit = 1
+                limit = 1,
+                lang = "en"
             };
             var jsonPayload = JsonConvert.SerializeObject(message);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
@@ -42,8 +43,8 @@ namespace WMiIApp.Services
             response.EnsureSuccessStatusCode();
             var responseContent = await response.Content.ReadAsStringAsync();
             //poprawić czytanie odpowiedzi
-            var tableContext = JsonConvert.DeserializeObject<List<TableContext>>(responseContent);
-            return tableContext;
+            var finalResponse = JsonConvert.DeserializeObject<FAQFinalResponse>(responseContent);
+            return finalResponse.faq;
         }
 
         public async Task<string> TranslateMessage(ObservableCollection<Message> messages, string from, string to)

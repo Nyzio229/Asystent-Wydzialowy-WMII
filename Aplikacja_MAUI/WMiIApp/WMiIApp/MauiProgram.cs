@@ -2,6 +2,8 @@
 using WMiIApp.ViewModels;
 using WMiIApp.Services;
 using CommunityToolkit.Maui;
+using banditoth.MAUI.DeviceId;
+using banditoth.MAUI.DeviceId.Interfaces;
 
 namespace WMiIApp
 {
@@ -13,6 +15,7 @@ namespace WMiIApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .ConfigureDeviceIdProvider()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

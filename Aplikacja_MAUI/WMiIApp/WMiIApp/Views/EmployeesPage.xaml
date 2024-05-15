@@ -4,20 +4,21 @@
              xmlns:local="clr-namespace:WMiIApp"
              x:Class="WMiIApp.EmployeesPage"
              xmlns:viewmodel="clr-namespace:WMiIApp.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:EmployeesViewModel"
+             xmlns:model="clr-namespace:WMiIApp.Models">
 
     <ContentPage.Resources>
         <local:FromIsWorkingToColorConverter x:Key="FromIsWorkingToColorConverter"/>
     </ContentPage.Resources>
 
-    <ContentPage.BindingContext>
-        <viewmodel:EmployeesViewModel />
-    </ContentPage.BindingContext>
-
+    
     <Grid RowDefinitions="Auto, *"
           Padding="10"
-          RowSpacing="10">
-        <SearchBar x:Name="MySearchBar" Placeholder="Wybierz osobę..." Grid.Row="0">
+          RowSpacing="10"
+          BackgroundColor="#2C3333">
+        <SearchBar x:Name="MySearchBar" Placeholder="Wybierz osobę..." Grid.Row="0"
+                   TextColor="#E7F6F2" BackgroundColor="#181b1b">
             <SearchBar.Behaviors>
                 <toolkit:EventToCommandBehavior 
                     EventName="TextChanged"
@@ -27,16 +28,16 @@
         </SearchBar>
             <CollectionView Grid.Row="1" ItemsSource="{Binding EmployeesVisible}">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Employee">
                     <Grid Padding="0,5"
-                          ColumnDefinitions="0.5*, 0.3*, 0.2*">
-                        <Frame>
-                            <Label  Text="{Binding Name}" FontSize="24"/>
+                          ColumnDefinitions="0.5*, 0.3*, 0.2*" >
+                        <Frame BackgroundColor="#395B64">
+                            <Label  Text="{Binding Name}" FontSize="24" TextColor="#E7F6F2" />
                         </Frame>
-                        <Frame Grid.Column="1">
-                            <Label  Text="{Binding Office}" FontSize="24"/>
+                        <Frame Grid.Column="1" BackgroundColor="#395B64">
+                            <Label  Text="{Binding Office}" FontSize="24" TextColor="#E7F6F2"/>
                         </Frame>
-                        <Frame Grid.Column="2">
+                        <Frame Grid.Column="2" BackgroundColor="#395B64">
                             <Ellipse Fill="{Binding IsWorking, Converter={StaticResource FromIsWorkingToColorConverter}}"
                                      WidthRequest="30"
                                      HeightRequest="30"

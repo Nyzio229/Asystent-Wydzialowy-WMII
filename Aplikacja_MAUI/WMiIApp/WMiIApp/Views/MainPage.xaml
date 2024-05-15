@@ -12,9 +12,9 @@
         <local:FromIsFAQToIsEnabledConverter x:Key="FromIsFAQToIsEnabledConverter"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, Auto" ColumnDefinitions=".75*, .1*, .15*"
+    <Grid RowDefinitions="*, Auto, Auto" ColumnDefinitions=".75*, .1*, .15*"
           RowSpacing="10" ColumnSpacing="0" BackgroundColor="#2C3333">
-        
+
         <CollectionView x:Name="collectionView" ItemsUpdatingScrollMode="KeepLastItemInView"  
                         Grid.ColumnSpan="3" VerticalOptions="End" ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
@@ -40,17 +40,27 @@
                                     CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"/>
                         </Grid>
                     </VerticalStackLayout>
-                    
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
-        <Entry x:Name="entry" Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="1" Grid.Column="0"
+
+        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="3" MaximumWidthRequest="300" HorizontalOptions="Start" IsVisible="{Binding IsAnimated}">
+            <Grid Padding="5,5" ColumnDefinitions=".5*, .5*">
+                <Frame BackgroundColor="#A5C9CA"
+                BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30"
+                Grid.ColumnSpan="2">
+                    <Image x:Name="loadingGif" Source="dots.gif" IsAnimationPlaying="False" MaximumWidthRequest="100" MaximumHeightRequest="40"/>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+
+        <Entry x:Name="entry" Placeholder="Wpisz wiadomość" Text="{Binding Text}" Grid.Row="2" Grid.Column="0"
                TextColor="#E7F6F2"/>
-        <ImageButton Source="microphone_icon.png" Grid.Row="1" Grid.Column="1" MaximumHeightRequest="30"
+        <ImageButton Source="microphone_icon.png" Grid.Row="2" Grid.Column="1" MaximumHeightRequest="30"
                      Command="{Binding SpeakCommand}"/>
         <ImageButton Source="send_icon.png" Command="{Binding SendCommand}" MaximumHeightRequest="40"
-                      Grid.Row="1" Grid.Column="2" Clicked="ImageButton_Clicked"/>
+                      Grid.Row="2" Grid.Column="2" Clicked="ImageButton_Clicked"/>
 
     </Grid>
 

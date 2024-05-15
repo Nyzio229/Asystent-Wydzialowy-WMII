@@ -26,6 +26,26 @@
         </DataTemplate>
     </Shell.ItemTemplate>
 
+    <ShellContent
+        ContentTemplate="{DataTemplate local:LoadingPage}"
+        Route="LoadingPage" 
+        Shell.FlyoutBehavior="Disabled"
+        FlyoutItemIsVisible="False"/>
+    <!--IsVisible="False"-->
+        <!--DELETELATER-->
+    <ShellContent
+        ContentTemplate="{DataTemplate local:EmailAuthPage}"
+        Route="EmailAuthPage" 
+        Shell.FlyoutBehavior="Disabled"
+        FlyoutItemIsVisible="False"/>
+    <!--DELETELATER-->
+    <ShellContent
+        ContentTemplate="{DataTemplate local:CodeAuthPage}"
+        Route="CodeAuthPage" 
+        Shell.FlyoutBehavior="Disabled" 
+        FlyoutItemIsVisible="False"/>
+    <!--DELETELATER-->
+
     <FlyoutItem Title="Czat" Icon="chat_icon.png">
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
@@ -58,6 +78,5 @@
             ContentTemplate="{DataTemplate local:EmployeesPage}"
             Route="EmployeesPage"/>
     </FlyoutItem>
-
 
 </Shell>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,13 @@ namespace WMiIApp.Models
 {
     public class TableContext
     {
-        public int id_pytania { get; set; }
-        public string? pytanie { get; set; }
-        public string? odpowiedz { get; set; }
+        [JsonProperty("answerPL")]
+        public string? AnswerPL { get; set; }
+        [JsonProperty("questionPL")]
+        public string? QuestionPL { get; set; }
+        [JsonProperty("answerEN")]
+        public string? AnswerEN { get; set; }
+        [JsonProperty("questionEN")]
+        public string? QuestionEN { get; set; }
     }
 }

@@ -31,6 +31,9 @@ namespace WMiIApp.ViewModels
         [ObservableProperty]
         public bool canBeSent = true;
 
+        [ObservableProperty]
+        public bool isAnimated = false;
+
         public MainViewModel(MessageService messageService) 
         {
             Items = [];
@@ -55,10 +58,10 @@ namespace WMiIApp.ViewModels
 
         static async Task PutTaskDelay()
         {
-            await Task.Delay(2000);
+            await Task.Delay(3000);
         }
 
-        ////odpowiedzi na sztywno
+        //odpowiedzi na sztywno
         //[RelayCommand]
         //async Task Send()
         //{
@@ -72,8 +75,11 @@ namespace WMiIApp.ViewModels
 
         //    Items.Add(message);
         //    Text = string.Empty;
+
+        //    IsAnimated = true;
         //    await PutTaskDelay();
-        //    //Text = "odpowiedź z serwera...";
+        //    IsAnimated = false;
+
         //    Text = "Wbrew powszechnemu przekonaniu, Lorem Ipsum nie jest po prostu przypadkowym tekstem. " +
         //        "Ma swoje korzenie w klasycznej literaturze łacińskiej z 45 r. p.n.e., co czyni go ponad 2000 lat starym.";
 
@@ -82,11 +88,6 @@ namespace WMiIApp.ViewModels
         //    messageReceived.Content = Text;
         //    messageReceived.Role = "assistant";
         //    messageReceived.IsSent = false;
-
-        //    messageReceived.IsFAQ = true;
-        //    IsEnabled = true;
-        //    AcceptFAQCommand.NotifyCanExecuteChanged();
-        //    RejectFAQCommand.NotifyCanExecuteChanged();
 
         //    Items.Add(messageReceived);
         //    Text = string.Empty;
@@ -130,6 +131,144 @@ namespace WMiIApp.ViewModels
             return CanBeSent;
         }
 
+        async Task<bool> TranslateFromPLToEN()
+        {
+            try
+            {
+                Message messageTranslated = new()
+                {
+                    Role = "user",
+                    IsSent = true,
+                    Content = await messageService.TranslateMessage(Items, "pl", "en-GB")
+                };
+                ItemsEN.Add(messageTranslated);
+                return true;
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak z tłumaczeniem...", "OK");
+                return false;
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+                return false;
+            }
+            finally
+            {
+                Text = string.Empty;
+            }
+        }
+
+        async Task<bool> Categorize()
+        {
+            try
+            {
+                ClassifyResponse classifyResponse = new();
+                classifyResponse = await messageService.GetCategory(ItemsEN);
+                switch (classifyResponse.label)
+                {
+                    case "-1":
+                        //await Shell.Current.DisplayAlert("Error!", "-1 CATEGORY", "OK");
+                        return true;
+                    case "navigation":
+                        await Shell.Current.GoToAsync("///MapPage_1");
+                        await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
+                        return false;
+                    case "chat":
+                        //ogólne
+                        return true;
+                    default:
+                        await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak... (kategoryzacja)", "OK");
+                        return false;
+                }
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...Sprawdź połączenie z internetem.", "OK");
+                return false;
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+                return false;
+            }
+            finally
+            {
+                Text = string.Empty;
+            }
+        }
+
+        async Task<bool> GetFaq()
+        {
+            try
+            {
+                List<TableContext> tableContexts = new List<TableContext>();
+                tableContexts = await messageService.GetMessageFromFAQ(ItemsEN);
+                if (tableContexts[0].AnswerPL != "-1")
+                {
+                    Message faqQuestionEN = new()
+                    {
+                        Content = "Did you mean...\n" + tableContexts[0].QuestionEN,
+                        IsSent = false,
+                        Role = "assistant"
+                    };
+                    ItemsEN.Add(faqQuestionEN);
+
+                    Message faqAnswerEN = new()
+                    {
+                        Content = "Answer: \n" + tableContexts[0].AnswerEN,
+                        IsSent = false,
+                        Role = "assistant"
+                    };
+                    ItemsEN.Add(faqAnswerEN);
+
+                    Message faqQuestionPL = new()
+                    {
+                        Content = "Czy chodziło ci o...\n" + tableContexts[0].QuestionPL,
+                        IsSent = false,
+                        Role = "assistant"
+                    };
+                    IsAnimated = false;
+                    Items.Add(faqQuestionPL);
+
+                    Message faqAnswerPL = new()
+                    {
+                        Content = "Odpowiedź: \n" + tableContexts[0].AnswerPL,
+                        IsSent = false,
+                        Role = "assistant",
+                        IsFAQ = true
+                    };
+                    Items.Add(faqAnswerPL);
+
+                    IsEnabled = true;
+                    AcceptFAQCommand.NotifyCanExecuteChanged();
+                    RejectFAQCommand.NotifyCanExecuteChanged();
+                    CanBeSent = false;
+                    SendCommand.NotifyCanExecuteChanged();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...Sprawdź połączenie z internetem.", "OK");
+                return false;
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+                return false;
+            }
+            finally
+            {
+                Text = string.Empty;
+            }
+        }
+
         //odpowiedzi z serwera
         [RelayCommand(CanExecute = nameof(CanSend))]
         async Task Send()
@@ -143,146 +282,26 @@ namespace WMiIApp.ViewModels
                 Role = "user"
             };
             Items.Add(message);
+            IsAnimated = true;
 
             //translacja
-            try
+            if (await TranslateFromPLToEN() == false)
             {
-                Message messageTranslated = new()
-                {
-                    Role = "user",
-                    IsSent = true,
-                    Content = await messageService.TranslateMessage(Items, "pl", "en-GB")
-                };
-                ItemsEN.Add(messageTranslated);
-            }
-            catch (HttpRequestException e)
-            {
-                await Shell.Current.DisplayAlert("Error!", e.Message + " TRANSLATION", "OK");
                 return;
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message + " TRANSLATION", "OK");
-                return;
-            }
-            finally
-            {
-                Text = string.Empty;
             }
 
             //kategoryzacja
-            try
+            if (await Categorize() == false)
             {
-                ClassifyResponse classifyResponse = new();
-                classifyResponse = await messageService.GetCategory(ItemsEN);
-                switch (classifyResponse.label)
-                {
-                    case "-1":
-                        await Shell.Current.DisplayAlert("Error!", "-1 CATEGORY", "OK");
-                        break;
-                    case "navigation":
-                        await Shell.Current.GoToAsync("///MapPage_1");
-                        await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
-                        return;
-                    case "chat":
-                        //ogólne
-                        break;
-                    default:
-                        await Shell.Current.DisplayAlert("Error!", "Coś poszło nie tak... (kategoryzacja)", "OK");
-                        return;
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                await Shell.Current.DisplayAlert("Error!", e.Message + "CATEGORY", "OK");
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message + "CATEGORY", "OK");
-            }
-            finally
-            {
-                Text = string.Empty;
+                IsAnimated = false;
+                return;
             }
 
-            ////FAQ
-            //try
-            //{
-            //    List<TableContext> tableContexts = new List<TableContext>();
-            //    tableContexts = await messageService.GetMessageFromFAQ(ItemsEN);
-            //    if (tableContexts[0].id_pytania != -1)
-            //    {
-            //        Message messageFAQ = new()
-            //        {
-            //            Content = "Did you mean...\n" + tableContexts[0].pytanie,
-            //            IsSent = false,
-            //            Role = "assistant"
-            //        };
-            //        ItemsEN.Add(messageFAQ);
-            //        try
-            //        {
-            //            Message faqTranslatedFromEN = new()
-            //            {
-            //                Role = "user",
-            //                IsSent = false,
-            //                Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
-            //            };
-            //            Items.Add(faqTranslatedFromEN);
-            //        }
-            //        catch (HttpRequestException e)
-            //        {
-            //            await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
-            //        }
-            //        Message messageFAQ2 = new()
-            //        {
-            //            Content = "Answer: \n" + tableContexts[0].odpowiedz,
-            //            IsSent = false,
-            //            Role = "assistant"
-            //        };
-            //        ItemsEN.Add(messageFAQ2);
-            //        try
-            //        {
-            //            Message faq2TranslatedFromEN = new()
-            //            {
-            //                Role = "user",
-            //                IsSent = false,
-            //                Content = await messageService.TranslateMessage(ItemsEN, "en", "pl"),
-            //                IsFAQ = true
-            //            };
-            //            Items.Add(faq2TranslatedFromEN);
-            //        }
-            //        catch (HttpRequestException e)
-            //        {
-            //            await Shell.Current.DisplayAlert("Error!", e.Message + " Translacja", "OK");
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            await Shell.Current.DisplayAlert("Error!", ex.Message + " Translacja", "OK");
-            //        }
-            //        IsEnabled = true;
-            //        AcceptFAQCommand.NotifyCanExecuteChanged();
-            //        RejectFAQCommand.NotifyCanExecuteChanged();
-            //        CanBeSent = false;
-            //        SendCommand.NotifyCanExecuteChanged();
-            //        return;
-            //    }
-            //}
-            //catch (HttpRequestException e)
-            //{
-            //    await Shell.Current.DisplayAlert("Error!", e.Message + " FAQ", "OK");
-            //}
-            //catch (Exception ex)
-            //{
-            //    await Shell.Current.DisplayAlert("Error!", ex.Message + " FAQ", "OK");
-            //}
-            //finally
-            //{
-            //    Text = string.Empty;
-            //}
+            //FAQ
+            if (await GetFaq() == false)
+            {
+                return;
+            }
 
             //LLM
             try
@@ -319,6 +338,7 @@ namespace WMiIApp.ViewModels
                     IsSent = false,
                     Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
                 };
+                IsAnimated = false;
                 Items.Add(messageTranslatedFromEN);
             }
             catch (HttpRequestException e)

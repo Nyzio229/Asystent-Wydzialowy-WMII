@@ -12,17 +12,17 @@ namespace WMiIApp.Models
     {
         [field: NonSerialized]
         public string name;
-        [JsonProperty("Name")]
+        [JsonProperty("name")]
         public string Name { get => name; set => SetProperty(ref name, value); }
 
         [field: NonSerialized]
         public string office;
-        [JsonProperty("Office")]
+        [JsonProperty("office")]
         public string Office { get => office; set => SetProperty(ref office, value); }
 
         [field: NonSerialized]
         public bool isWorking;
-        [JsonProperty("IsWorking")]
+        [JsonProperty("isWorking")]
         public bool IsWorking { get => isWorking; set => SetProperty(ref isWorking, value); }
     }
 }

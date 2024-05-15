@@ -20,72 +20,45 @@ namespace WMiIApp.ViewModels
         ObservableCollection<Employee> employees;
         [ObservableProperty]
         ObservableCollection<Employee> employeesVisible;
+        bool isBusy = false;
+        bool employeesVisibleInitialized = false;
+        EmployeesService employeesService;
 
         public EmployeesViewModel()
         {
             Employees = [];
             EmployeesVisible = [];
             _cancellationTokenSource = new CancellationTokenSource();
-            bool employeesVisibleInitialized = false;
+            employeesService = new EmployeesService();
 
-            
+
             Task.Run(async () =>
             {
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     try
                     {
-                        await RefreshEmployees();
-                        //Employees = await EmployeesService.GetEmployees();
+                        Employees = await employeesService.GetEmployees();
                         if (!employeesVisibleInitialized)
                         {
                             EmployeesVisible = Employees;
                             employeesVisibleInitialized = true;
                         }
+                        if (!isBusy)
+                        {
+                            EmployeesVisible = Employees;
+                        }
                     }
                     catch {}
-                    await Task.Delay(2000);
+                    await Task.Delay(10000);
                 }
             });
-            
-
-
-            //Employee emp1 = new Employee();
-            //emp1.Name = "Janusz Czarny";
-            //emp1.Office = "D114";
-            //emp1.IsWorking = false;
-
-            //Employee emp2 = new Employee();
-            //emp2.Name = "Anna Brzoza";
-            //emp2.Office = "F31";
-            //emp2.IsWorking = true;
-
-            //Employee emp3 = new Employee();
-            //emp3.Name = "Kazimierz Cichociemny";
-            //emp3.Office = "A2";
-            //emp3.IsWorking = false;
-
-            //Employees.Add(emp1);
-            //Employees.Add(emp2);
-            //Employees.Add(emp3);
-            //EmployeesVisible = Employees;
-        }
-        static int counterToDelete = 0;
-        async Task RefreshEmployees()
-        {
-            var newEmployees = await EmployeesService.GetEmployees();
-
-            Employees.Clear();
-
-            foreach (var employee in newEmployees)
-            {
-                Employees.Add(employee);
-            }
         }
 
         [RelayCommand]
         void OnTextUpdated(string text)
         {
+            isBusy = true;
             if (!string.IsNullOrEmpty(text))
             {
                 string filterText = text.ToLower();
@@ -94,6 +67,7 @@ namespace WMiIApp.ViewModels
             else
             {
                 EmployeesVisible = Employees;
+                isBusy = false;
             }
         }
 

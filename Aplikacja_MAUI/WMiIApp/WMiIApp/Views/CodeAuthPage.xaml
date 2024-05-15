@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WMiIApp.CodeAuthPage"
+             Title="CodeAuthPage">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label 
+        Text="Wpisz swój kod weryfikacyjny:"
+        HorizontalOptions="Center"
+        VerticalOptions="End"
+        Grid.Row="0" Padding="20"/>
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto" RowSpacing="10">
+            <Entry
+            MaximumWidthRequest="300"
+            Grid.Row="0"
+            x:Name="entry"/>
+            <Button
+            Text="Dalej"
+            MaximumWidthRequest="80"
+            Grid.Row="1" 
+            Clicked="Button_Clicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -13,9 +13,16 @@ namespace WMiIApp
             BindingContext = vm;
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
+        private async void ImageButton_Clicked(object sender, EventArgs e)
         {
-            entry.HideKeyboardAsync();
+            await entry.HideKeyboardAsync();
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await Task.Delay(100);
+            loadingGif.IsAnimationPlaying = true;
         }
     }
 
