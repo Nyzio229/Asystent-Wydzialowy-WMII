@@ -1,0 +1,218 @@
+[
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Who is the chief dean and who are his assistants?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "What interesting upcoming events in the department can I attend?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Can you give me the dean's contact information?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where should I apply to change my major?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "When is the dean's office open?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How are you doing?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "What information can you give me?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How can I change my major?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How do I change universities?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Who should I contact for information about Erasmus?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find an application for a condition?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find out what classes I need to register for?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where do I get my study materials from?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How can I borrow a book from the library?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Is there a study circle in the department?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How do I sign up for the Computer Science Research Circle?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find information about meetings and the board of directors of the computer science club?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "How can I check the semester plan?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "I am in my first year in the engineering iformatics major, where is the plan for him?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "When does the exam session start?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find information regarding exam dates?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Are there any scholarships available for students with good grades?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find information on the rector's scholarship."
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Where can I find information about apprenticeships?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Could you describe how to sign up for apprenticeships?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "I would like to study a semester abroad. What options do I have?"
+         }
+      ]
+   },
+   {
+      "messages": [
+         {
+            "role": "user",
+            "content": "Are there any upcoming events at the department that I should know about"
+         }
+      ]
+   }
+]

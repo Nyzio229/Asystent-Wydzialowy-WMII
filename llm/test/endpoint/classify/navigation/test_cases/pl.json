@@ -152,5 +152,82 @@
             "source": "E310",
             "destination": null
         }
+    },
+    {
+        "text": "Chcę się dostać do K194",
+        "metadata": {
+            "source": "E310",
+            "destination": null
+        }
+    },
+    {
+        "text": "Pokaż mi drogę do sali PM3",
+        "metadata": {
+            "source": null,
+            "destination": "PM3"
+        }
+    },
+    {
+        "text": "Zaprowadź mnie z SS3 do sali PM1",
+        "metadata": {
+            "source": "SS3",
+            "destination": "PM1"
+        }
+    },
+    {
+        "text": "Chcę iść do pokoju C109",
+        "metadata": {
+            "source": null,
+            "destination": "C109"
+        }
+    },
+    {
+        "text": "Chcę dojść z klasy e    207 do s  4",
+        "metadata": {
+            "source": "E207",
+            "destination": "s4"
+        }
+    },
+    {
+        "text": "Pokaż mi kierunek do auli",
+        "metadata": {
+            "source": null,
+            "destination": "aula"
+        }
+    },
+    {
+        "text": "Pokaż mi mapę do biblioteki",
+        "metadata": {
+            "source": null,
+            "destination": "biblioteka"
+        }
+    },
+    {
+        "text": "Pokaż mi mapę od sali konferencyjnej do biblioteki",
+        "metadata": {
+            "source": "sala konferencyjna",
+            "destination": "biblioteka"
+        }
+    },
+    {
+        "text": "Jak się dostać z S9 do SS2?",
+        "metadata": {
+            "source": "s9",
+            "destination": "ss2"
+        }
+    },
+    {
+        "text": "Gdzie jest S9?",
+        "metadata": {
+            "source": null,
+            "destination": "s9"
+        }
+    },
+    {
+        "text": "Jak się dostać z toalety w piwnicy do sali spotkań?",
+        "metadata": {
+            "source": "WC piwnica",
+            "destination": "sala spotkań"
+        }
     }
 ]

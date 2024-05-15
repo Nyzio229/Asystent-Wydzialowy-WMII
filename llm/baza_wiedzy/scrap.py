@@ -44,11 +44,16 @@ def get_text(tag: bs4.Tag, with_links=True) -> str:
     def _filter_child(child: bs4.Tag) -> bs4.Tag:
         name = child.name
         if name == "tr":
-            if list(filter(lambda string: not string.isspace(), child.find_all(string=True))):
+            if list(filter(
+                lambda string: not string.isspace(),
+                child.find_all(string=True)
+            )):
                 next_sibling = child.find_next_sibling("tr")
                 if next_sibling:
                     strings = next_sibling.find_all(string=True)
-                    strings = list(filter(lambda s: not s.isspace(), strings))
+                    strings = list(filter(
+                        lambda s: not s.isspace(), strings
+                    ))
 
                     if len(strings) == 1:
                         # zamień spację na końcu obecnego <td> na przecinek i spację
@@ -254,6 +259,8 @@ def soup_for(url: str) -> bs4.BeautifulSoup:
         timeout=30
     )
 
+    response.raise_for_status()
+
     soup = bs4.BeautifulSoup(response.content, "html.parser")
 
     return soup
@@ -358,8 +365,14 @@ def get_data_from_portlets_article(soup: bs4.BeautifulSoup):
     # wpisy z innych stron (np. "konkursy i koła") oraz poboczne wpisy (np. "Archiwum")
     portlets = soup.select(".portlet-borderless-container")
 
-    data = (list(map(lambda portlet: _get_article_data(portlet, f"article{suffix}"), portlets))
-            for suffix in ("p", "b", "c"))
+    data = (
+        list(map(
+            lambda portlet: _get_article_data(portlet, f"article{suffix}"),
+            portlets
+        ))
+        for suffix in ("p", "b", "c")
+    )
+
     data = list(filter(None, chain(*data)))
 
     return data

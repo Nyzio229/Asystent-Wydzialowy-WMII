@@ -4,6 +4,9 @@ namespace ServerApiMikoAI.Models.Context
 {
     public class VerificationDataBaseContext : DbContext
     {
+        public VerificationDataBaseContext() {
+        }
+
         public VerificationDataBaseContext(DbContextOptions<VerificationDataBaseContext> options) : base(options) { }
 
         public DbSet<VerificationTableContext> verification_table { get; set; }

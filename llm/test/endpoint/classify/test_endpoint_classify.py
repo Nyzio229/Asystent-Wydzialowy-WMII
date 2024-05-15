@@ -1,29 +1,26 @@
-import unittest
-
 from typing import Literal, Type, TypeVar, Optional
 
 from pydantic import BaseModel
 
-from endpoint_tester import EndpointTester
+from test_endpoint import TestEndpoint
 
 class MinimalClassifyTestCase(BaseModel):
     text: str
 
 T = TypeVar("T", bound=MinimalClassifyTestCase)
 
-class TestEndpointClassify(EndpointTester, unittest.TestCase):
+class TestEndpointClassify(TestEndpoint):
     def __init__(
         self,
-        method_name: str,
         label: Literal["chat", "navigation"],
-        test_case_type: Type[T]
+        test_case_type: Type[T],
+        *args, **kwargs
     ) -> None:
-        unittest.TestCase.__init__(self, method_name)
-
         self._label = label
 
-        EndpointTester.__init__(
-            self, "classify", test_case_type
+        super().__init__(
+            "classify", test_case_type, None,
+            *args, **kwargs
         )
 
     def _assert_api_response(
@@ -58,16 +55,22 @@ class TestEndpointClassify(EndpointTester, unittest.TestCase):
         self,
         test_cases: list[T]
     ) -> list[T]:
-        translated = list(map(lambda test_case: test_case.model_copy(
-            update=dict(
-                text=self._translate(test_case.text)
-            )
-        ), test_cases))
+        translated = list(map(
+            lambda test_case: test_case.model_copy(
+                update=dict(
+                    text=self._translate(test_case.text)
+                )
+            ),
+            test_cases
+        ))
 
         return translated
 
     def _get_expected_responses(self) -> list[dict[str]]:
-        return list(map(lambda test_case: dict(
-            label=self._label,
-            metadata=getattr(test_case, "metadata", None)
-        ), self._test_cases))
+        return list(map(
+            lambda test_case: dict(
+                label=self._label,
+                metadata=getattr(test_case, "metadata", None)
+            ),
+            self._test_cases
+        ))

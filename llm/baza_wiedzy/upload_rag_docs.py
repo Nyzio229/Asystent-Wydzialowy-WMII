@@ -7,9 +7,14 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from faq_upload import fetch_faq
+from upload_faq import fetch_faq, FaqEntry
 
 from utils import get_cached_translation, upload_docs, translate
+
+from fetch_misc_docs import (
+    get_academic_year_organization,
+    get_umk_wiki_page
+)
 
 class Document(BaseModel):
     page_content: str
@@ -113,7 +118,7 @@ def doc_translate(
 
     return translated
 
-def fetch_translated_rag_docs() -> list[dict[str, str]]:
+def get_scrapped_webpages_docs() -> list[Document]:
     dump_dir_path = os.path.join(
         "scrapowane_strony_wydzialowe",
         "dump"
@@ -141,47 +146,93 @@ def fetch_translated_rag_docs() -> list[dict[str, str]]:
             translator=lambda doc: doc_translate(doc, lang_from, lang_to),
             model_type=Document,
             deserialize_pl=False,
-            serialize=True
+            verify_translated_data_size=False
         )
 
         translated_docs += translated
 
     return translated_docs
 
-def fetch_translated_faq() -> list[dict[str, str]]:
-    _, translated_faq = fetch_faq()
+def get_umk_wiki_page_doc() -> Document:
+    wp = get_umk_wiki_page()
 
-    n_faq_entries = len(translated_faq)
+    doc = Document(
+        metadata=dict(
+            origin=wp.url
+        ),
+        page_content=wp.page_content
+    )
 
-    def _faq_entry_mapper(idx: int, faq_entry: dict[str, str]) -> dict[str, str]:
-        question = faq_entry["question"]
-        answer = faq_entry["answer"]
+    return doc
+
+def get_academic_year_organization_doc() -> Document:
+    ayo = get_academic_year_organization()
+
+    doc = Document(
+        metadata=dict(
+            origin=ayo.remote_file_path
+        ),
+        page_content=ayo.file_content
+    )
+
+    return doc
+
+def get_faq_docs() -> list[Document]:
+    faq = fetch_faq(
+        with_pl=False,
+        serialize=False
+    )
+
+    n_faq_entries = len(faq)
+
+    def _faq_entry_to_doc(idx: int, faq_entry: FaqEntry) -> Document:
+        question = faq_entry.question
+        answer = faq_entry.answer
 
         page_content = f"Q: {question}\nA: {answer}"
 
-        mapped_faq_entry = dict(
+        doc = Document(
             page_content=page_content,
             metadata=dict(
                 origin=f"FAQ ({idx+1}/{n_faq_entries})"
             )
         )
 
-        return mapped_faq_entry
+        return doc
 
-    translated_faq = list(map(lambda pair: _faq_entry_mapper(*pair), enumerate(translated_faq)))
+    faq = list(map(
+        lambda pair: _faq_entry_to_doc(*pair),
+        enumerate(faq)
+    ))
 
-    return translated_faq
+    return faq
 
 def main() -> None:
-    print("Pobieranie zescrapowanych danych ze stron wydziałowych...")
+    downloading_texts_with_getters = (
+        ("zescrapowanych danych ze stron wydziałowych", get_scrapped_webpages_docs),
+        ("FAQ", get_faq_docs),
+        ("organizacji roku akademickiego", get_academic_year_organization_doc),
+        ("strony UMK na wikipedii", get_umk_wiki_page_doc)
+    )
 
-    translated_rag_docs = fetch_translated_rag_docs()
+    print("Pobieranie:")
 
-    print("\nPobieranie FAQ...")
+    docs: list[Document] = []
 
-    translated_faq = fetch_translated_faq()
+    for i, (text, doc_getter) in enumerate(downloading_texts_with_getters):
+        print(f"\n{i+1}. {text}...")
 
-    docs = translated_rag_docs + translated_faq
+        doc = doc_getter()
+
+        if isinstance(doc, Document):
+            doc = [doc]
+
+        docs += doc
+
+    docs = list(map(
+        lambda doc: doc.model_dump(),
+        docs
+    ))
 
     print("\nPrzesyłanie do bazy wektorowej...")
 

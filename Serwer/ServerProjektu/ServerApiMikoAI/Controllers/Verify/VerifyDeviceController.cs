@@ -20,11 +20,9 @@ namespace ServerApiMikoAI.Controllers.Verify
         }
 
         [HttpPost]
-        public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request)
-        {
+        public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request) {
 
-            if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0)
-            {
+            if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0) {
                 return Ok("DeviceId and VerificationCode are required.");
             }
 
@@ -35,8 +33,7 @@ namespace ServerApiMikoAI.Controllers.Verify
                 .Where(ev => ev.device_id == request.DeviceId && ev.verification_code == request.VerificationCode && ev.expiration_date >= DateTime.UtcNow)
                 .FirstOrDefaultAsync();
 
-            if (emailVerification == null)
-            {
+            if (emailVerification == null) {
                 return Ok("Invalid verification code or device id.");
             }
 
@@ -48,7 +45,8 @@ namespace ServerApiMikoAI.Controllers.Verify
             // Zapisz zaszyfrowany klucz API w bazie danych
             var apiAccess = new ApiAccessTableContext {
                 device_id = request.DeviceId,
-                api_key = encryptedApiKey
+                api_key = encryptedApiKey,
+                is_active = true
             };
 
             _context.api_access.Add(apiAccess);
@@ -68,6 +66,8 @@ namespace ServerApiMikoAI.Controllers.Verify
             //return null;
         }
 
+
+
         private string GenerateApiKey() {
             return Guid.NewGuid().ToString("N"); // Wygenerowanie unikalnego klucza API
         }
@@ -84,5 +84,6 @@ namespace ServerApiMikoAI.Controllers.Verify
                 }
             }
         }
+
     }
 }

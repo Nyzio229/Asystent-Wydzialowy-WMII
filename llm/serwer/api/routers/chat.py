@@ -1,3 +1,5 @@
+import re
+
 from fastapi import APIRouter
 
 from pydantic import BaseModel
@@ -12,11 +14,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from common import (
     common,
     chat_with_default_system_message,
+    get_extended_system_message,
     langchain_chat_completion,
     log_endpoint_call,
     LLMInferenceParams,
-    Message,
-    SYSTEM_MESSAGE
+    Message
 )
 
 class ChatRequest(BaseModel):
@@ -29,12 +31,14 @@ def _rag(
     messages: list[Message],
     llm_inference_params: LLMInferenceParams
 ) -> str:
-    doc_sep = f"\n{'-'*15}\nDocument with additional context:\n\n"
+    doc_sep = f"\n{'-'*15}\nAdditional information about the faculty:\n\n"
 
     system_message = (
-        f"{SYSTEM_MESSAGE}\n\n"
-        "Here are documents that contain reliable facts that may help you "
-        "provide a better (and factually correct) answer:"
+        f"{get_extended_system_message()}\n\n"
+        "Here is information fetched from the faculty websites that contains "
+        "reliable facts that may help you provide a better (and factually correct) answer "
+        "(if some information is missing then let the user know that you don't know the answer or "
+        "don't have access to the specific data):"
         f"{doc_sep}{{context}}"
     )
 
@@ -59,8 +63,10 @@ def _rag(
         combine_docs_chain=chat_chain
     )
 
-    messages = [(message.role, message.content)
-                for message in messages]
+    messages = [
+        (message.role, message.content)
+        for message in messages
+    ]
 
     prompt_template_input = dict(
         input=messages[-1][1],
@@ -81,18 +87,21 @@ router = APIRouter()
 async def chat(
     request: ChatRequest
 ) -> ChatResponse:
+    args = (
+        common.llm,
+        request.messages,
+        request.llm_inference_params
+    )
+
     if request.rag:
-        response = _rag(
-            common.llm,
-            request.messages,
-            request.llm_inference_params
-        )
+        response = _rag(*args)
     else:
         response = chat_with_default_system_message(
-            common.llm,
-            request.messages,
-            request.llm_inference_params
+            *args, extend_system_message=True
         )
+
+    response = re.sub("\n+", "\n", response)
+    response = response.strip()
 
     result = ChatResponse(
         text=response

@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.031679"
-     inkscape:cx="115.66788"
-     inkscape:cy="356.10941"
+     inkscape:zoom="0.50791975"
+     inkscape:cx="576.86278"
+     inkscape:cy="282.52495"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -544,7 +544,7 @@
        transform="rotate(-0.15648)" />
     <path
        id="stairs2"
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.860977"
+       style="fill:#cbebfa;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.860977"
        d="m 51.270243,8.257261 12.924815,-0.0353 0.0545,19.960525 -12.924805,0.0353 z m 9.952625,20.317504 -7.056435,-0.01812 -10e-4,-0.7224 7.056425,0.01812 z"
        class="room" />
     <rect
@@ -851,6 +851,73 @@
        id="korytarz"
        style="fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.861869;stroke-dasharray:none;stroke-opacity:1"
        d="m 192.65348,198.65775 h -25.48475 v -0.12764 h 15.94373 v -14.59394 h -2.23759 v -0.11938 h 2.01538 v -35.7141 h 8.35246 v -19.90627 h -8.41137 v -3.72277 l 0.54518,-0.002 -0.13281,-34.738452 h 0.0703 l -0.0935,-34.288345 -0.28887,5.17e-4 V 34.10352 h -8.53178 v 20.970296 l -0.65784,0.0016 -0.0568,-20.978564 -14.09681,0.03876 0.0568,20.978565 -0.10232,5.16e-4 0.0568,20.669535 11.53883,-0.0315 5.2e-4,0.3638 -0.2279,5.2e-4 0.092,33.783472 h -0.21342 v 2.75642 h -30.31184 v 35.45003 h 30.47152 v 35.70996 h 2.21176 v 0.11938 h -14.00125 v 14.59394 h 5.0798 v 0.12764 h -9.8547 v 6.56859 h 38.26847 z" />
+    <rect
+       style="display:inline;fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:0.950723;stroke-dasharray:none;stroke-opacity:1"
+       id="rect9-0-5-1"
+       width="9.8837957"
+       height="0.61969399"
+       x="-31.400274"
+       y="175.21645"
+       transform="matrix(-0.00327711,-0.99999463,0.99139399,0.130912,0,0)"
+       inkscape:transform-center-x="-6.6980001"
+       inkscape:transform-center-y="1.7037874" />
+    <ellipse
+       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
+       id="path4-0-3-4-7-2-1-2-5"
+       cx="166.70999"
+       cy="188.53287"
+       rx="2.479085"
+       ry="1.1908884" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       x="161.37422"
+       y="192.96507"
+       id="text1-3-3-4-4-3"
+       transform="scale(1.0202231,0.98017777)"><tspan
+         sodipodi:role="line"
+         style="stroke:none;stroke-width:0.464148"
+         x="161.37422"
+         y="192.96507"
+         id="tspan2-1-1-2-8-2">F105</tspan></text>
+    <ellipse
+       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
+       id="path4-0-3-4-7-2-1-2-52"
+       cx="166.66353"
+       cy="191.51772"
+       rx="2.479085"
+       ry="1.1908884" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       x="161.32867"
+       y="196.01028"
+       id="text1-3-3-4-4-5"
+       transform="scale(1.0202231,0.98017777)"><tspan
+         sodipodi:role="line"
+         style="stroke:none;stroke-width:0.464148"
+         x="161.32867"
+         y="196.01028"
+         id="tspan2-1-1-2-8-6">F107</tspan></text>
+    <ellipse
+       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
+       id="path4-0-3-4-7-2-1-2-7"
+       cx="166.71228"
+       cy="194.455"
+       rx="2.479085"
+       ry="1.1908884" />
+    <text
+       xml:space="preserve"
+       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       x="161.37645"
+       y="199.00697"
+       id="text1-3-3-4-4-6"
+       transform="scale(1.0202231,0.98017777)"><tspan
+         sodipodi:role="line"
+         style="stroke:none;stroke-width:0.464148"
+         x="161.37645"
+         y="199.00697"
+         id="tspan2-1-1-2-8-5">F108</tspan></text>
     <rect
        style="fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:1.133;stroke-dasharray:none;stroke-opacity:1"
        id="rect9-0-5"

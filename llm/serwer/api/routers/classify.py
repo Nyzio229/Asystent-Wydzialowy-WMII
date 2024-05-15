@@ -14,7 +14,7 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel, Field
 
-from llama_cpp import LogitsProcessorList
+from llama_cpp import LlamaGrammar, LogitsProcessorList
 
 from lmformatenforcer import CharacterLevelParser, JsonSchemaParser
 from lmformatenforcer.integrations.llamacpp import (
@@ -29,34 +29,47 @@ from common import (
     Message
 )
 
-class ClassificationRequest(BaseModel):
-    text: str
-
 _NAVIGATION_DESCRIPTION_WHEN_SPECIFIED = (
     "When specified, it is assumed to be a place on a university campus. "
-    "It can be a coded room name (the code is: a letter followed by a few digits); "
-    "it doesn't have to be a valid name of an existing room/place."
+    "If it is a letter followed by a few digits (example: B202) then consider it "
+    "a correctly coded room name; "
+    "it doesn't have to be a valid name of an existing room/place. "
+    "The location may also consist of a few words, for example: "
+    "'toilet near <a room>' or 'stairs next to <a room>'."
 )
 
-def _get_navigation_point_description(preposition: str, point: str) -> str:
+def _get_navigation_point_description(
+    description: str,
+    preposition: str,
+    point: str
+) -> str:
     return (
-        f"{point.capitalize()} point for navigation. "
-        "The navigation query may be incomplete, so "
-        f"leave this field blank if the {point.lower()} point for navigation "
+        f"{point.capitalize()} point for navigation. " +
+        f"{description}\n"
+        "The navigation query may be incomplete (that is, "
+        f"the {point} point might not be specified at all). "
+        f"In such case, answer with '<unknown>' if the {point} point for navigation "
         "isn't explicitly specified within the query. "
         f"{_NAVIGATION_DESCRIPTION_WHEN_SPECIFIED} "
-        f"It's IMPORTANT that the {point.lower()} point must come right after "
-        f"the following preposition: '{preposition.lower()}'"
+        f"The {point} point usually comes right after "
+        f"the following preposition: '{preposition}'"
     )
 
 class CategoryNavigationMetadataSource(BaseModel):
     source: Optional[str] = Field(
-        description=_get_navigation_point_description("from", "starting")
+        description=_get_navigation_point_description(
+            "The starting point is the location that the user wants to go from, "
+            "where he is currently located or where he is starting from.",
+            "from", "starting"
+        )
     )
 
 class CategoryNavigationMetadataDestination(BaseModel):
     destination: Optional[str] = Field(
-        description=_get_navigation_point_description("to", "destination")
+        description=_get_navigation_point_description(
+            "The destination point is the location that the user wants to go to.",
+            "to", "destination"
+        )
     )
 
 class Place(BaseModel):
@@ -93,6 +106,8 @@ class SynonymsContainer(BaseModel):
         return extended
 
 _places: list[Place] = []
+_simple_places_names: list[str] = []
+
 _synonyms: list[SynonymsContainer] = []
 
 _PLACES_DIR_PATH = Path("places")
@@ -164,11 +179,16 @@ def _get_synonyms() -> list[SynonymsContainer]:
 
     return _synonyms
 
-def _get_places() -> list[Place]:
+def _get_places() -> tuple[
+    list[str], list[Place]
+]:
     global _places
+    global _simple_places_names
 
-    if not _places:
-        def _read_simple_places(file_name: str) -> list[Place]:
+    if not _places or not _simple_places_names:
+        def _read_simple_places(
+            file_name: str
+        ) -> list[Place]:
             places: list[Place] = []
 
             simple_places_path = _PLACES_DIR_PATH / file_name
@@ -235,46 +255,22 @@ def _get_places() -> list[Place]:
         _extend_places(places)
 
         _places = places
+        _simple_places_names = list(map(
+            lambda place: place.pl.lower(), simple_places
+        ))
 
-    return _places
+    return _simple_places_names, _places
 
-class ClassificationIfNavigation(BaseModel):
-    is_navigation: bool = Field(
-        description=(
-            "Whether the user's query is a navigation query. "
-            "A navigation query is a question which asks "
-            "how to get from/to a certain place/location within a university campus. "
-            "It can also be phrased in various ways, like asking for directions. "
-            "The source/destination of navigation can be a coded room name (such as A5); "
-            "it doesn't have to be a valid name of an existing room/place. "
-            "A navigation query may consist of multiple sentences/questions.\n"
-            "It's also possible that the user provides additional, irrelevant information or context;"
-            "in such case, consider his query as a navigation query if ANY of his questions/sentences "
-            "regard in some way: navigating/wanting to get somewhere/looking for directions/"
-            "asking how the user the can get somewhere/reaching a certain place or location/"
-            "asking if there's a way to get somewhere/where a place/room is located/"
-            "asking to tell the user how to get somewhere/"
-            "asking if it's possible to get to a place.\n"
-            "In short, a navigation query is most of the times a text "
-            "that contains any mention of a location/place."
-        )
-    )
+_GRAMMAR_TRUE_FALSE = LlamaGrammar.from_string(
+    '''root ::= "true" | "false"'''
+)
 
 class CategoryNavigationMetadata(BaseModel):
     source: Optional[str] = None
     destination: Optional[str] = None
 
-class CategoryNavigationRephraseQuery(BaseModel):
-    rephrased_query: str = Field(
-        description=(
-            "The rephrased navigation query. "
-            "It must be in the form of: "
-            "'How to get from <source> to <destination>?'. "
-            "If a piece of information (starting or destination point)"
-            "is missing then it should be marked with: <unknown>. " +
-            _NAVIGATION_DESCRIPTION_WHEN_SPECIFIED
-        )
-    )
+class ClassificationRequest(BaseModel):
+    text: str
 
 class ClassificationResult(BaseModel):
     label: Literal["navigation", "chat"]
@@ -344,10 +340,11 @@ async def classify(
 
         return response
 
-    def _invoke_llm_for_task_2(
+    def _chat_with_llm_for_task(
         query: str,
         task: str,
-        suffix: Optional[str] = None
+        suffix: Optional[str] = None,
+        grammar: Optional[LlamaGrammar] = None
     ) -> str:
         if suffix:
             suffix = f"\n\n{suffix}"
@@ -355,7 +352,7 @@ async def classify(
         prompt = (
             f"{task}\n\n"
             "Here is the user's query:\n"
-            f"'{query}'"
+            f'"{query}"'
             f"{suffix if suffix else ''}"
         )
 
@@ -373,7 +370,8 @@ async def classify(
         response = chat_with_default_system_message(
             common.llm,
             [prompt_message],
-            llm_inference_params
+            llm_inference_params,
+            grammar=grammar
         )
 
         response = response.lower()
@@ -399,7 +397,7 @@ async def classify(
             "You MUST answer using the following json schema:"
             f"{response_schema_str}\n\n" +
             "Here is the user's query:\n" +
-            f"'{query}'"
+            f'"{query}"'
         )
 
         prompt = _get_prompt(prompt)
@@ -408,45 +406,299 @@ async def classify(
 
         return result
 
+    def _get_next_nearest_substring(
+        text: str | list[str],
+        substrings: Iterable[str],
+        start_idx: Optional[int] = None
+    ) -> tuple[Optional[str], Optional[int]]:
+        lowest_idx: Optional[int] = None
+        next_substring: Optional[str] = None
+
+        for substring in substrings:
+            try:
+                idx = text.index(substring, start_idx)
+            except ValueError:
+                continue
+
+            if lowest_idx is None or idx < lowest_idx:
+                lowest_idx = idx
+                next_substring = substring
+
+        return next_substring, lowest_idx
+
+    def _split_preserve_punctuation(
+        text: str,
+        punctuation: Iterable[str]
+    ) -> list[str]:
+        split_words: list[str] = []
+
+        words = text.split()
+
+        for word in words:
+            start_idx = 0
+
+            while True:
+                next_char, idx = _get_next_nearest_substring(
+                    word, punctuation, start_idx
+                )
+
+                if idx is None:
+                    break
+
+                split_words += [word[start_idx:idx], next_char]
+
+                start_idx = idx+1
+
+            if start_idx < len(word):
+                split_words.append(word[start_idx:])
+
+        split_words = list(filter(
+            lambda x: x, split_words
+        ))
+
+        return split_words
+
+    def _find_best_matching_place(
+        location: str,
+        places: list[Place]
+    ) -> Optional[Place]:
+        exact_match: Optional[Place] = None
+        matching_places: dict[str, Place] = {}
+
+        for place in places:
+            for en_name in place.en:
+                if en_name == location:
+                    exact_match = place
+
+                    break
+
+                if en_name in location:
+                    matching_places[en_name] = place
+            else:
+                continue
+
+            break
+
+        if exact_match:
+            place = exact_match
+        elif not matching_places:
+            place = None
+        elif len(matching_places) == 1 or len(set(map(
+            lambda place: place.pl, matching_places.values()
+        ))) == 1:
+            place = next(iter(matching_places.values()))
+        else:
+            best_match_result: tuple[
+                tuple[str, Place],
+                int
+            ] = process.extractOne(
+                query=location,
+                choices=matching_places.items(),
+                processor=lambda pair: pair[0]
+            )
+
+            best_match = best_match_result[0]
+
+            place = best_match[1]
+
+            logger.debug(
+                "'%s' contains %d places: %s. Best match is: '%s' (because of '%s')",
+                location,
+                len(matching_places),
+                list(map(
+                    lambda place: place.pl, matching_places.values()
+                )),
+                place.pl,
+                best_match[0]
+            )
+
+        return place
+
+    def _get_navigation_metadata_using_brute_force(
+        query: str,
+        places: list[Place]
+    ) -> Optional[dict[str, Optional[Place]]]:
+        punctuation = {".", ",", "?", "!"}
+
+        words = _split_preserve_punctuation(
+            query.lower(), punctuation
+        )
+
+        source_words = {"from"}
+        destination_words = {"to", "into", "where"}
+
+        stops = source_words | destination_words | punctuation
+
+        metadata: dict[list[str], list[str]] = {
+            key: []
+            for key in [
+                "source", "destination"
+            ]
+        }
+
+        idx = 0
+
+        n_words = len(words)
+
+        while idx < n_words:
+            word = words[idx]
+
+            idx += 1
+
+            if word in source_words:
+                metadata_key = "source"
+            elif word in destination_words:
+                metadata_key = "destination"
+            else:
+                continue
+
+            _, stop_idx = _get_next_nearest_substring(
+                words, stops, idx
+            )
+
+            if not stop_idx:
+                stop_idx = n_words
+
+            location = " ".join(words[idx:stop_idx])
+            location = _format_place_name(location)
+
+            metadata[metadata_key].append(location)
+
+            idx = stop_idx
+
+        for key, value in metadata.items():
+            for location in value:
+                best_match = _find_best_matching_place(
+                    location, places
+                )
+
+                if best_match:
+                    break
+            else:
+                best_match = None
+
+            metadata[key] = best_match
+
+        return metadata
+
+    def _extend_places_names(
+        navigation_query: str,
+        places_names: list[str],
+        extension_word: str
+    ) -> str:
+        new_words: list[str] = []
+
+        words = navigation_query.split()
+
+        n_words = len(words)
+
+        for i, word in enumerate(words):
+            def _has_neighbor_at(idx: int) -> bool:
+                return words[idx].lower() == extension_word
+
+            def _has_left_neighbor() -> bool:
+                return _has_neighbor_at(i-1)
+
+            def _has_right_neighbor() -> bool:
+                return _has_neighbor_at(i+1)
+
+            filtered_word = re.sub(r"[^a-z\d ]", "", word.lower())
+
+            if filtered_word in places_names:
+                if i == 0:
+                    has_neighbor = _has_right_neighbor()
+                elif i == n_words-1:
+                    has_neighbor = _has_left_neighbor()
+                else:
+                    has_neighbor = _has_left_neighbor() or _has_right_neighbor()
+
+                if not has_neighbor:
+                    new_words.append(extension_word)
+
+            new_words.append(word)
+
+        extended_query = " ".join(new_words)
+
+        return extended_query
+
     request_text = request.text
 
-    """
-    result_if_navigation = _invoke_llm_for_task(
-        request_text,
-        "categorize",
-        ClassificationIfNavigation
+    simple_places_names, places = _get_places()
+
+    metadata = _get_navigation_metadata_using_brute_force(
+        request_text, places
     )
 
-    label = "navigation" if result_if_navigation.is_navigation else "chat"
-    """
+    if metadata:
+        logger.debug(
+            "Got navigation metadata using brute force"
+        )
 
-    is_navigation = _invoke_llm_for_task_2(
-        request_text,
-        "Please decide whether the user's query (given at the end) is a navigation query. "
-        "A navigation query is a question which asks "
-        "how to get from/to a certain place/location within a university campus. "
-        "It can also be phrased in various ways, like asking for directions. "
-        "The source/destination of navigation can be a coded room name (such as A5); "
-        "it doesn't have to be a valid name of an existing room/place. "
-        "A navigation query may consist of multiple sentences/questions.\n"
-        "It's also possible that the user provides additional, irrelevant information or context;"
-        "in such case, consider his query as a navigation query if ANY of his questions/sentences "
-        "regard in some way: navigating/wanting to get somewhere/looking for directions/"
-        "asking how the user the can get somewhere/reaching a certain place or location/"
-        "asking if there's a way to get somewhere/where a place/room is located/"
-        "asking to tell the user how to get somewhere/"
-        "asking if it's possible to get to a place.\n"
-        "In short, a navigation query is most of the times a text "
-        "that contains any mention of a location/place.\n",
-        "If you think the query is a navigation query then answer with 'yes', otherwise with 'no'."
-    ) == "yes"
+        for key, value in metadata.items():
+            if value:
+                logger.debug(
+                    "metadata['%s'] = '%s'",
+                    key, value.pl
+                )
 
-    label = "navigation" if is_navigation else "chat"
+    extended_request_text = _extend_places_names(
+        request_text, simple_places_names, "room"
+    )
+
+    def _is_metadata_complete(
+        metadata: dict[str, Optional[Place]]
+    ) -> bool:
+        return all(value for value in metadata.values())
+
+    if (
+        not _is_metadata_complete(metadata) and
+        extended_request_text != request_text
+    ):
+        logger.debug(
+            "Extended request text: from '%s' to '%s'",
+            request_text, extended_request_text
+        )
+
+        request_text = extended_request_text
+
+    if metadata:
+        label = "navigation"
+    else:
+        is_navigation = _chat_with_llm_for_task(
+            request_text,
+            "Please decide whether the user's query (given at the end) is a navigation query. "
+            "A navigation query is a question which asks "
+            "how to get from/to a certain place/location within a university campus. "
+            "It can also be phrased in various ways, like asking for directions. "
+            "The source/destination of navigation can be a coded room name (such as A5); "
+            "it doesn't have to be a valid name of an existing room/place. "
+            "A navigation query may consist of multiple sentences/questions.\n"
+            "It's also possible that the user provides additional, irrelevant information or context;"
+            "in such case, consider his query as a navigation query if ANY of his questions/sentences "
+            "regard in some way: navigating/wanting or needing to get to, in or into somewhere/looking for directions/"
+            "asking how the user the can get somewhere/reaching a certain place or location/"
+            "asking if there's a way to get somewhere/where a place/room is located/"
+            "asking to tell the user how to get somewhere/"
+            "asking if it's possible to get to a place. "
+            "Keep in mind that many room/place names are coded, like B302 or L5 (a letter and a few digits).\n"
+            "In short, a navigation query is most of the times a text "
+            "that contains any mention of a location/place.\n",
+            "If you think the query is a navigation query then answer with 'true', otherwise with 'false'.",
+            _GRAMMAR_TRUE_FALSE
+        ) == "true"
+
+        label = "navigation" if is_navigation else "chat"
 
     if label == "navigation":
-        def _get_navigation_metadata(
-            navigation_query: str
-        ) -> Optional[dict[str, Optional[str]]]:
+        def _get_missing_navigation_metadata_using_llm(
+            navigation_query: str,
+            metadata: dict[str, Optional[Place]]
+        ) -> Optional[dict[str, Optional[Place]]]:
+            metadata = metadata.copy()
+
+            if _is_metadata_complete(metadata):
+                return metadata
+
             doc = common.nlp(navigation_query)
 
             adps_texts = []
@@ -456,57 +708,98 @@ async def classify(
                     adps_texts.append(token.text.lower())
 
             def _log_no_preposition_in_query_skip_point_extraction(
-                preposition: str,
-                point: str
+                preposition: str | tuple[str, ...],
+                point: str,
+                additional_check: Optional[str] = None
             ) -> None:
                 logger.debug(
-                    "Navigation query doesn't contain the '%s' word (POS: preposition/ADP), "
+                    "Navigation query doesn't contain the '%s' word (POS: preposition/ADP)%s, "
                     "so skipping '%s' point extraction.",
                     preposition,
+                    f" (in addition: {additional_check})" if additional_check else "",
                     point
                 )
 
-            result_source = _invoke_llm_for_task(
-                navigation_query,
-                "extract information from",
-                CategoryNavigationMetadataSource
-            )
-
-            source = result_source.source
-
-            if (
-                "from" not in adps_texts and source and
-                _format_place_name(source) not in _format_place_name(navigation_query)
-            ):
+            if metadata["source"]:
                 source = None
-
-                _log_no_preposition_in_query_skip_point_extraction(
-                    "from", "source"
-                )
-
-            if "to" in adps_texts:
-                result_destination = _invoke_llm_for_task(
+            else:
+                result_source = _invoke_llm_for_task(
                     navigation_query,
                     "extract information from",
-                    CategoryNavigationMetadataDestination
+                    CategoryNavigationMetadataSource
                 )
 
-                destination = result_destination.destination
-            else:
+                source = result_source.source
+
+                if source and "from" in source:
+                    source = source.replace("from", "")
+
+                has_from_adp = "from" in adps_texts
+
+                if (
+                    not has_from_adp and source and
+                    _format_place_name(source) not in _format_place_name(navigation_query)
+                ):
+                    if has_from_adp:
+                        if source:
+                            additional_check = (
+                                f"'source' value ('{_format_place_name(source)}') "
+                                "wasn't found in the query"
+                            )
+                        else:
+                            additional_check = "'source' value is `None`"
+                    else:
+                        additional_check = None
+
+                    _log_no_preposition_in_query_skip_point_extraction(
+                        "from", "source", additional_check
+                    )
+
+                    source = None
+
+            if metadata["destination"]:
                 destination = None
+            else:
+                words_to = ("where", "there")
+                prepositions_to = ("to", "into")
 
-                _log_no_preposition_in_query_skip_point_extraction(
-                    "to", "destination"
-                )
+                if (
+                    any(
+                        word in navigation_query.lower()
+                        for word in words_to
+                    )
+                    or
+                    any(
+                        preposition in adps_texts
+                        for preposition in prepositions_to
+                    )
+                ):
+                    result_destination = _invoke_llm_for_task(
+                        navigation_query,
+                        "extract information from",
+                        CategoryNavigationMetadataDestination
+                    )
+
+                    destination = result_destination.destination
+                else:
+                    destination = None
+
+                    _log_no_preposition_in_query_skip_point_extraction(
+                        prepositions_to, "destination", f"it doesn't contain any of the words: {words_to}"
+                    )
 
             metadata_str = dict(
                 source=source,
                 destination=destination
             )
 
-            metadata_places: dict[str, Optional[Place]] = {}
-
-            places = _get_places()
+            if all(not value for value in metadata.values()):
+                missing_metadata_key = None
+            else:
+                missing_metadata_key = next(
+                    (key for key, value in metadata.items() if not value),
+                    None
+                )
 
             for key, value in metadata_str.items():
                 if not value:
@@ -520,51 +813,9 @@ async def classify(
                         key, value, name
                     )
 
-                exact_match: Optional[Place] = None
-                matching_places: dict[str, Place] = {}
-
-                for place in places:
-                    for en_name in place.en:
-                        if en_name == name:
-                            exact_match = place
-
-                            break
-
-                        if en_name in name:
-                            matching_places[en_name] = place
-                    else:
-                        continue
-
-                    break
-
-                if exact_match:
-                    place = exact_match
-                elif not matching_places:
-                    place = None
-                elif len(matching_places) == 1:
-                    place = next(iter(matching_places.values()))
-                else:
-                    best_match_result: tuple[
-                        tuple[str, Place],
-                        int
-                    ] = process.extractOne(
-                        query=name,
-                        choices=matching_places.items(),
-                        processor=lambda pair: pair[0]
-                    )
-
-                    best_match = best_match_result[0]
-
-                    place = best_match[1]
-
-                    logger.debug(
-                        "metadata['%s']: '%s' contains %d places: %s. Best match is: '%s' (because of '%s')",
-                        key, name,
-                        len(matching_places),
-                        list(map(lambda place: place.pl, matching_places.values())),
-                        place.pl,
-                        best_match[0]
-                    )
+                place = _find_best_matching_place(
+                    name, places
+                )
 
                 if place:
                     logger.debug(
@@ -573,61 +824,53 @@ async def classify(
                     )
                 else:
                     logger.debug(
-                        "metadata['%s']: no such place '%s'. Setting to None",
+                        "metadata['%s']: no such place '%s'. Setting to `None`",
                         key, name
                     )
 
-                metadata_places[key] = place
+                metadata[key] = place
 
-            has_points = any(place for place in metadata_places.values())
-
-            if has_points:
-                metadata = {
-                    key: value.pl if value else None
-                    for key, value in metadata_places.items()
-                }
-            else:
-                metadata = None
-
+            # check for llm hallucination of the missing place
+            # (it usually assigns the same place as
+            # both source and destination if one is missing)
+            if (
+                missing_metadata_key and
+                metadata["source"] == metadata["destination"]
+            ):
                 logger.debug(
-                    "metadata: no valid places"
+                    "Hallucination check: llm most likely hallucinated the '%s' metadata value ('%s'). "
+                    "Therefore, setting it to `None`.",
+                    missing_metadata_key, metadata[missing_metadata_key].pl
                 )
+
+                metadata[missing_metadata_key] = None
 
             return metadata
 
-        def _set_metadata(navigation_query: str):
-            nonlocal metadata
-            metadata = _get_navigation_metadata(navigation_query)
-            
-        def _check_metadata() -> bool:
-            if metadata:
-                return True
+        if not metadata:
+            metadata = dict(
+                source=None,
+                destination=None
+            )
 
-            nonlocal label
+        metadata = _get_missing_navigation_metadata_using_llm(
+            request_text, metadata
+        )
+
+        has_points = any(place for place in metadata.values())
+
+        if has_points:
+            metadata = {
+                key: value.pl if value else None
+                for key, value in metadata.items()
+            }
+        else:
             label = "chat"
+            metadata = None
 
-            return False
-
-        _set_metadata(request_text)
-
-        if _check_metadata() and len(set(metadata.values())) == 1:
             logger.debug(
-                "metadata: both points are equal ('%s'). "
-                "Attempting to rephrase the query and try again.",
-                next(iter(metadata.values()))
+                "metadata: no valid places"
             )
-
-            result_rephrase = _invoke_llm_for_task(
-                request_text,
-                "rephrase",
-                CategoryNavigationRephraseQuery
-            )
-
-            navigation_query = result_rephrase.rephrased_query
-
-            _set_metadata(navigation_query)
-
-            _check_metadata()
     else:
         metadata = None
 

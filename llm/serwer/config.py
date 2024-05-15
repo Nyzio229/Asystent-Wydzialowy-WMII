@@ -25,12 +25,7 @@ class Config(BaseModel):
         class FaqLike(BaseModel):
             score_threshold: float
 
-        class DocsUpload(BaseModel):
-            separator: str
-            chunk_size: int
-
         faq_like: FaqLike
-        docs_upload: DocsUpload
 
     command_line: CommandLine
     vector_store: VectorStore
@@ -62,10 +57,6 @@ config = Config(
     api=Config.Api(
         faq_like=Config.Api.FaqLike(
             score_threshold=0.6
-        ),
-        docs_upload=Config.Api.DocsUpload(
-            chunk_size=1024,
-            separator="\n\n"
         )
     )
 )

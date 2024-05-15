@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.7974891"
-     inkscape:cx="329.78507"
-     inkscape:cy="290.2861"
+     inkscape:zoom="3.1899564"
+     inkscape:cx="574.30252"
+     inkscape:cy="275.39561"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -63,7 +63,8 @@
        x="8.7785921"
        y="60.685055"
        transform="rotate(-0.15648)"
-       inkscape:label="b111" />
+       inkscape:label="b111"
+       class="room" />
     <ellipse
        style="display:inline;fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.786293;stroke-opacity:1"
        id="path4-0-9-0-1-0"
@@ -96,7 +97,8 @@
        x="8.823575"
        y="67.498993"
        transform="rotate(-0.15648)"
-       inkscape:label="b110" />
+       inkscape:label="b110"
+       class="room" />
     <ellipse
        style="display:inline;fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.786293;stroke-opacity:1"
        id="path4-0-9-0-1-5"
@@ -452,8 +454,8 @@
        x="8.6161165"
        y="103.15932"
        transform="rotate(-0.15648)"
-       inkscape:label="stairs" 
-	class="room"/>
+       inkscape:label="stairs"
+       class="room" />
     <rect
        style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-dasharray:none;stroke-opacity:1"
        id="pm1"
@@ -537,7 +539,7 @@
        transform="rotate(-0.15648)" />
     <path
        id="stairs"
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.860977"
+       style="fill:#cbebfa;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.860977"
        d="m 50.652365,20.894841 12.924815,-0.0353 0.0545,19.960525 -12.924805,0.0353 z m 9.952625,20.317504 -7.056435,-0.01812 -10e-4,-0.7224 7.056425,0.01812 z"
        inkscape:label="stairs" />
     <rect
@@ -727,15 +729,15 @@
        inkscape:transform-center-x="-7.0028032"
        inkscape:transform-center-y="0.56014207" />
     <rect
-       style="fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:0.73054;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:0.950723;stroke-dasharray:none;stroke-opacity:1"
        id="rect9-0-5-1"
-       width="4.3613496"
-       height="0.82920134"
-       x="-59.159878"
-       y="171.66618"
-       transform="matrix(-0.01001441,-0.99994985,0.99906777,0.04316924,0,0)"
-       inkscape:transform-center-x="-9.0318452"
-       inkscape:transform-center-y="0.75178386" />
+       width="9.8837957"
+       height="0.61969399"
+       x="-44.213058"
+       y="173.54866"
+       transform="matrix(-0.00327711,-0.99999463,0.99139399,0.130912,0,0)"
+       inkscape:transform-center-x="-6.6980001"
+       inkscape:transform-center-y="1.7037874" />
     <rect
        style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
        id="rect2-6"
@@ -1840,7 +1842,7 @@
          y="123.25261">SK</tspan></text>
     <path
        id="galeria"
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.558956;stroke-opacity:1"
+       style="fill:#cbebfa;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.558956;stroke-opacity:1"
        d="m 134.17922,69.236025 -2.26537,1.577094 v 32.240511 h 12.64526 V 69.236025 Z"
        inkscape:label="galeria" />
     <ellipse

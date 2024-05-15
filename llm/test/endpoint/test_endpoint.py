@@ -2,9 +2,11 @@ import abc
 
 import json
 
+import unittest
+
 from pathlib import Path
 
-from typing import Type, TypeVar
+from typing import Type, TypeVar, Optional
 
 import requests
 
@@ -13,8 +15,9 @@ from pydantic import BaseModel
 from baza_wiedzy.utils import get_cached_translation, translate
 
 T = TypeVar("T", bound=BaseModel)
+U = TypeVar("U", bound=BaseModel)
 
-class EndpointTester:
+class TestEndpoint(unittest.TestCase):
     lang_from = "pl"
     lang_to = "en-US"
 
@@ -24,15 +27,26 @@ class EndpointTester:
     def __init__(
         self,
         endpoint: str,
-        test_case_type: Type[T]
+        test_case_type: Type[T],
+        translated_test_case_type: Optional[Type[U]] = None,
+        *args, **kwargs
     ) -> None:
+        super().__init__(*args, **kwargs)
+
         self._api_url = f"{self._SERVER_URL}/{endpoint}"
 
         self._test_case_type = test_case_type
+        self._translated_test_case_type = (
+            translated_test_case_type or test_case_type
+        )
+
         self._test_cases_dir = Path(self._TEST_CASES_DIR)
 
         self._test_cases = self._get_translated_test_cases()
         self._expected_responses = self._get_expected_responses()
+
+        if not self._expected_responses:
+            return
 
         n_test_cases = len(self._test_cases)
         n_expected_responses = len(self._expected_responses)
@@ -46,7 +60,7 @@ class EndpointTester:
     def _assert_api_response(
         self,
         response: dict[str],
-        expected_response: dict[str]
+        expected_response: Optional[dict[str]]
     ) -> None:
         pass
 
@@ -54,11 +68,11 @@ class EndpointTester:
     def _translate_test_cases(
         self,
         test_cases: list[T]
-    ) -> list[T]:
+    ) -> list[U]:
         pass
 
     @abc.abstractmethod
-    def _get_expected_responses(self) -> list[dict[str]]:
+    def _get_expected_responses(self) -> Optional[list[dict[str]]]:
         pass
 
     @classmethod
@@ -69,14 +83,15 @@ class EndpointTester:
     def _translate_back(cls, message: str) -> str:
         return translate(message, cls.lang_to, cls.lang_from)
 
-    def _get_translated_test_cases(self) -> list[T]:
+    def _get_translated_test_cases(self) -> list[U]:
         dir_path = self._test_cases_dir
         translated = get_cached_translation(
             pl_path=dir_path / "pl.json",
             cache_path=dir_path / "translated.json",
             translator=self._translate_test_cases,
             with_pl=False,
-            model_type=self._test_case_type
+            model_type=self._test_case_type,
+            translated_model_type=self._translated_test_case_type
         )
 
         return translated
@@ -85,7 +100,7 @@ class EndpointTester:
         response = requests.post(
             self._api_url,
             json=kwargs,
-            timeout=10
+            timeout=20
         )
 
         response = response.json()
@@ -94,8 +109,8 @@ class EndpointTester:
 
     def _run_test_case(
         self,
-        test_case: T,
-        expected_response: dict[str]
+        test_case: U,
+        expected_response: Optional[dict[str]]
     ) -> None:
         attr_names = list(test_case.model_fields.keys())
 
@@ -115,6 +130,10 @@ class EndpointTester:
         response = self._call_remote_endpoint(**attrs)
 
         _log_field("Response", response)
+
+        if not expected_response:
+            return
+
         _log_field("Expecting", expected_response)
 
         self._assert_api_response(
@@ -128,13 +147,20 @@ class EndpointTester:
 
         test_cases = self._test_cases
 
-        for i, (test_case, expected_response) in enumerate(zip(
-            test_cases, self._expected_responses
-        )):
+        class_name = self.__class__.__name__
+
+        expected_responses = self._expected_responses
+
+        for i, test_case in enumerate(test_cases):
             _print_boundary()
 
-            print(f"Test [{i+1}/{len(test_cases)}]\n")
+            test_id = f"{i+1}/{len(test_cases)}"
 
-            self._run_test_case(test_case, expected_response)
+            print(f"Test ('{class_name}') [{test_id}]\n")
+
+            expected_response = expected_responses[i] if expected_responses else None
+
+            with self.subTest(test_id):
+                self._run_test_case(test_case, expected_response)
 
             _print_boundary()

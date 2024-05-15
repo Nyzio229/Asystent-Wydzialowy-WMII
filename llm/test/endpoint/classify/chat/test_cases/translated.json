@@ -1,23 +1,32 @@
 [
-    {
-        "text": "What is the weather like?"
-    },
-    {
-        "text": "Is Berlin located far from here?"
-    },
-    {
-        "text": "When is the dean's office open?"
-    },
-    {
-        "text": "Where should I apply to change my major?"
-    },
-    {
-        "text": "Hi, how are you doing?"
-    },
-    {
-        "text": "Let me prepare you something to eat."
-    },
-    {
-        "text": "Are you from here?"
-    }
+   {
+      "text": "What is the weather like?"
+   },
+   {
+      "text": "Is Berlin located far from here?"
+   },
+   {
+      "text": "When is the dean's office open?"
+   },
+   {
+      "text": "Where should I apply to change my major?"
+   },
+   {
+      "text": "Hi, how are you doing?"
+   },
+   {
+      "text": "Let me prepare you something to eat."
+   },
+   {
+      "text": "Are you from here?"
+   },
+   {
+      "text": "I want to get to K194"
+   },
+   {
+      "text": "Lead me to the exit"
+   },
+   {
+      "text": "Show me the way to room U8"
+   }
 ]

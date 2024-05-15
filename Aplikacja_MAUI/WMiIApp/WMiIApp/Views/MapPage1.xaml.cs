@@ -46,28 +46,42 @@ public partial class MapPage1 : ContentPage
         }
     }
 
+    private void HandleRoomButtonClickStairsOneWayUp(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("///MapPage2");
+    }
+
+    private void HandleRoomButtonClickStairsOneWayDown(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("///MapPage0");
+    }
+
+    private async void HandleRoomButtonClickStairsTwoWay(object sender, EventArgs e)
+    {
+        string action = await DisplayActionSheet("IdŸ na", "Zamknij", null, "Parter", "II piêtro");
+
+        if (action == "Parter")
+        {
+            Shell.Current.GoToAsync("///MapPage0");
+        }
+        else if (action == "II piêtro")
+        {
+            Shell.Current.GoToAsync("///MapPage2");
+        }
+    }
+
     private async void DisplayRoomInfo(Room room)
     {
         string message = $"Nazwa sali: {room.Name}\n" +
                          $"Piêtro: {room.Floor}\n";
 
-        // Wyswietlanie innych nazw, jesli s¹ dostepne
-        if (room.OtherNames.Any())
-        {
-            message += "Inne Nazwy: ";
-            foreach (string otherName in room.OtherNames)
-            {
-                message += $" {otherName} ";
-            }
-            message += "\n";
-        }
 
         if (room.Residents.Any())
         {
-            message += "Rezydenci: ";
+            message += "Rezydenci: \n";
             foreach (string resident in room.Residents)
             {
-                message += $" {resident} ";
+                message += $" -> {resident}\n";
             }
 
             message += "\n";
@@ -88,10 +102,12 @@ public partial class MapPage1 : ContentPage
             if (actionResult == "Dodaj jako miejsce startowe")
             {
                 sourceRoomListView.SelectedItem = room.Name;
+                App.sourceRoom = room.Name;
             }
             else if (actionResult == "Dodaj jako miejsce docelowe")
             {
                 destinationRoomListView.SelectedItem = room.Name;
+                App.destinationRoom = room.Name;
             }
         }
     }
@@ -120,6 +136,8 @@ public partial class MapPage1 : ContentPage
             sourceRoomListView.IsVisible = false;
 
             sourceSearchBar.Text = selectedRoom;
+
+            App.sourceRoom = selectedRoom;
 
             sourceSearchBar.HideKeyboardAsync();
         }
@@ -151,6 +169,8 @@ public partial class MapPage1 : ContentPage
 
             destinationSearchBar.Text = selectedRoom;
 
+            App.destinationRoom = selectedRoom;
+
             destinationSearchBar.HideKeyboardAsync();
         }
     }
@@ -158,8 +178,8 @@ public partial class MapPage1 : ContentPage
     // Metoda wywo³ywana po kliknieciu przycisku "Wyznacz trase"
     private void OnCalculateRouteClicked(object sender, EventArgs e)
     {
-        string sourceRoomName = (string)sourceRoomListView.SelectedItem;
-        string destinationRoomName = (string)destinationRoomListView.SelectedItem;
+        string sourceRoomName = App.sourceRoom;
+        string destinationRoomName = App.destinationRoom;
 
         // Pobieramy obiekty pokoi na podstawie ich nazw
         Room sourceRoom = App.GlobalRooms.FindByName(sourceRoomName);
@@ -172,7 +192,7 @@ public partial class MapPage1 : ContentPage
             return;
         }
 
-        // Znajdujemy najkrotsz¹ sciezke miêdzy pokojami
+        // Znajdujemy najkrotsza sciezke miêdzy pokojami
         List<Room> shortestPath = App.pathFinder.FindShortestPath(sourceRoom, destinationRoom);
 
         if (shortestPath == null)
@@ -182,14 +202,49 @@ public partial class MapPage1 : ContentPage
         }
         else
         {
+            menuGrid.IsVisible = false;
+
             // Znaleziono sciezke, wyswietlamy alert z lista pokoi
-            string message = "Znaleziona droga:\n";
+            string message = "Aby dotrzeæ do celu musisz przejœæ przez nastêpuj¹ce punkty:\n";
             foreach (var room in shortestPath)
             {
-                message += room.Name + "\n";
+                if (room.Name != "Korytarz")
+                {
+                    message += "-> " + room.Name + "\n";
+                }
             }
-            DisplayAlert("Znaleziona droga", message, "OK");
+            message += "Dla u³atwienia wyœwietli³em Ci trasê na mapie \n";
+            DisplayAlert("Znaleziono trasê", message, "OK");
         }
+
+        if (sourceRoom.Floor == -1)
+        {
+            Shell.Current.GoToAsync("///MapPage_1");
+        }
+        else if (sourceRoom.Floor == 0)
+        {
+            Shell.Current.GoToAsync("///MapPage0");
+        }
+        else if (sourceRoom.Floor == 1)
+        {
+            Shell.Current.GoToAsync("///MapPage1");
+        }
+        else if (sourceRoom.Floor == 2)
+        {
+            Shell.Current.GoToAsync("///MapPage2");
+        }
+
+    }
+
+    private void OnClearRouteClicked(object sender, EventArgs e)
+    {
+        sourceSearchBar.Text = "";
+        destinationSearchBar.Text = "";
+
+        App.sourceRoom = "";
+        App.destinationRoom = "";
+
+        App.pathFinder.Path.Clear();
     }
 
     private void OnShowMenuButtonClicked(object sender, EventArgs e)
@@ -198,6 +253,11 @@ public partial class MapPage1 : ContentPage
         if (menuGrid.IsVisible == false)
             menuGrid.IsVisible = true;
         else menuGrid.IsVisible = false;
+
+        sourceSearchBar.Text = App.sourceRoom;
+        sourceRoomListView.IsVisible = false;
+        destinationSearchBar.Text = App.destinationRoom;
+        destinationRoomListView.IsVisible = false;
     }
 
     private void Path_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

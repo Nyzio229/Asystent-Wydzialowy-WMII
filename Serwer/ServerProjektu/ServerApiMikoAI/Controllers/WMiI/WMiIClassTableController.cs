@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace ServerApiMikoAI.Controllers.WMiI
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class WMiIClassTableController : ControllerBase
     {
