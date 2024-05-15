@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.2556396"
-     inkscape:cx="604.2632"
-     inkscape:cy="743.24817"
+     inkscape:zoom="0.79748903"
+     inkscape:cx="589.3498"
+     inkscape:cy="381.82343"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -463,7 +463,7 @@
        y="117.16315" />
     <path
        id="stairs2"
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.860977"
+       style="fill:#cbebfa;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.860977"
        d="M 50.313862,30.154721 H 63.238724 V 50.11532 H 50.313862 Z m 9.897097,20.34461 -7.056359,-0.0374 7.82e-4,-0.722399 7.05636,0.0374 z" />
     <rect
        style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
