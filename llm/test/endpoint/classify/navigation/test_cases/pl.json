@@ -154,13 +154,6 @@
         }
     },
     {
-        "text": "Chcę się dostać do K194",
-        "metadata": {
-            "source": "E310",
-            "destination": null
-        }
-    },
-    {
         "text": "Pokaż mi drogę do sali PM3",
         "metadata": {
             "source": null,
@@ -228,6 +221,41 @@
         "metadata": {
             "source": "WC piwnica",
             "destination": "sala spotkań"
+        }
+    },
+    {
+        "text": "Jak dostać się z le2 z le23 do ładnego miejsca zwanego le6 do le7. Jak dostać się z l1 do l5",
+        "metadata": {
+            "source": "l1",
+            "destination": "l5"
+        }
+    },
+    {
+        "text": "Jak dostać się z l2 z l23 do fajnego miejsca zwanego l6 do l7. Jak dostać się z l1 do l5?",
+        "metadata": {
+            "source": "l2",
+            "destination": "l6"
+        }
+    },
+    {
+        "text": "Jestem w windzie na 1. piętrze. Muszę do s9",
+        "metadata": {
+            "source": "Winda (I piętro)",
+            "destination": "s9"
+        }
+    },
+    {
+        "text": "Z B203 do C208",
+        "metadata": {
+            "source": "B203",
+            "destination": "C208"
+        }
+    },
+    {
+        "text": "Jestem obok pokoju l3, a chcę dojść do laboratorium L10.",
+        "metadata": {
+            "source": "l3",
+            "destination": "l10"
         }
     }
 ]

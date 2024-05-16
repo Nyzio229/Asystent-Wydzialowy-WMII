@@ -10,19 +10,24 @@ import spacy
 
 from pydantic import BaseModel
 
-from llama_cpp import Llama, LlamaGrammar
-
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
 
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from qdrant_client.http.exceptions import UnexpectedResponse
+
+from llama_cpp import Llama, ChatCompletionRequestMessage
+
+from langchain.storage import LocalFileStore
+
+from langchain_core.vectorstores import VectorStore
+
+from langchain.retrievers.multi_vector import MultiVectorRetriever
+
+from langchain_core.retrievers import RetrieverOutputLike
 
 from langchain_core.prompt_values import ChatPromptValue
-from langchain_core.retrievers import RetrieverOutputLike
-from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from langchain_community.docstore.document import Document
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 
@@ -52,7 +57,7 @@ class Common:
     faq_vector_store: dict[str, VectorStore]
     rag_vector_store: VectorStore
     vector_store_client: QdrantClient
-    rag_retriever: VectorStoreRetriever
+    rag_retriever: MultiVectorRetriever
     history_aware_retriever: RetrieverOutputLike
 
     llm_inference_params = LLMInferenceParams(
@@ -71,6 +76,9 @@ class Common:
         max_tokens=None
     )
 
+LOGGER_NAME = "mikolAI"
+LOGGER = logging.getLogger(LOGGER_NAME)
+
 common: Common = Common()
 
 def init_common(cmd_line_args):
@@ -78,14 +86,17 @@ def init_common(cmd_line_args):
 
     common.llm = Llama(
         model_path=cmd_line_args.model,
-        chat_format=cmd_line_args.chat_format,
         n_ctx=cmd_line_args.n_ctx,
         n_gpu_layers=cmd_line_args.n_gpu_layers,
+        chat_format="chatml",
         verbose=False
     )
 
     common.embedder = HuggingFaceEmbeddings(
-        model_name=config.embed.model
+        model_name=config.embed.model,
+        model_kwargs=dict(
+            trust_remote_code=True
+        )
     )
 
     vector_store_config = config.vector_store
@@ -98,11 +109,11 @@ def init_common(cmd_line_args):
     def _create_langchain_vector_store(collection_name: str) -> VectorStore:
         try:
             vector_store_client.get_collection(collection_name)
-        except Exception:
+        except UnexpectedResponse:
             vector_store_client.create_collection(
                 collection_name=collection_name,
                 vectors_config=VectorParams(
-                    size=384,
+                    size=768,
                     distance=Distance.COSINE
                 )
             )
@@ -115,22 +126,30 @@ def init_common(cmd_line_args):
 
         return vector_store
 
-    common.vector_store_client = vector_store_client
-
     common.faq_vector_store = {}
 
-    for lang, collection_name in vector_store_config.faq_collection_name.items():
+    common.vector_store_client = vector_store_client
+
+    for lang, collection_name in (
+        vector_store_config.faq_collection_for_lang.items()
+    ):
         common.faq_vector_store[lang] = _create_langchain_vector_store(
             collection_name
         )
 
+    rag_collection_name = vector_store_config.rag_collection_name
+
     common.rag_vector_store = _create_langchain_vector_store(
-        vector_store_config.rag_collection_name
+        rag_collection_name
     )
 
-    common.rag_retriever = common.rag_vector_store.as_retriever(
+    common.rag_retriever = MultiVectorRetriever(
+        vectorstore=common.rag_vector_store,
+        byte_store=LocalFileStore(
+            f"{rag_collection_name}_file_store"
+        ),
         search_kwargs=dict(
-            k=10
+            k=5
         )
     )
 
@@ -141,9 +160,9 @@ def init_common(cmd_line_args):
 
     def _invoke_model(prompt: ChatPromptValue) -> str:
         system_prompt = (
-            "Given a chat history and the latest user question " +
-            "which might reference context in the chat history, formulate a standalone question " +
-            "which can be FULLY understood without the chat history. Do NOT answer the question, " +
+            "Given a chat history and the latest user question "
+            "which might reference context in the chat history, formulate a standalone question "
+            "which can be FULLY understood without the chat history. Do NOT answer the question, "
             "just reformulate it if needed and otherwise return it as is "
             "(you act like the user asking the question):"
         )
@@ -162,11 +181,10 @@ def init_common(cmd_line_args):
 
         response = response["choices"][0]["text"]
 
-        logger = logging.getLogger("mikolAI")
-        logger.setLevel(logging.DEBUG)
-        logger.debug("[History aware retriever]")
-        logger.debug(" * prompt: %s", prompt)
-        logger.debug(" * response: %s", response)
+        LOGGER.setLevel(logging.DEBUG)
+        LOGGER.debug("[History aware retriever]")
+        LOGGER.debug(" * prompt: %s", prompt)
+        LOGGER.debug(" * response: %s", response)
 
         return response
 
@@ -178,22 +196,21 @@ def init_common(cmd_line_args):
 
 def chat_completion(
     llm: Llama,
-    messages: list[dict[str, str]],
-    llm_inference_params: LLMInferenceParams,
-    grammar: Optional[LlamaGrammar] = None
+    messages: list[ChatCompletionRequestMessage],
+    llm_inference_params: LLMInferenceParams
 ) -> str:
     response = llm.create_chat_completion(
         messages,
-        grammar=grammar,
         **llm_inference_params.model_dump()
     )
 
     response = response["choices"][0]["message"]["content"]
 
-    logger = logging.getLogger("mikolAI")
-    logger.setLevel(logging.DEBUG)
-    logger.debug("[Chat completion]")
-    logger.debug(
+    LOGGER.setLevel(logging.DEBUG)
+
+    LOGGER.debug("[Chat completion]")
+
+    LOGGER.debug(
         " * messages: %s",
         json.dumps([
             message.copy() | dict(
@@ -205,7 +222,8 @@ def chat_completion(
             for message in messages
         ], ensure_ascii=False, indent=3)
     )
-    logger.debug(" * response: %s", response)
+
+    LOGGER.debug(" * response: %s", response)
 
     return response
 
@@ -267,8 +285,7 @@ def chat_with_default_system_message(
     llm: Llama,
     messages: list[Message],
     llm_inference_params: LLMInferenceParams,
-    extend_system_message: bool = False,
-    grammar: Optional[LlamaGrammar] = None
+    extend_system_message: bool = False
 ) -> str:
     def _message_mapping(message: Message) -> dict[str, str]:
         role = _convert_langchain_message_role_to_llama(message.role)
@@ -294,8 +311,7 @@ def chat_with_default_system_message(
     response = chat_completion(
         llm,
         messages,
-        llm_inference_params,
-        grammar
+        llm_inference_params
     )
 
     return response
@@ -306,37 +322,22 @@ def langchain_chat_completion(
     llm_inference_params: LLMInferenceParams
 ) -> str:
     messages = _langchain_chat_prompt_to_llama_messages(prompt)
+
     response = chat_completion(llm, messages, llm_inference_params)
 
     return response
-
-def upload_docs(
-    vector_store: VectorStore,
-    docs: list[Document],
-    ids: Optional[list[str]] = None
-) -> list[str]:
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1024,
-        chunk_overlap=100
-    )
-
-    docs = text_splitter.split_documents(docs)
-    ids = vector_store.add_documents(docs, ids=ids)
-
-    return ids
 
 def log_endpoint_call(
     endpoint: str,
     request: BaseModel,
     result: BaseModel
 ) -> None:
-    logger = logging.getLogger("mikolAI")
-    logger.setLevel(logging.DEBUG)
+    LOGGER.setLevel(logging.DEBUG)
 
-    logger.debug("[endpoint '/%s']", endpoint)
+    LOGGER.debug("[endpoint '/%s']", endpoint)
 
     def _log_model(name: str, model: BaseModel) -> str:
-        logger.debug(
+        LOGGER.debug(
             "-> %s:\n%s",
             name,
             model.model_dump_json(indent=3)

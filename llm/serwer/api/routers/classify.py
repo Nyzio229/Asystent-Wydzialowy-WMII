@@ -8,13 +8,13 @@ from pathlib import Path
 
 from typing import Iterable, Literal, Optional, Type, TypeVar
 
-from fuzzywuzzy import process
-
 from fastapi import APIRouter
+
+from fuzzywuzzy import process
 
 from pydantic import BaseModel, Field
 
-from llama_cpp import LlamaGrammar, LogitsProcessorList
+from llama_cpp import LogitsProcessorList
 
 from lmformatenforcer import CharacterLevelParser, JsonSchemaParser
 from lmformatenforcer.integrations.llamacpp import (
@@ -24,6 +24,7 @@ from lmformatenforcer.integrations.llamacpp import (
 
 from common import (
     common,
+    LOGGER,
     chat_with_default_system_message,
     log_endpoint_call,
     Message
@@ -261,10 +262,6 @@ def _get_places() -> tuple[
 
     return _simple_places_names, _places
 
-_GRAMMAR_TRUE_FALSE = LlamaGrammar.from_string(
-    '''root ::= "true" | "false"'''
-)
-
 class CategoryNavigationMetadata(BaseModel):
     source: Optional[str] = None
     destination: Optional[str] = None
@@ -303,8 +300,7 @@ async def classify(
 
     tokenizer_data = build_token_enforcer_tokenizer_data(common.llm)
 
-    logger = logging.getLogger("mikolAI")
-    logger.setLevel(logging.DEBUG)
+    LOGGER.setLevel(logging.DEBUG)
 
     def _infer_with_character_level_parser(
         prompt: str,
@@ -334,17 +330,16 @@ async def classify(
 
         response = output["choices"][0]["text"]
 
-        logger.debug("[Classify]")
-        logger.debug(" * prompt: %s", prompt)
-        logger.debug(" * response: %s", response)
+        LOGGER.debug("[Classify]")
+        LOGGER.debug(" * prompt: %s", prompt)
+        LOGGER.debug(" * response: %s", response)
 
         return response
 
     def _chat_with_llm_for_task(
         query: str,
         task: str,
-        suffix: Optional[str] = None,
-        grammar: Optional[LlamaGrammar] = None
+        suffix: Optional[str] = None
     ) -> str:
         if suffix:
             suffix = f"\n\n{suffix}"
@@ -370,15 +365,14 @@ async def classify(
         response = chat_with_default_system_message(
             common.llm,
             [prompt_message],
-            llm_inference_params,
-            grammar=grammar
+            llm_inference_params
         )
 
         response = response.lower()
 
-        logger.debug("[Classify]")
-        logger.debug(" * prompt: %s", prompt)
-        logger.debug(" * response: %s", response)
+        LOGGER.debug("[Classify]")
+        LOGGER.debug(" * prompt: %s", prompt)
+        LOGGER.debug(" * response: %s", response)
 
         return response
 
@@ -489,8 +483,7 @@ async def classify(
             place = next(iter(matching_places.values()))
         else:
             best_match_result: tuple[
-                tuple[str, Place],
-                int
+                tuple[str, Place], int
             ] = process.extractOne(
                 query=location,
                 choices=matching_places.items(),
@@ -501,7 +494,7 @@ async def classify(
 
             place = best_match[1]
 
-            logger.debug(
+            LOGGER.debug(
                 "'%s' contains %d places: %s. Best match is: '%s' (because of '%s')",
                 location,
                 len(matching_places),
@@ -525,7 +518,7 @@ async def classify(
         )
 
         source_words = {"from"}
-        destination_words = {"to", "into", "where"}
+        destination_words = {"to", "into", "where", "for"}
 
         stops = source_words | destination_words | punctuation
 
@@ -566,6 +559,8 @@ async def classify(
 
             idx = stop_idx
 
+        metadata_places: dict[str, Optional[Place]] = {}
+
         for key, value in metadata.items():
             for location in value:
                 best_match = _find_best_matching_place(
@@ -577,9 +572,12 @@ async def classify(
             else:
                 best_match = None
 
-            metadata[key] = best_match
+            metadata_places[key] = best_match
 
-        return metadata
+        if any(value for value in metadata_places.values()):
+            return metadata_places
+
+        return None
 
     def _extend_places_names(
         navigation_query: str,
@@ -590,11 +588,15 @@ async def classify(
 
         words = navigation_query.split()
 
+        lower_words = list(map(
+            str.lower, words
+        ))
+
         n_words = len(words)
 
         for i, word in enumerate(words):
             def _has_neighbor_at(idx: int) -> bool:
-                return words[idx].lower() == extension_word
+                return lower_words[idx] == extension_word
 
             def _has_left_neighbor() -> bool:
                 return _has_neighbor_at(i-1)
@@ -602,7 +604,7 @@ async def classify(
             def _has_right_neighbor() -> bool:
                 return _has_neighbor_at(i+1)
 
-            filtered_word = re.sub(r"[^a-z\d ]", "", word.lower())
+            filtered_word = re.sub(r"[^a-z\d ]", "", lower_words[i])
 
             if filtered_word in places_names:
                 if i == 0:
@@ -629,14 +631,18 @@ async def classify(
         request_text, places
     )
 
+    is_metadata_complete = (
+        metadata and all(value for value in metadata.values())
+    )
+
     if metadata:
-        logger.debug(
+        LOGGER.debug(
             "Got navigation metadata using brute force"
         )
 
         for key, value in metadata.items():
             if value:
-                logger.debug(
+                LOGGER.debug(
                     "metadata['%s'] = '%s'",
                     key, value.pl
                 )
@@ -645,17 +651,12 @@ async def classify(
         request_text, simple_places_names, "room"
     )
 
-    def _is_metadata_complete(
-        metadata: dict[str, Optional[Place]]
-    ) -> bool:
-        return all(value for value in metadata.values())
-
     if (
-        not _is_metadata_complete(metadata) and
+        not is_metadata_complete and
         extended_request_text != request_text
     ):
-        logger.debug(
-            "Extended request text: from '%s' to '%s'",
+        LOGGER.debug(
+            'Extended request text: "%s" -> "%s"',
             request_text, extended_request_text
         )
 
@@ -666,39 +667,31 @@ async def classify(
     else:
         is_navigation = _chat_with_llm_for_task(
             request_text,
-            "Please decide whether the user's query (given at the end) is a navigation query. "
-            "A navigation query is a question which asks "
+            "Please decide whether the user's query (given at the end) is a spatial navigation query. "
+            "A spatial navigation query is a question which asks "
             "how to get from/to a certain place/location within a university campus. "
             "It can also be phrased in various ways, like asking for directions. "
             "The source/destination of navigation can be a coded room name (such as A5); "
             "it doesn't have to be a valid name of an existing room/place. "
-            "A navigation query may consist of multiple sentences/questions.\n"
+            "A spatial navigation query may consist of multiple sentences/questions.\n"
             "It's also possible that the user provides additional, irrelevant information or context;"
-            "in such case, consider his query as a navigation query if ANY of his questions/sentences "
+            "in such case, consider his query as a spatial navigation query if ANY of his questions/sentences "
             "regard in some way: navigating/wanting or needing to get to, in or into somewhere/looking for directions/"
-            "asking how the user the can get somewhere/reaching a certain place or location/"
-            "asking if there's a way to get somewhere/where a place/room is located/"
+            "asking how the user can get somewhere/reaching a certain place or location/"
+            "asking if there's a way to get somewhere/where a place or room is located/"
             "asking to tell the user how to get somewhere/"
-            "asking if it's possible to get to a place. "
+            "asking if it's possible to get to a place.\n"
             "Keep in mind that many room/place names are coded, like B302 or L5 (a letter and a few digits).\n"
-            "In short, a navigation query is most of the times a text "
-            "that contains any mention of a location/place.\n",
-            "If you think the query is a navigation query then answer with 'true', otherwise with 'false'.",
-            _GRAMMAR_TRUE_FALSE
+            "If you think the query is a spatial navigation query then answer with 'true', otherwise with 'false'."
         ) == "true"
 
         label = "navigation" if is_navigation else "chat"
 
     if label == "navigation":
-        def _get_missing_navigation_metadata_using_llm(
+        def _set_missing_navigation_metadata_using_llm(
             navigation_query: str,
             metadata: dict[str, Optional[Place]]
-        ) -> Optional[dict[str, Optional[Place]]]:
-            metadata = metadata.copy()
-
-            if _is_metadata_complete(metadata):
-                return metadata
-
+        ) -> None:
             doc = common.nlp(navigation_query)
 
             adps_texts = []
@@ -712,7 +705,7 @@ async def classify(
                 point: str,
                 additional_check: Optional[str] = None
             ) -> None:
-                logger.debug(
+                LOGGER.debug(
                     "Navigation query doesn't contain the '%s' word (POS: preposition/ADP)%s, "
                     "so skipping '%s' point extraction.",
                     preposition,
@@ -793,13 +786,13 @@ async def classify(
                 destination=destination
             )
 
-            if all(not value for value in metadata.values()):
-                missing_metadata_key = None
-            else:
+            if any(value for value in metadata.values()):
                 missing_metadata_key = next(
                     (key for key, value in metadata.items() if not value),
                     None
                 )
+            else:
+                missing_metadata_key = None
 
             for key, value in metadata_str.items():
                 if not value:
@@ -808,7 +801,7 @@ async def classify(
                 name = _format_place_name(value)
 
                 if value != name:
-                    logger.debug(
+                    LOGGER.debug(
                         "metadata['%s']: formatting '%s' -> '%s'",
                         key, value, name
                     )
@@ -818,12 +811,12 @@ async def classify(
                 )
 
                 if place:
-                    logger.debug(
+                    LOGGER.debug(
                         "metadata['%s']: found place '%s' for '%s'",
                         key, place.pl, name
                     )
                 else:
-                    logger.debug(
+                    LOGGER.debug(
                         "metadata['%s']: no such place '%s'. Setting to `None`",
                         key, name
                     )
@@ -834,18 +827,22 @@ async def classify(
             # (it usually assigns the same place as
             # both source and destination if one is missing)
             if (
-                missing_metadata_key and
+                any(value for value in metadata.values()) and
                 metadata["source"] == metadata["destination"]
             ):
-                logger.debug(
-                    "Hallucination check: llm most likely hallucinated the '%s' metadata value ('%s'). "
+                # we assume that it's more likely for the user not to specify
+                # the source point (rather than the destination point)
+                if not missing_metadata_key:
+                    missing_metadata_key = "source"
+
+                LOGGER.debug(
+                    "Hallucination check: LLM most likely hallucinated "
+                    "the '%s' metadata value ('%s'). "
                     "Therefore, setting it to `None`.",
                     missing_metadata_key, metadata[missing_metadata_key].pl
                 )
 
                 metadata[missing_metadata_key] = None
-
-            return metadata
 
         if not metadata:
             metadata = dict(
@@ -853,9 +850,10 @@ async def classify(
                 destination=None
             )
 
-        metadata = _get_missing_navigation_metadata_using_llm(
-            request_text, metadata
-        )
+        if not is_metadata_complete:
+            _set_missing_navigation_metadata_using_llm(
+                request_text, metadata
+            )
 
         has_points = any(place for place in metadata.values())
 
@@ -868,7 +866,7 @@ async def classify(
             label = "chat"
             metadata = None
 
-            logger.debug(
+            LOGGER.debug(
                 "metadata: no valid places"
             )
     else:

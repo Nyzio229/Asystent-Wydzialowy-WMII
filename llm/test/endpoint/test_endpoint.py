@@ -103,6 +103,8 @@ class TestEndpoint(unittest.TestCase):
             timeout=20
         )
 
+        response.raise_for_status()
+
         response = response.json()
 
         return response

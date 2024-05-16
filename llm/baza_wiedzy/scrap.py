@@ -180,6 +180,14 @@ def get_text(tag: bs4.Tag, with_links=True) -> str:
 
                         continue
 
+                if name == "td":
+                    # czasem (np. "https://www.mat.umk.pl/web/wmii/wydzial/nauczyciele-akademiccy")
+                    # połączenie <td> sprawia że nie nie ma odstępów pomiędzy kolejnymi komórkami
+                    # w tabli, więc je dodaj
+                    yield f" {_get_all_text(child)} "
+
+                    continue
+
                 # nagłówki html: od <h1> do <h6>
                 header_tag_names = frozenset(f"h{i}" for i in range(1, 7))
 
@@ -206,14 +214,21 @@ def get_text(tag: bs4.Tag, with_links=True) -> str:
                     url = urljoin(BASE_URL, url)
 
                     # pomiń jeśli:
-                    # 1. tekst linku jest pusty (np. jeśli jest to obrazek)
+                    # 1. jeśli link jest zbyt długi
                     # 2. spacja jest w urlu (w jednym miejscu jest błąd: href="https://W dniach od 31 lipca do 6 się (...)")
                     # 3. jeśli link to wysyłanie maila
                     # 4. jeśli link już w tekście zawiera odnośnik
                     # (samo `child.string` nie zawsze działa, np. jeśli w tekście jest kolejny tag)
                     link_text = _get_all_text(child).strip()
 
-                    if link_text and " " not in url and not url.startswith("mailto:") and url != link_text:
+                    MAX_URL_LENGTH = 70
+
+                    if (
+                        len(url) < MAX_URL_LENGTH and
+                        " " not in url and
+                        not url.startswith("mailto:") and
+                        url != link_text
+                    ):
                         yield f" (link: {url})"
             # pomiń komentarze html (<!-- komentarz tutaj -->), skrypty, arkusze stylów i szablony
             elif isinstance(child, bs4.NavigableString) and not isinstance(child, (bs4.Comment, bs4.Script, bs4.Stylesheet, bs4.TemplateString)):
@@ -429,6 +444,12 @@ def resolve_urls(sub_pages: dict[str, list]) -> list[str]:
 
     return urls
 
+def get_dump_dir_path() -> str:
+    return os.path.join(
+        "scrapowane_strony_wydzialowe",
+        "pl"
+    )
+
 def main() -> None:
     sub_pages = {
         "web": [
@@ -512,11 +533,7 @@ def main() -> None:
     }
 
     urls = resolve_urls(sub_pages)
-
-    save_path = os.path.join(
-        "scrapowane_strony_wydzialowe",
-        "dump"
-    )
+    save_path = get_dump_dir_path()
 
     save(save_path, urls)
 

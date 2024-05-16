@@ -1,10 +1,8 @@
-import re
+from llama_cpp import Llama
 
 from fastapi import APIRouter
 
 from pydantic import BaseModel
-
-from llama_cpp import Llama
 
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -31,14 +29,15 @@ def _rag(
     messages: list[Message],
     llm_inference_params: LLMInferenceParams
 ) -> str:
-    doc_sep = f"\n{'-'*15}\nAdditional information about the faculty:\n\n"
+    doc_sep = f"\n{'-'*15}\nSnippet about the faculty:\n\n"
 
     system_message = (
         f"{get_extended_system_message()}\n\n"
-        "Here is information fetched from the faculty websites that contains "
+        "Here are snippets fetched from the faculty websites that contain "
         "reliable facts that may help you provide a better (and factually correct) answer "
-        "(if some information is missing then let the user know that you don't know the answer or "
-        "don't have access to the specific data):"
+        "(don't let the user know that this information is provided to you, "
+        "but you can say that you do have access to data from some of faculty websites) "
+        "(if none of the information answer the question then just say that you don't know the answer):"
         f"{doc_sep}{{context}}"
     )
 
@@ -78,7 +77,7 @@ def _rag(
 
     return response
 
-class ChatResponse(BaseModel):
+class ChatResult(BaseModel):
     text: str
 
 router = APIRouter()
@@ -86,24 +85,21 @@ router = APIRouter()
 @router.post("/chat")
 async def chat(
     request: ChatRequest
-) -> ChatResponse:
-    args = (
+) -> ChatResult:
+    chat_args = (
         common.llm,
         request.messages,
         request.llm_inference_params
     )
 
     if request.rag:
-        response = _rag(*args)
+        response = _rag(*chat_args)
     else:
         response = chat_with_default_system_message(
-            *args, extend_system_message=True
+            *chat_args, extend_system_message=True
         )
 
-    response = re.sub("\n+", "\n", response)
-    response = response.strip()
-
-    result = ChatResponse(
+    result = ChatResult(
         text=response
     )
 

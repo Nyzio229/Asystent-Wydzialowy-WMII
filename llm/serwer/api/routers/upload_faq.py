@@ -4,24 +4,24 @@ from fastapi import APIRouter
 
 from pydantic import BaseModel
 
-from api.routers.faq import FaqEntry
+from common import common
 
-from common import common, upload_docs
+from api.routers.faq import FAQEntry
 
 from langchain_community.docstore.document import Document
 
 class LangFAQ(BaseModel):
-    faq: list[FaqEntry]
+    faq: list[FAQEntry]
     lang: Literal["en", "pl"]
 
-class FAQUploadRequest(BaseModel):
+class UploadFAQRequest(BaseModel):
     lang_faqs: list[LangFAQ]
 
 router = APIRouter()
 
-@router.post("/faq_upload")
-async def faq_upload(
-    request: FAQUploadRequest
+@router.post("/upload_faq")
+async def upload_faq(
+    request: UploadFAQRequest
 ) -> None:
     faq_entry_ids: list[str] = []
 
@@ -36,10 +36,11 @@ async def faq_upload(
             for faq_entry in lang_faq.faq
         ]
 
-        ids = upload_docs(
-            common.faq_vector_store[lang_faq.lang],
+        vector_store = common.faq_vector_store[lang_faq.lang]
+
+        ids = vector_store.add_documents(
             docs,
-            faq_entry_ids
+            ids=faq_entry_ids
         )
 
         if i == 0:
