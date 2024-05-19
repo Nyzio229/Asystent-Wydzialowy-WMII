@@ -150,24 +150,24 @@ def get_umk_wiki_page() -> WikipediaPage:
         page = wikipedia.page(page_title)
         page_content = _fix_whitespaces(page.content)
 
-        wp = WikipediaPage(
+        page = WikipediaPage(
             url=unquote(page.url),
             page_content=page_content
         )
 
-        return wp
+        return page
 
-    def _translate_wp(wp: WikipediaPage) -> WikipediaPage:
-        return wp.model_copy(
+    def _translate_page(page: WikipediaPage) -> WikipediaPage:
+        return page.model_copy(
             update=dict(
-                page_content=_translate(wp.page_content)
+                page_content=_translate(page.page_content)
             )
         )
 
     translated = get_cached_translation(
         pl_path=dir_path / "pl.json",
         cache_path=dir_path / "translated.json",
-        translator=_translate_wp,
+        translator=_translate_page,
         model_type=WikipediaPage,
         as_list=False,
         with_pl=False,

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from utils import get_cached_translation, translate, upload_docs
 
-class FaqEntry(BaseModel):
+class FAQEntry(BaseModel):
     answer: str
     question: str
 
@@ -29,8 +29,8 @@ def fetch_faq(
             f'{"..." if len(message) > n_chars else ""}'
         )
 
-    def _translate_faq(faq: list[FaqEntry]) -> list[FaqEntry]:
-        translated_faq: list[FaqEntry] = []
+    def _translate_faq(faq: list[FAQEntry]) -> list[FAQEntry]:
+        translated_faq: list[FAQEntry] = []
 
         for i, faq_entry in enumerate(faq):
             print(">", f"[{i+1}/{len(faq)}]:")
@@ -41,7 +41,7 @@ def fetch_faq(
 
             print(f"   * Tłumaczenie ('{lang_from}' -> '{lang_to}')...")
 
-            translated_faq_entry = FaqEntry(
+            translated_faq_entry = FAQEntry(
                 question=_translate(faq_entry.question),
                 answer=_translate(faq_entry.answer)
             )
@@ -59,7 +59,7 @@ def fetch_faq(
         pl_path=faq_dir / "pl.json",
         cache_path=faq_dir / "translated.json",
         translator=_translate_faq,
-        model_type=FaqEntry,
+        model_type=FAQEntry,
         with_pl=with_pl,
         serialize=serialize
     )
@@ -84,7 +84,7 @@ def main() -> None:
     print("\nPrzesyłanie do bazy wektorowej...")
 
     upload_docs(
-        "faq_upload",
+        "upload_faq",
         lang_faqs=[
             _make_lang_faq(faq, "pl"),
             _make_lang_faq(translated_faq, "en")

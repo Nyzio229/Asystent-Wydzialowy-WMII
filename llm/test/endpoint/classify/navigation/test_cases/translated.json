@@ -154,13 +154,6 @@
       }
    },
    {
-      "text": "I want to get to K194",
-      "metadata": {
-         "source": "E310",
-         "destination": null
-      }
-   },
-   {
       "text": "Show me the way to the PM3 room",
       "metadata": {
          "source": null,
@@ -222,12 +215,47 @@
           "source": null,
           "destination": "s9"
       }
-  },
-  {
+   },
+   {
       "text": "How to get from toilet in the basement to the meeting room?",
       "metadata": {
          "source": "WC piwnica",
          "destination": "sala spotkań"
+      }
+   },
+   {
+      "text": "How do I get from le2 from le23 to the nice place called the le6 to le7. How to get from l1 to l5",
+      "metadata": {
+         "source": "l1",
+         "destination": "l5"
+      }
+   },
+   {
+      "text": "How do I get from l2 from l23 to the nice place called the l6 to l7. How to get from l1 to l5",
+      "metadata": {
+         "source": "l2",
+         "destination": "l6"
+      }
+   },
+   {
+      "text": "I'm in the elevator on the 1st floor. I need to get to s9",
+      "metadata": {
+         "source": "Winda (I piętro)",
+         "destination": "s9"
+      }
+   },
+   {
+      "text": "From B203 to C208",
+      "metadata": {
+         "source": "B203",
+         "destination": "C208"
+      }
+   },
+   {
+      "text": "I'm next to room l3, and I want to get to lab L10.",
+      "metadata": {
+         "source": "l3",
+         "destination": "l10"
       }
    }
 ]

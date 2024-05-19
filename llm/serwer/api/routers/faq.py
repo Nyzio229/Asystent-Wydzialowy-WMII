@@ -11,12 +11,12 @@ class FAQRequest(BaseModel):
     faq_ids: list[str]
     lang: Literal["en", "pl"] = "pl"
 
-class FaqEntry(BaseModel):
+class FAQEntry(BaseModel):
     answer: str
     question: str
 
 class FAQResult(BaseModel):
-    faq: list[FaqEntry]
+    faq: list[FAQEntry]
 
 router = APIRouter()
 
@@ -24,7 +24,7 @@ router = APIRouter()
 async def faq(
     request: FAQRequest
 ) -> FAQResult:
-    collection_name = config.vector_store.faq_collection_name[request.lang]
+    collection_name = config.vector_store.faq_collection_for_lang[request.lang]
 
     faq_ids = request.faq_ids
 
@@ -47,7 +47,7 @@ async def faq(
 
         docs.append(doc)
 
-    result = FAQResult(faq=[FaqEntry(
+    result = FAQResult(faq=[FAQEntry(
         question=doc["page_content"],
         answer=doc["metadata"]["answer"]
     ) for doc in docs])

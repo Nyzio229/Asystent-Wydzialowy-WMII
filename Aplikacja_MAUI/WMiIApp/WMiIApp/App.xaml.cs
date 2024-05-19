@@ -34,7 +34,9 @@ namespace WMiIApp
         Room portiernia = new Room("portiernia", "Portiernia (Parter)", 250, 183, 0);
         Room wejscie = new Room("wejscie", "Wejście (Parter)", 250, 163, 0);
         Room schodyParterPiwnicaLeskKoloWejscia = new Room("schody_parter_kolo_wejscia_parter", "Schody koło wejścia (Parter)", 215, 184, 0);
+        Room schodyParterPiwnicaLeskKoloWejscia2 = new Room("schody_parter_kolo_wejscia_parter2", "Korytarz", 200, 184, 0);
         Room schodyParterPiwnicaKoloPatio = new Room("schody_parter_piwnica_parter", "Schody do Piwnicy (Parter)", 165, 149, 0);
+        Room schodyParterPiwnicaKoloPatio2 = new Room("schody_parter_piwnica_parter2", "Korytarz", 148, 149, 0);
         Room d114 = new Room("d114", "D114 (Parter)", 250, 135, 0);
         Room d113 = new Room("d113", "D113 (Parter)", 250, 126, 0);
         Room d112 = new Room("d112", "D112 (Parter)", 250, 117, 0);
@@ -44,6 +46,7 @@ namespace WMiIApp
         Room d108 = new Room("d108", "D108 (Parter)", 250, 59, 0);
         Room d107 = new Room("d107", "D107 (Parter)", 250, 49, 0);
         Room schody3 = new Room("schody3", "Schody Koło Biblioteki (Parter)", 241, 74, 0);
+        Room schody3_2 = new Room("schody3_2", "Korytarz", 230, 62, 0);
         Room biblioteka = new Room("biblioteka", "Biblioteka/C114 (Parter)", 205, 98, 0);
         Room patio2 = new Room("patio2", "Korytarz", 207, 74, 0);
         Room galeria = new Room("galeria", "Galeria (Parter)", 187, 141, 0);
@@ -57,6 +60,7 @@ namespace WMiIApp
         Room aula = new Room("aula", "Aula/A105 (Parter)", 66, 200, 0);
         Room salaKonferencyjna = new Room("sala_konferencyjna", "Sala Konferencyjna/A109 (Parter)", 66, 158, 0);
         Room schodyKoloAuli = new Room("schody_kolo_auli", "Schody Koło Auli (Parter)", 54, 141, 0);
+        Room schodyKoloAuli2 = new Room("schody_kolo_auli2", "Korytarz", 28, 143, 0);
         Room wc2 = new Room("wc2", "WC Koło Auli (Parter)", 50, 135, 0);
         Room b106 = new Room("b106", "B106 (Parter)", 50, 129, 0);
         Room b107 = new Room("b107", "B107 (Parter)", 50, 122, 0);
@@ -70,6 +74,7 @@ namespace WMiIApp
         Room c104 = new Room("c104", "C104 (Parter)", 120, 58, 0);
         Room c102 = new Room("c102", "C102 (Parter)", 105, 58, 0);
         Room schody = new Room("schody", "Schody Koło PM1 (Parter)", 85, 58, 0);
+        Room schodyKoloPM1 = new Room("schodyPM1", "Korytarz", 85, 38, 0);
         Room pm1 = new Room("pm1", "PM1/B116 (Parter)", 55, 58, 0);
         Room ss1 = new Room("ss1", "SS1/B114 (Parter)", 50, 62, 0);
 
@@ -93,7 +98,9 @@ namespace WMiIApp
         Room e214 = new Room("e214", "E214 (I piętro)", 242, 220, 1);
         Room spot = new Room("spot", "Sala Spotkań/E216 (I piętro)", 242, 205, 1);
         Room schodyKoloWejsciaPierwszePietro = new Room("schody_parter_kolo_wejscia_pierwsze", "Schody koło wejścia (I piętro)", 234, 192, 1);
-        Room schodyPierwszeDrugiePietroPierwsze = new Room("schody_pierwsze_drugie_pietro", "Schody I piętro - II piętro (I piętro)", 252, 192, 1);
+        Room schodyKoloWejsciaPierwszePietro_1 = new Room("schody_parter_kolo_wejscia_pierwsze_1", "Korytarz", 206, 192, 1);
+        Room schodyPierwszeDrugiePietroPierwsze = new Room("schody_pierwsze_drugie_pietro", "Schody I piętro - II piętro (I piętro)", 254, 192, 1);
+        Room schodyPierwszeDrugiePietroPierwsze2 = new Room("schody_pierwsze_drugie_pietro2", "Korytarz", 260, 176, 1);
         Room dziekanat = new Room("dziekanat", "Dziekanat/D214/D210/D208 (I piętro)", 252, 152, 1);
         Room dziekanatStudencki = new Room("dziekanat_studencki", "Dziekanat studencki/D219/D221 (I piętro)", 240, 120, 1);
         Room s5 = new Room("s5", "S5/D206 (I piętro)", 252, 118, 1);
@@ -102,6 +109,8 @@ namespace WMiIApp
         Room s8 = new Room("s8", "S8/D202 (I piętro)", 248, 46, 1);
         Room korytarzPierwszePietro = new Room("korytarz_pierwsze_pietro", "Korytarz", 200, 92, 1);
         Room schodyPierwszePietroKoloS8 = new Room("schody2", "Schody obok S8 (I piętro)", 243, 68, 1);
+        Room schodyPierwszePietroKoloS8_2 = new Room("schody2_1", "Korytarz", 234, 50, 1);
+        Room schodyPierwszePietroKoloS8_3 = new Room("schody2_2", "Korytarz", 234, 68, 1);
         Room b217 = new Room("b217", "B217 (I piętro)", 55, 55, 1);
         Room b218 = new Room("b218", "B218 (I piętro)", 55, 64, 1);
         Room b219 = new Room("b219", "B219 (I piętro)", 55, 72, 1);
@@ -111,6 +120,7 @@ namespace WMiIApp
         Room b223 = new Room("b223", "B223 (I piętro)", 55, 105, 1);
         Room b224 = new Room("b224", "B224 (I piętro)", 55, 116, 1);
         Room schodyKoloAuliPierwsze = new Room("schody_kolo_auli_pierwsze", "Schody koło Auli (I piętro)", 52, 125, 1);
+        Room schodyKoloAuliPierwsze2 = new Room("schody_kolo_auli_pierwsze_1", "Korytarz", 30, 125, 1);
         Room b202 = new Room("b202", "B202 (I piętro)", 48, 117, 1);
         Room b203 = new Room("b203", "B203 (I piętro)", 48, 112, 1);
         Room b204 = new Room("b204", "B204 (I piętro)", 48, 102, 1);
@@ -123,6 +133,8 @@ namespace WMiIApp
         Room l11 = new Room("l11", "L11/C203 (I piętro)", 140, 40, 1);
         Room l10 = new Room("l10", "L10/C202 (I piętro)", 110, 40, 1);
         Room schodyPierwszePietroKoloPM2 = new Room("schody_pierwsze", "Schody obok PM2 (I piętro)", 80, 40, 1);
+        Room schodyPierwszePietroKoloPM2_2 = new Room("schody_pierwsze_2", "Korytarz", 86, 30, 1);
+        Room schodyPierwszePietroKoloPM2_3 = new Room("schody_pierwsze_3", "Korytarz", 86, 20, 1);
         Room pm2 = new Room("pm2", "PM2/B213 (I piętro)", 60, 40, 1);
         Room ss2 = new Room("ss2", "SS2/B211 (I piętro)", 48, 40, 1);
         Room f105 = new Room("f105", "F105 (Parter/I piętro) Zejdź na dół schodami", 230, 250, 1);
@@ -135,6 +147,7 @@ namespace WMiIApp
         Room l8 = new Room("l8", "L8/E302 (II piętro)", 248, 225, 2);
         Room l7 = new Room("l7", "L7/E301 (II piętro)", 248, 208, 2);
         Room schodyPierwszeDrugiePietroDrugie = new Room("schody_pierwsze_drugie_pietro_drugie", "Schody I piętro - II piętro (II piętro)", 249, 154, 2);
+        Room schodyPierwszeDrugiePietroDrugie2 = new Room("schody_pierwsze_drugie_pietro_drugie2", "Korytarz", 257, 170, 2);
         Room e307 = new Room("e307", "E307 (II piętro)", 240, 233, 2);
         Room e309 = new Room("e309", "E309 (II piętro)", 240, 225, 2);
         Room e310 = new Room("e310", "E310 (II piętro)", 240, 217, 2);
@@ -153,6 +166,7 @@ namespace WMiIApp
         Room l4 = new Room("l4", "L4/D303 (II piętro)", 248, 110, 2);
         Room s9 = new Room("s9", "S9/D302 (II piętro)", 243, 108, 2);
         Room schodyKoloS9 = new Room("schody_kolo_s9", "Schody koło S9 (II piętro)", 230, 108, 2);
+        Room schodyKoloS9_2 = new Room("schody_kolo_s9_2", "Korytarz", 236, 80, 2);
         Room korytarzDrugiePietro = new Room("korytarz_drugie_pietro", "Korytarz", 200, 115, 2);
         Room b317 = new Room("b317", "B317 (II piętro)", 54, 82, 2);
         Room b318 = new Room("b318", "B318 (II piętro)", 54, 90, 2);
@@ -163,6 +177,7 @@ namespace WMiIApp
         Room b323 = new Room("b323", "B323 (II piętro)", 54, 134, 2);
         Room b324 = new Room("b324", "B324 (II piętro)", 54, 144, 2);
         Room schodyKoloAuliDrugie = new Room("schody_kolo_auli_drugie", "Schody koło Auli (II piętro)", 52, 155, 2);
+        Room schodyKoloAuliDrugie2 = new Room("schody_kolo_auli_drugie2", "Korytarz", 28, 155, 2);
         Room b302 = new Room("b302", "B302 (II piętro)", 48, 146, 2);
         Room b303 = new Room("b303", "B303 (II piętro)", 48, 140, 2);
         Room b304 = new Room("b304", "B304 (II piętro)", 48, 132, 2);
@@ -175,6 +190,7 @@ namespace WMiIApp
         Room l2 = new Room("l2", "L2/C303 (II piętro)", 146, 74, 2);
         Room l1 = new Room("l1", "L1/C302 (II piętro)", 110, 74, 2);
         Room schodyKoloPM3 = new Room("schody_kolo_pm3", "Schody koło PM3 (II piętro)", 82, 74, 2);
+        Room schodyKoloPM3_2 = new Room("schody_kolo_pm3_2", "Korytarz", 82, 46, 2);
         Room pm3 = new Room("pm3", "PM3/B313 (II piętro)", 54, 74, 2);
         Room ss3 = new Room("ss3", "SS3/B311 (II piętro)", 48, 74, 2);
         Room f303 = new Room("f303", "Zejście schodami do F303 (I piętro/II piętro)", 235, 245, 2);
@@ -358,7 +374,7 @@ namespace WMiIApp
             bar.AddNeighbor(wcPiwnica);
             bar.AddNeighbor(schodyParterPiwnica);
             schodyParterPiwnica.AddNeighbor(bar);
-            schodyParterPiwnica.AddNeighbor(schodyParterPiwnicaKoloPatio);
+            schodyParterPiwnica.AddNeighbor(schodyParterPiwnicaKoloPatio2);
             schodyParterPiwnicaLesk.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia);
             schodyParterPiwnicaLesk.AddNeighbor(lesk);
             lesk.AddNeighbor(schodyParterPiwnicaLesk);
@@ -401,12 +417,18 @@ namespace WMiIApp
             schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(wejscie);
             schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(portiernia);
             schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(galeria);
-            schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(schodyKoloWejsciaPierwszePietro);
-            schodyParterPiwnicaKoloPatio.AddNeighbor(schodyParterPiwnica);
+            schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(schodyParterPiwnicaKoloPatio);
+            schodyParterPiwnicaLeskKoloWejscia.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia2);
+            schodyParterPiwnicaLeskKoloWejscia2.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia);
+            schodyParterPiwnicaLeskKoloWejscia2.AddNeighbor(schodyKoloWejsciaPierwszePietro_1);
+            schodyParterPiwnicaKoloPatio.AddNeighbor(schodyParterPiwnicaKoloPatio2);
             schodyParterPiwnicaKoloPatio.AddNeighbor(galeria);
             schodyParterPiwnicaKoloPatio.AddNeighbor(patio);
             schodyParterPiwnicaKoloPatio.AddNeighbor(salaKonferencyjna);
             schodyParterPiwnicaKoloPatio.AddNeighbor(aula);
+            schodyParterPiwnicaKoloPatio.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia);
+            schodyParterPiwnicaKoloPatio2.AddNeighbor(schodyParterPiwnicaKoloPatio);
+            schodyParterPiwnicaKoloPatio2.AddNeighbor(schodyParterPiwnica);
             d114.AddNeighbor(wejscie);
             d114.AddNeighbor(d113);
             d113.AddNeighbor(d114);
@@ -426,7 +448,9 @@ namespace WMiIApp
             d107.AddNeighbor(d108);
             schody3.AddNeighbor(d109);
             schody3.AddNeighbor(d110);
-            schody3.AddNeighbor(schodyPierwszePietroKoloS8);
+            schody3.AddNeighbor(schody3_2);
+            schody3_2.AddNeighbor(schody3);
+            schody3_2.AddNeighbor(schodyPierwszePietroKoloS8_3);
             biblioteka.AddNeighbor(galeria);
             biblioteka.AddNeighbor(patio2);
             biblioteka.AddNeighbor(d111);
@@ -478,7 +502,9 @@ namespace WMiIApp
             schodyKoloAuli.AddNeighbor(salaKonferencyjna);
             schodyKoloAuli.AddNeighbor(wc2);
             schodyKoloAuli.AddNeighbor(b124);
-            schodyKoloAuli.AddNeighbor(schodyKoloAuliPierwsze);
+            schodyKoloAuli.AddNeighbor(schodyKoloAuli2);
+            schodyKoloAuli2.AddNeighbor(schodyKoloAuli);
+            schodyKoloAuli2.AddNeighbor(schodyKoloAuliPierwsze);
             wc2.AddNeighbor(schodyKoloAuli);
             wc2.AddNeighbor(b106);
             wc2.AddNeighbor(b124);
@@ -518,12 +544,16 @@ namespace WMiIApp
             c102.AddNeighbor(c104);
             c102.AddNeighbor(schody);
             schody.AddNeighbor(pm1);
+            schody.AddNeighbor(schodyKoloPM1);
             schody.AddNeighbor(c102);
+            schodyKoloPM1.AddNeighbor(schody);
+            schodyKoloPM1.AddNeighbor(schodyPierwszePietroKoloPM2_2);
             pm1.AddNeighbor(ss1);
             pm1.AddNeighbor(schody);
             ss1.AddNeighbor(pm1);
             ss1.AddNeighbor(b119);
             ss1.AddNeighbor(b111);
+            
 
             //Sasiedzi I pietro
             f209.AddNeighbor(f208);
@@ -600,14 +630,18 @@ namespace WMiIApp
             spot.AddNeighbor(e202);
             schodyKoloWejsciaPierwszePietro.AddNeighbor(spot);
             schodyKoloWejsciaPierwszePietro.AddNeighbor(s4);
-            schodyKoloWejsciaPierwszePietro.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia);
+            schodyKoloWejsciaPierwszePietro.AddNeighbor(schodyKoloWejsciaPierwszePietro_1);
             schodyKoloWejsciaPierwszePietro.AddNeighbor(dziekanat);
             schodyKoloWejsciaPierwszePietro.AddNeighbor(schodyPierwszeDrugiePietroPierwsze);
+            schodyKoloWejsciaPierwszePietro_1.AddNeighbor(schodyKoloWejsciaPierwszePietro);
+            schodyKoloWejsciaPierwszePietro_1.AddNeighbor(schodyParterPiwnicaLeskKoloWejscia2);
             schodyPierwszeDrugiePietroPierwsze.AddNeighbor(schodyKoloWejsciaPierwszePietro);
             schodyPierwszeDrugiePietroPierwsze.AddNeighbor(dziekanat);
             schodyPierwszeDrugiePietroPierwsze.AddNeighbor(spot);
             schodyPierwszeDrugiePietroPierwsze.AddNeighbor(s4);
-            schodyPierwszeDrugiePietroPierwsze.AddNeighbor(schodyPierwszeDrugiePietroDrugie);
+            schodyPierwszeDrugiePietroPierwsze.AddNeighbor(schodyPierwszeDrugiePietroPierwsze2);
+            schodyPierwszeDrugiePietroPierwsze2.AddNeighbor(schodyPierwszeDrugiePietroPierwsze);
+            schodyPierwszeDrugiePietroPierwsze2.AddNeighbor(schodyPierwszeDrugiePietroDrugie2);
             dziekanat.AddNeighbor(schodyKoloWejsciaPierwszePietro);
             dziekanat.AddNeighbor(schodyPierwszeDrugiePietroPierwsze);
             dziekanat.AddNeighbor(dziekanatStudencki);
@@ -629,10 +663,14 @@ namespace WMiIApp
             s8.AddNeighbor(s7);
             korytarzPierwszePietro.AddNeighbor(s6);
             korytarzPierwszePietro.AddNeighbor(wcPierwsze);
-            schodyPierwszePietroKoloS8.AddNeighbor(schody3);
             schodyPierwszePietroKoloS8.AddNeighbor(s7);
             schodyPierwszePietroKoloS8.AddNeighbor(s8);
-            schodyPierwszePietroKoloS8.AddNeighbor(schodyKoloS9);
+            schodyPierwszePietroKoloS8.AddNeighbor(schodyPierwszePietroKoloS8_3);
+            schodyPierwszePietroKoloS8_2.AddNeighbor(schodyPierwszePietroKoloS8_3);
+            schodyPierwszePietroKoloS8_2.AddNeighbor(schodyKoloS9_2);
+            schodyPierwszePietroKoloS8_3.AddNeighbor(schodyPierwszePietroKoloS8_2);
+            schodyPierwszePietroKoloS8_3.AddNeighbor(schodyPierwszePietroKoloS8);
+            schodyPierwszePietroKoloS8_3.AddNeighbor(schody3_2);
             b217.AddNeighbor(ss2);
             b217.AddNeighbor(pm2);
             b217.AddNeighbor(b208);
@@ -666,8 +704,9 @@ namespace WMiIApp
             b224.AddNeighbor(schodyKoloAuliPierwsze);
             schodyKoloAuliPierwsze.AddNeighbor(b224);
             schodyKoloAuliPierwsze.AddNeighbor(b202);
-            schodyKoloAuliPierwsze.AddNeighbor(schodyKoloAuli);
-            schodyKoloAuliPierwsze.AddNeighbor(schodyKoloAuliDrugie);
+            schodyKoloAuliPierwsze.AddNeighbor(schodyKoloAuliPierwsze2);
+            schodyKoloAuliPierwsze2.AddNeighbor(schodyKoloAuliPierwsze);
+            schodyKoloAuliPierwsze2.AddNeighbor(schodyKoloAuliDrugie2);
             b202.AddNeighbor(schodyKoloAuliPierwsze);
             b202.AddNeighbor(b203);
             b202.AddNeighbor(b224);
@@ -704,10 +743,17 @@ namespace WMiIApp
             l11.AddNeighbor(l10);
             l10.AddNeighbor(l11);
             l10.AddNeighbor(schodyPierwszePietroKoloPM2);
+
             schodyPierwszePietroKoloPM2.AddNeighbor(l10);
             schodyPierwszePietroKoloPM2.AddNeighbor(pm2);
-            schodyPierwszePietroKoloPM2.AddNeighbor(schody);
-            schodyPierwszePietroKoloPM2.AddNeighbor(schodyKoloPM3);
+            schodyPierwszePietroKoloPM2.AddNeighbor(schodyPierwszePietroKoloPM2_2);
+
+            schodyPierwszePietroKoloPM2_2.AddNeighbor(schodyKoloPM1);
+            schodyPierwszePietroKoloPM2_2.AddNeighbor(schodyPierwszePietroKoloPM2);
+            schodyPierwszePietroKoloPM2_2.AddNeighbor(schodyPierwszePietroKoloPM2_3);
+
+            schodyPierwszePietroKoloPM2_3.AddNeighbor(schodyPierwszePietroKoloPM2_2);
+            schodyPierwszePietroKoloPM2_3.AddNeighbor(schodyKoloPM3_2);
             pm2.AddNeighbor(ss2);
             pm2.AddNeighbor(schodyPierwszePietroKoloPM2);
             pm2.AddNeighbor(b217);
@@ -735,10 +781,12 @@ namespace WMiIApp
             l7.AddNeighbor(e312);
             l7.AddNeighbor(e311);
             l7.AddNeighbor(e310);
-            schodyPierwszeDrugiePietroDrugie.AddNeighbor(schodyPierwszeDrugiePietroPierwsze);
+            schodyPierwszeDrugiePietroDrugie.AddNeighbor(schodyPierwszeDrugiePietroDrugie2);
             schodyPierwszeDrugiePietroDrugie.AddNeighbor(l6);
             schodyPierwszeDrugiePietroDrugie.AddNeighbor(d311);
             schodyPierwszeDrugiePietroDrugie.AddNeighbor(d312);
+            schodyPierwszeDrugiePietroDrugie2.AddNeighbor(schodyPierwszeDrugiePietroDrugie);
+            schodyPierwszeDrugiePietroDrugie2.AddNeighbor(schodyPierwszeDrugiePietroPierwsze2);
             e307.AddNeighbor(l9);
             e307.AddNeighbor(e309);
             e307.AddNeighbor(l8);
@@ -790,10 +838,12 @@ namespace WMiIApp
             l4.AddNeighbor(korytarzDrugiePietro);
             s9.AddNeighbor(l4);
             s9.AddNeighbor(schodyKoloS9);
-            schodyKoloS9.AddNeighbor(schodyPierwszePietroKoloS8);
+            schodyKoloS9.AddNeighbor(schodyKoloS9_2);
             schodyKoloS9.AddNeighbor(s9);
             schodyKoloS9.AddNeighbor(l4);
             schodyKoloS9.AddNeighbor(korytarzDrugiePietro);
+            schodyKoloS9_2.AddNeighbor(schodyKoloS9);
+            schodyKoloS9_2.AddNeighbor(schodyPierwszePietroKoloS8_2);
             korytarzDrugiePietro.AddNeighbor(schodyKoloS9);
             korytarzDrugiePietro.AddNeighbor(l4);
             korytarzDrugiePietro.AddNeighbor(wcDrugiePietro);
@@ -829,7 +879,9 @@ namespace WMiIApp
             b324.AddNeighbor(b323);
             b324.AddNeighbor(b302);
             b324.AddNeighbor(b303);
-            schodyKoloAuliDrugie.AddNeighbor(schodyKoloAuliPierwsze);
+            schodyKoloAuliDrugie2.AddNeighbor(schodyKoloAuliDrugie);
+            schodyKoloAuliDrugie2.AddNeighbor(schodyKoloAuliPierwsze2);
+            schodyKoloAuliDrugie.AddNeighbor(schodyKoloAuliDrugie2);
             schodyKoloAuliDrugie.AddNeighbor(b324);
             schodyKoloAuliDrugie.AddNeighbor(b302);
             b302.AddNeighbor(schodyKoloAuliDrugie);
@@ -868,9 +920,11 @@ namespace WMiIApp
             l2.AddNeighbor(l1);
             l1.AddNeighbor(l2);
             l1.AddNeighbor(schodyKoloPM3);
-            schodyKoloPM3.AddNeighbor(schodyPierwszePietroKoloPM2);
+            schodyKoloPM3.AddNeighbor(schodyKoloPM3_2);
             schodyKoloPM3.AddNeighbor(pm3);
             schodyKoloPM3.AddNeighbor(l1);
+            schodyKoloPM3_2.AddNeighbor(schodyKoloPM3);
+            schodyKoloPM3_2.AddNeighbor(schodyPierwszePietroKoloPM2_3);
             pm3.AddNeighbor(schodyKoloPM3);
             pm3.AddNeighbor(b317);
             pm3.AddNeighbor(ss3);
@@ -1048,6 +1102,21 @@ namespace WMiIApp
             GlobalRooms.AddRoom(f306);
             GlobalRooms.AddRoom(f403);
             GlobalRooms.AddRoom(f405);
+            GlobalRooms.AddRoom(schodyParterPiwnicaKoloPatio2);
+            GlobalRooms.AddRoom(schodyParterPiwnicaLeskKoloWejscia2);
+            GlobalRooms.AddRoom(schodyKoloAuli2);
+            GlobalRooms.AddRoom(schodyKoloPM1);
+            GlobalRooms.AddRoom(schody3_2);
+            GlobalRooms.AddRoom(schodyKoloWejsciaPierwszePietro_1);
+            GlobalRooms.AddRoom(schodyPierwszeDrugiePietroPierwsze2);
+            GlobalRooms.AddRoom(schodyPierwszePietroKoloS8_2);
+            GlobalRooms.AddRoom(schodyPierwszePietroKoloS8_3);
+            GlobalRooms.AddRoom(schodyKoloAuliPierwsze2);
+            GlobalRooms.AddRoom(schodyPierwszePietroKoloPM2_2);
+            GlobalRooms.AddRoom(schodyPierwszePietroKoloPM2_3);
+            GlobalRooms.AddRoom(schodyPierwszeDrugiePietroDrugie2);
+            GlobalRooms.AddRoom(schodyKoloS9_2);
+            GlobalRooms.AddRoom(schodyKoloAuliDrugie2);
         }
     }
 }

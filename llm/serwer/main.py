@@ -5,16 +5,16 @@ import uvicorn
 
 from fastapi import FastAPI
 
-from common import init_common
 from command_line import parse_args
+from common import LOGGER, init_common
 
 from api.routers import (
     chat,
     classify,
     faq,
     faq_like,
-    faq_upload,
-    rag_docs_upload
+    upload_faq,
+    upload_rag_docs
 )
 
 def create_app() -> FastAPI:
@@ -25,8 +25,8 @@ def create_app() -> FastAPI:
         classify.router,
         faq.router,
         faq_like.router,
-        faq_upload.router,
-        rag_docs_upload.router
+        upload_faq.router,
+        upload_rag_docs.router
     ]
 
     for router in routers:
@@ -35,8 +35,7 @@ def create_app() -> FastAPI:
     return app
 
 def setup_logger():
-    logger = logging.getLogger("mikolAI")
-    logger.setLevel(logging.INFO)
+    LOGGER.setLevel(logging.INFO)
 
     formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
 
@@ -48,8 +47,8 @@ def setup_logger():
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 
-    logger.addHandler(file_handler)
-    logger.addHandler(stdout_handler)
+    LOGGER.addHandler(file_handler)
+    LOGGER.addHandler(stdout_handler)
 
 def main() -> None:
     setup_logger()

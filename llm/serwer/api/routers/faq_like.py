@@ -22,7 +22,9 @@ router = APIRouter()
 async def faq_like(
     request: FAQLikeRequest
 ) -> FAQLikeResult:
-    result = common.faq_vector_store[request.lang].similarity_search(
+    vector_store = common.faq_vector_store[request.lang]
+
+    result = vector_store.similarity_search(
         query=request.text,
         k=request.limit,
         score_threshold=config.api.faq_like.score_threshold

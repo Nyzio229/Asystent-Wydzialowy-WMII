@@ -28,13 +28,6 @@ def parse_args():
     )
 
     parser.add_argument(
-        "-f",
-        "--chat_format",
-        help="Chat format",
-        default=cmd_line_config.chat_format
-    )
-
-    parser.add_argument(
         "--n_ctx",
         help="Context window size",
         default=cmd_line_config.n_ctx,

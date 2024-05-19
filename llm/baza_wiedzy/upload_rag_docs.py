@@ -1,5 +1,8 @@
 import os
+import re
 import glob
+
+import urllib
 
 from pathlib import Path
 
@@ -7,14 +10,16 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from upload_faq import fetch_faq, FaqEntry
-
-from utils import get_cached_translation, upload_docs, translate
-
 from fetch_misc_docs import (
     get_academic_year_organization,
     get_umk_wiki_page
 )
+
+from scrap import get_dump_dir_path
+
+from upload_faq import fetch_faq, FAQEntry
+
+from utils import get_cached_translation, upload_docs, translate
 
 class Document(BaseModel):
     page_content: str
@@ -39,6 +44,24 @@ def doc_translate(
             metadata |= doc_metadata
         else:
             metadata = doc_metadata
+
+        path = urllib.parse.urlparse(
+            metadata["origin"]
+        ).path
+
+        path_parts: list[str] = path[1:].split("/")[1:]
+
+        path_parts = list(map(
+            lambda part: part.capitalize().replace("-", " "),
+            path_parts
+        ))
+
+        combined_origin_parts = ", ".join(path_parts)
+
+        page_content = (
+            f"(Tagi: {combined_origin_parts})"
+            f"\n\n{page_content}"
+        )
 
         page_content = _translate(page_content)
 
@@ -67,9 +90,12 @@ def doc_translate(
         keys = entry.keys()
 
         if keys == {"title", "body"}:
+            body = entry["body"]
             title = entry["title"]
 
             if title:
+                body = f"*{title}*\n\n{body}"
+
                 doc_metadata = dict(
                     title=title
                 )
@@ -79,38 +105,57 @@ def doc_translate(
             doc_metadata |= metadata
 
             _append_translated_doc(
-                page_content=entry["body"],
+                page_content=body,
                 doc_metadata=doc_metadata
             )
         elif keys == {"section_title", "news", "articles", "stray_text"}:
+            section_title = entry["section_title"]
+
             doc_metadata = dict(
-                section_title=entry["section_title"]
+                section_title=section_title
             ) | metadata
+
+            section_header = f"*{section_title}*\n\n"
 
             for news in entry["news"]:
                 assert news.keys() == {"title", "date", "abstract"}
 
+                news_date = news["date"]
+                news_title = news["title"]
+                news_abstract = news["abstract"]
+
+                page_content = (
+                    f"{section_header}*{news_title}* "
+                    f"({news_date})\n\n{news_abstract}"
+                )
+
                 _append_translated_doc(
-                    page_content=news["abstract"],
+                    page_content=page_content,
                     doc_metadata=doc_metadata,
                     metadata=dict(
-                        news_title=news["title"],
-                        news_date=news["date"]
+                        news_title=news_title,
+                        news_date=news_date
                     )
                 )
 
             for i, article in enumerate(entry["articles"]):
+                page_content = f"{section_header}{article}"
+
                 _append_translated_doc(
-                    page_content=article,
+                    page_content=page_content,
                     doc_metadata=doc_metadata,
                     metadata=dict(
                         article_id=i
                     )
                 )
 
-            if entry["stray_text"]:
+            stray_text = entry["stray_text"]
+
+            if stray_text:
+                page_content = f"{section_header}{stray_text}"
+
                 _append_translated_doc(
-                    page_content=entry["stray_text"],
+                    page_content=page_content,
                     doc_metadata=doc_metadata
                 )
         else:
@@ -118,11 +163,8 @@ def doc_translate(
 
     return translated
 
-def get_scrapped_webpages_docs() -> list[Document]:
-    dump_dir_path = os.path.join(
-        "scrapowane_strony_wydzialowe",
-        "dump"
-    )
+def get_scrapped_faculty_webpages_docs() -> list[Document]:
+    dump_dir_path = get_dump_dir_path()
 
     glob_path = os.path.join(dump_dir_path, "*.json")
 
@@ -153,17 +195,22 @@ def get_scrapped_webpages_docs() -> list[Document]:
 
     return translated_docs
 
-def get_umk_wiki_page_doc() -> Document:
-    wp = get_umk_wiki_page()
+def get_umk_wiki_page_docs() -> list[Document]:
+    page = get_umk_wiki_page()
 
-    doc = Document(
-        metadata=dict(
-            origin=wp.url
+    docs = list(map(
+        lambda doc: Document(
+            metadata=dict(
+                origin=page.url
+            ),
+            page_content=doc
         ),
-        page_content=wp.page_content
-    )
+        re.split(
+            "\n== .* ==\n", page.page_content
+        )
+    ))
 
-    return doc
+    return docs
 
 def get_academic_year_organization_doc() -> Document:
     ayo = get_academic_year_organization()
@@ -185,7 +232,7 @@ def get_faq_docs() -> list[Document]:
 
     n_faq_entries = len(faq)
 
-    def _faq_entry_to_doc(idx: int, faq_entry: FaqEntry) -> Document:
+    def _faq_entry_to_doc(idx: int, faq_entry: FAQEntry) -> Document:
         question = faq_entry.question
         answer = faq_entry.answer
 
@@ -209,17 +256,19 @@ def get_faq_docs() -> list[Document]:
 
 def main() -> None:
     downloading_texts_with_getters = (
-        ("zescrapowanych danych ze stron wydziałowych", get_scrapped_webpages_docs),
-        ("FAQ", get_faq_docs),
-        ("organizacji roku akademickiego", get_academic_year_organization_doc),
-        ("strony UMK na wikipedii", get_umk_wiki_page_doc)
+        ("zescrapowanych danych ze stron wydziałowych", get_scrapped_faculty_webpages_docs),
+        #("FAQ", get_faq_docs),
+        #("organizacji roku akademickiego", get_academic_year_organization_doc),
+        #("strony UMK na wikipedii", get_umk_wiki_page_docs)
     )
 
     print("Pobieranie:")
 
     docs: list[Document] = []
 
-    for i, (text, doc_getter) in enumerate(downloading_texts_with_getters):
+    for i, (text, doc_getter) in enumerate(
+        downloading_texts_with_getters
+    ):
         print(f"\n{i+1}. {text}...")
 
         doc = doc_getter()
@@ -230,14 +279,13 @@ def main() -> None:
         docs += doc
 
     docs = list(map(
-        lambda doc: doc.model_dump(),
-        docs
+        lambda doc: doc.model_dump(), docs
     ))
 
     print("\nPrzesyłanie do bazy wektorowej...")
 
     upload_docs(
-        "rag_docs_upload",
+        "upload_rag_docs",
         docs=docs
     )
 
