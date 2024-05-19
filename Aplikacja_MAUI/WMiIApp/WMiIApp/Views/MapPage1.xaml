@@ -24,11 +24,11 @@
                 WidthRequest="40" 
                 BackgroundColor="Transparent"
                 AbsoluteLayout.LayoutFlags="None" 
-                AbsoluteLayout.LayoutBounds="200,2,40,40"/>
+                AbsoluteLayout.LayoutBounds="170,2,40,40"/>
                 <Image Source="map_icon.png" 
                 HeightRequest="40" 
                 WidthRequest="40" 
-                AbsoluteLayout.LayoutBounds="200,2,40,40" 
+                AbsoluteLayout.LayoutBounds="170,2,40,40" 
                 AbsoluteLayout.LayoutFlags="None"/>
             </AbsoluteLayout>
         </StackLayout>
