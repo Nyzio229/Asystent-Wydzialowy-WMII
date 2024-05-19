@@ -4,13 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WMiIApp"
-    Title="WMiIApp"
-    BackgroundColor="#181b1b"
-    FlyoutBackgroundColor="#181b1b"
-    Shell.ForegroundColor="#E7F6F2" 
-    TabBarBackgroundColor="#181b1b"
-    TabBarUnselectedColor="#E7F6F2"
-    TabBarTitleColor="#A5C9CA">
+    BackgroundColor="#1E1C26"
+    FlyoutBackgroundColor="#1E1C26"
+    Shell.ForegroundColor="#FFFFFF" 
+    TabBarBackgroundColor="#1E1C26"
+    TabBarUnselectedColor="#FFFFFF"
+    TabBarTitleColor="#0277FA">
 
     <Shell.ItemTemplate>
         <DataTemplate>
@@ -21,7 +20,7 @@
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
                        VerticalTextAlignment="Center" 
-                       TextColor="#E7F6F2"/>
+                       TextColor="#FFFFFF"/>
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
@@ -31,20 +30,18 @@
         Route="LoadingPage" 
         Shell.FlyoutBehavior="Disabled"
         FlyoutItemIsVisible="False"/>
-    <!--IsVisible="False"-->
-        <!--DELETELATER-->
+    
     <ShellContent
         ContentTemplate="{DataTemplate local:EmailAuthPage}"
         Route="EmailAuthPage" 
         Shell.FlyoutBehavior="Disabled"
         FlyoutItemIsVisible="False"/>
-    <!--DELETELATER-->
+    
     <ShellContent
         ContentTemplate="{DataTemplate local:CodeAuthPage}"
         Route="CodeAuthPage" 
         Shell.FlyoutBehavior="Disabled" 
         FlyoutItemIsVisible="False"/>
-    <!--DELETELATER-->
 
     <FlyoutItem Title="Czat" Icon="chat_icon.png">
         <ShellContent

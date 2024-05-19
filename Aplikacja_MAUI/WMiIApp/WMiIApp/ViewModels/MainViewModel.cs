@@ -42,14 +42,14 @@ namespace WMiIApp.ViewModels
 
             Message message = new()
             {
-                Content = "Cześć! Jestem MikoAI i chętnie odpowiem na wszystkie twoje pytania...",
+                Content = "Cześć! Jestem MikoAI i chętnie odpowiem na wszystkie twoje pytania!",
                 Role = "assistant",
                 IsSent = false
             };
             Items.Add(message);
             Message message2 = new()
             {
-                Content = "Hi, I'm MikoAI and I'm happy to answer all your questions...",
+                Content = "Hi, I'm MikoAI and I'm happy to answer all your questions!",
                 Role = "assistant",
                 IsSent = false
             };
@@ -139,7 +139,7 @@ namespace WMiIApp.ViewModels
                 {
                     Role = "user",
                     IsSent = true,
-                    Content = await messageService.TranslateMessage(Items, "pl", "en-GB")
+                    Content = await messageService.TranslateMessage(Items, "pl", "en-US")
                 };
                 ItemsEN.Add(messageTranslated);
                 return true;

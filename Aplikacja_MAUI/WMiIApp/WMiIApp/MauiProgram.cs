@@ -3,7 +3,6 @@ using WMiIApp.ViewModels;
 using WMiIApp.Services;
 using CommunityToolkit.Maui;
 using banditoth.MAUI.DeviceId;
-using banditoth.MAUI.DeviceId.Interfaces;
 
 namespace WMiIApp
 {
@@ -21,9 +20,8 @@ namespace WMiIApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MessageService>();

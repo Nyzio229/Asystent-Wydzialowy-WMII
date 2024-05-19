@@ -5,7 +5,7 @@ namespace WMiIApp
     public partial class App : Application
     {
         //uri for http connections
-        public const string uri = "https://52b2-188-146-248-103.ngrok-free.app/";
+        public const string uri = "http://158.75.112.151:9124/";
         public static RoomMap GlobalRooms { get; } = new RoomMap();
 
         public static PathFinder pathFinder = new PathFinder();
