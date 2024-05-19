@@ -72,7 +72,7 @@ namespace WMiIApp.Models
         // Metoda do rysowania strzalki
         private void DrawArrow(ICanvas canvas, float startX, float startY, float endX, float endY)
         {
-            float arrowSize = (float)9; // Rozmiar strzalki
+            float arrowSize = (float)5; // Rozmiar strzalki
 
             // Obliczamy kat miedzy punktami
             float angle = (float)Math.Atan2(endY - startY, endX - startX);
