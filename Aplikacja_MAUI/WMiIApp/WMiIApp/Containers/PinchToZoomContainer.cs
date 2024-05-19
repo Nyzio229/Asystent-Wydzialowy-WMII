@@ -122,7 +122,7 @@ namespace WMiIApp
                 newScale = Math.Max(Width / Content.Width, Height / Content.Height);
 
             // Dodatkowy mnoznik
-            double additionalScaleFactor = 1.5;
+            double additionalScaleFactor = 1.33;
 
             currentScale = newScale * additionalScaleFactor;
             startScale = newScale * additionalScaleFactor;
