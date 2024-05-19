@@ -18,7 +18,7 @@ public partial class MapPage1 : ContentPage
 		InitializeComponent();
 
         // Inicjalizacja listy nazw pokojow
-        allRoomNames = App.GlobalRooms.GetRooms().Select(room => room.Name).OrderBy(name => name).ToList();
+        allRoomNames = App.GlobalRooms.GetRooms().Where(room => room.Name != "Korytarz").Select(room => room.Name).OrderBy(name => name).ToList();
         filteredRoomNames = allRoomNames;
 
         App.pathFinder.Path.CollectionChanged += Path_CollectionChanged;
@@ -58,7 +58,7 @@ public partial class MapPage1 : ContentPage
 
     private async void HandleRoomButtonClickStairsTwoWay(object sender, EventArgs e)
     {
-        string action = await DisplayActionSheet("IdŸ na", "Zamknij", null, "Parter", "II piêtro");
+        string action = await DisplayActionSheet("", "Zamknij", null, "Parter", "II piêtro");
 
         if (action == "Parter")
         {
@@ -204,16 +204,10 @@ public partial class MapPage1 : ContentPage
         {
             menuGrid.IsVisible = false;
 
-            // Znaleziono sciezke, wyswietlamy alert z lista pokoi
-            string message = "Aby dotrzeæ do celu musisz przejœæ przez nastêpuj¹ce punkty:\n";
-            foreach (var room in shortestPath)
-            {
-                if (room.Name != "Korytarz")
-                {
-                    message += "-> " + room.Name + "\n";
-                }
-            }
-            message += "Dla u³atwienia wyœwietli³em Ci trasê na mapie \n";
+            // Znaleziono sciezke, wyswietlamy alert
+            string message = $"Miejsce startowe znajduje siê na {shortestPath[0].Floor} piêtrze.\n";
+            message += $"Miejsce docelowe znajduje siê na {shortestPath[shortestPath.Count() - 1].Floor} piêtrze.\n";
+            message += "Wyœwietli³em Ci trasê na mapie \n";
             DisplayAlert("Znaleziono trasê", message, "OK");
         }
 
