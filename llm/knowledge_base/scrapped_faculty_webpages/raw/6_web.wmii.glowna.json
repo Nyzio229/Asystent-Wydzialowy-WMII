@@ -1,0 +1,113 @@
+{
+   "origin": "https://www.mat.umk.pl/web/wmii/glowna",
+   "page_content": [
+      {
+         "title": "Archiwum",
+         "body": "* *Biuletyny informacyjne (link: https://www.mat.umk.pl/web/wmii/wydzial/biuletyn-informacyjny)*\n* *Aktualności* (link: https://www.mat.umk.pl/web/wmii/aktualnosci)\n* *Doktoraty i habilitacje* (link: https://www.mat.umk.pl/web/wmii/doktoraty-i-habilitacje)\n* *Konferencje* (link: https://www.mat.umk.pl/web/wmii/konferencje)"
+      },
+      {
+         "title": "Na skróty",
+         "body": "* Poczta przez WWW (link: https://poczta.mat.umk.pl/)\n* Elektroniczne Wspomaganie Zajęć (Moodle) (link: https://moodle.mat.umk.pl/)\n* Uniwersytecki System Obsługi Studiów (USOS) (link: https://usosweb.umk.pl/)\n* System samokształcenia oraz testowania umiejętności i wiedzy (link: https://www.mat.umk.pl:8070/start.html)\n* Biblioteka (link: https://www.mat.umk.pl/web/biblioteka-wmii/strona-glowna)\n* Czasopisma on-line\n* Miscellanea (link: https://www.mat.umk.pl/misc)\n* Biuletyn Informacyjny (link: https://www.mat.umk.pl/web/wmii/wydzial/biuletyn-informacyjny)\n* Zasoby dostępne po zalogowaniu [dla pracowników (link: https://www.mat.umk.pl/group/dla-pracownikow/glowna) | dla studentów (link: https://www.mat.umk.pl/group/wmii/)]\n\n* Kalendarz akademicki *2023/2024* (link: https://www.mat.umk.pl/documents/10180/1168268/Kalendarz_2023_2024.pdf)\n\n* Mapa portalu (link: https://www.mat.umk.pl/web/wmii/mapa-witryny)"
+      },
+      {
+         "title": "",
+         "body": "(link: http://most.amu.edu.pl)"
+      },
+      {
+         "title": "",
+         "body": "(link: https://www.fizyka.umk.pl/wiadomosci/?id=2942)"
+      },
+      {
+         "title": "",
+         "body": "(link: http://interaps.fizyka.umk.pl/?project=)"
+      },
+      {
+         "section_title": "Aktualności",
+         "news": [
+            {
+               "title": "VIII Sympozjum Analizy Nieliniowej, SNA 2024",
+               "date": "20 maja 2024",
+               "abstract": "W dniach 17-21 czerwca 2024 r. na WMiI odbędzie się VIII Sympozjum Analizy Nieliniowej, organizowane wspólnie z Uniwersyteckim Centrum Badań Nieliniowych im. J. P. Schaudera (link: https://cbn.umk.pl/home).\nTematyka skoncentrowana będzie głównie wokół następujących obszarów: metody topologiczne w równaniach różniczkowych, modelowanie matematyczne w nauce i technologii, metody wariacyjne i punkty krytyczne, optymalizacja i sterowanie, metryczna teoria punktów stałych, równania różniczkowe cząstkowe i ich zastosowania, dynamika niskowymiarowa, niezmienniki topologiczne i ich zastosowania.\nWe wtorek *18 czerwca* odbędą się następujące uroczystości:\n* wręczenia Medalu im. J. P. Schaudera *profesorowi* *Thomasowi Bartschowi* z Uniwersytetu w Giessen,\n* wręczenia Nagrody im. J. P. Schaudera dla młodych matematyków *dr. Bartoszowi Bieganowskiemu* (UW, UMK) oraz wyróżnień w tym konkursie *dr. Wojciechowi Górnemu* (Universität Wien) i *dr. Jakubowi Skrzeczkowskiemu* (Oxford University),\n\na w czwartek *20 czerwca* odbędzie się specjalna sesja poświęcona *prof. Wojciechowi Kryszewskiemu*, długoletniemu pracownikowi WMiI, zasłużonemu dla CBN i znanemu specjaliście w zakresie metod topologicznych w analizie nieliniowej.\nSerdecznie zapraszamy!\n\nWięcej informacji na temat Sympozjum znajduje się na stronie sna.mat.umk.pl (link: https://sna.mat.umk.pl/). Partnerami wydarzenia są Uniwersyteckie Centrum Doskonałości DAMSI (link: https://damsi.umk.pl/), Europejskie Towarzystwo Matematyczne (link: https://euromathsoc.org/) i Wydział Matematyki, Informatyki i Mechaniki UW (link: https://www.mimuw.edu.pl/pl/), a także Miasto Toruń (link: https://www.torun.pl/), Wydawnictwo LOGI (link: https://lamiglowki.net/) oraz Fabryka Cukiernicza Kopernik S.A. (link: https://www.kopernik.com.pl/)"
+            },
+            {
+               "title": "Nagroda \"Best Demonstration Award\" na konferencji AAMAS 2024",
+               "date": "14 maja 2024",
+               "abstract": "Na konferencji AAMAS 2024 (The 23rd International Conference on Autonomous Agents and Multi-Agent Systems) rangi A*, odbywającej się w Auckland, w Nowej Zelandii, dnia 9 maja zespół składający się z Damiana Kurpiewskiego (IPI PAN, WMiI UMK), Mateusza Kamińskiego (IPI PAN, WMiI UMK) i Wojciecha Jamrogi (University of Luxembourg, IPI PAN) otrzymał nagrodę w kategorii \"Best Demonstration Award\" za pracę \"STV+KH: Towards Practical Verification of Strategic Ability for Knowledge and Information Flow\". Tematem badań było rozwinięcie narzędzia weryfikacji zdolności strategicznych dla logiki ATL z niepełną informacją, poprzez dodanie weryfikacji formuł z operatorami wiedzowymi (K) i niepewności Hartleya (H).\n\nLink do publikacji: https://www.ifaamas.org/Proceedings/aamas2024/pdfs/p2812.pdf"
+            },
+            {
+               "title": "Stypendium doktoranckie w projekcie NCN prof. dr. hab. Krzysztofa Frączka",
+               "date": "14 maja 2024",
+               "abstract": "*Wydział Matematyki i Informatyki UMK ogłasza konkurs na stypendium doktoranckie w ramach projektu „**Perturbacje potoków lokalnie hamiltonowskich oraz uogólnione przekładania odcinków**” kierowanego przez prof. dr. hab. Krzysztofa Frączka*\n*------------------------------------------------*\n\n*Konkurs na stypendium doktoranckie w ramach projektu „**Perturbacje potoków lokalnie hamiltonowskich oraz uogólnione przekładania odcinków**” finansowanego przez NCN*\n\n*Tytuł projektu:* *Perturbacje potoków lokalnie hamiltonowskich oraz uogólnione przekładania odcinków*\n\n*Kierownik projektu: prof. dr hab. Krzysztof Frączek*\n\n*Nazwa jednostki*: Wydział Matematyki i Informatyki, Uniwersytet Mikołaja Kopernika w Toruniu\n\n*Nazwa stanowiska*: doktorant\n\n*Wymagania*:\n- ukończone studia magisterskie z matematyki (dyplom magistra należy dostarczyć do 10.09.2024 r.),\n- zainteresowania naukowe związane teorią układów dynamicznych i teorią ergodyczną,\n- znajomość podstaw teorii układów dynamicznych,\n- biegła znajomość języka angielskiego.\n\nWymagane dokumenty:\n· życiorys uwzględniający przebieg nauki, osiągnięcia wynikające z prowadzenia badań, stypendia, nagrody, doświadczenie naukowe zdobyte w kraju lub za granicą (w tym udział w warsztatach, stażach i projektach badawczych),\n· opis dorobku naukowego, w tym wykaz publikacji i prezentacji konferencyjnych,\n· list motywacyjny uwzględniający opis zainteresowań naukowych związanych z tematyką projektu,\n· kopie dotychczas otrzymanych dyplomów,\n· podpisana zgoda na przetwarzanie danych osobowych.\n\n*Opis zadań*:\n- prowadzenie badań naukowych opisanych w projekcie https://ncn.gov.pl/sites/default/files/listy-rankingowe/2023-10-12-prbis9kij4c/streszczenia/595675-en.pdf,\n- odbycie kształcenia w szkole doktorskiej,\n- przygotowanie rozprawy doktorskiej,\n- realizacja stażu w jednostce zagranicznej,\n- aktywny udział w spotkaniach grupy badawczej w zakresie uzgodnionym z kierownikiem projektu,\n- współpraca przy upowszechnianiu wyników projektu, w tym zaangażowanie w przygotowywanie publikacji oraz prezentacji.\n\n*Typ konkursu NCN*: PRELUDIUM BIS – ST\n\n*Termin składania ofert*: 31 maja 2024\n\n*Forma składania ofert*: email\n\n*Warunki zatrudnienia*:\nStypendium doktoranckie będzie przyznane na okres 48 miesięcy od 1 października 2024 r. w miesięcznej wysokości: 5 tys. zł do miesiąca, w którym zostanie przeprowadzona ocena śródokresowa doktoranta w szkole doktorskiej oraz 6 tys. zł w następnym okresie. W ramach uczestnictwa w projekcie doktorant może strać się o finansowane krótkich wyjazdów naukowych lub szkoleniowych oraz uczestnictwa w konferencjach.\n\n*Dodatkowe informacje*:\nDokumenty należy przesłać w wersji elektronicznej na adres: fraczek@mat.umk.pl"
+            },
+            {
+               "title": "Międzywydziałowy Konkurs Projektów Zespołowych",
+               "date": "14 maja 2024",
+               "abstract": "Rusza kolejna edycja \"Miedzywydziałowego Konkursu Projektów Zespołowych\"!!! Konkurs jest prowadzony w ramach kursu \"Pracownia Projektów Zespołowych\" na Wydziale Fizyki, Astronomii i Informatyki Stosowanej (WFAiIS) prowadzonego na kierunku Informatyka Stosowana oraz kursu \"Programowanie Zespołowe\" na Wydziale Matematyki i Informatyki (WMiI) prowadzonego na kierunku Informatyka. Współorganizatorem Konkursu jest Fundacja Aleksandra Jabłońskiego. Konkurs został objęty Patronatem Honorowym przez Panią Prorektor ds. Studenckich prof. dr hab. Beatę Przyborowską. Udział w konkursie polega na przygotowaniu projektu, zgłoszenia go do Konkursu oraz przedstawieniu poświęconej mu 20-minutowej prezentacji ustnej ocenianej przez Komisję. W Konkursie przyznawane są nagrody pieniężne ufundowane przez sponsorów: EIB, AIS.PL i Simplito. Więcej szczegółów i regulamin na stronie."
+            },
+            {
+               "title": "XX Konferencja \"Informatyka w Edukacji\", IwE2024",
+               "date": "13 maja 2024",
+               "abstract": "W dniach 25-27 czerwca 2024 na WMiI odbędzie się jubileuszowa XX Konferencja \"Informatyka w Edukacji\", IwE2024. Tematem przewodnim jubileuszowej edycji konferencji jest: Kształcenie informatyczne drogą do cyfrowej transformacji społeczeństwa.\n\nKonferencja kierowana jest do nauczycieli szkolnych i akademickich, naukowców, metodyków, instytucji edukacyjnych, ministerstw, ośrodków metodycznych, firm edukacyjnych i wszystkich zainteresowanych rozwojem edukacji informatycznej w naszym kraju i na świecie. Szczegółowe informacje o konferencji, zasady zgłaszania wystąpień, warsztatów i publikacji znajdują się na stronie https://iwe.mat.umk.pl. Serdecznie zapraszamy!"
+            },
+            {
+               "title": "Spotkanie z cyklu meetit.live ,,Walidacja? A komu to potrzebne?'' z Jakubem Chilczukiem, 08.05.2024 r., godz. 18:00",
+               "date": "4 maja 2024",
+               "abstract": "W środę *8 maja 2024* roku o godzinie *18:00* w sali *S9* odbędzie się siódme w roku akademickim 2023/24 spotkanie z cyklu *meetit.live*. Prelegentem będzie pan *Jakub Chilczuk*, który wygłosi wykład pt. ,,*Walidacja? A komu to potrzebne?*''. Spotkanie jest otwarte dla wszystkich zainteresowanych, ale ze względów organizacyjnych prosimy o zarejestrowanie się poprzez stronę: https://app.evenea.pl/event/meetitlive-14/. Po wykładzie zapraszamy uczestników na spotkanie integracyjne przy kawie i ciastkach.\n\nTematyka wykładu:\n\nPodczas wykładu nie będziemy wchodzić w szczegóły jak działa każde narzędzie, którego używamy w Intelu. Skupimy się za to na tym po co jest walidacja, dlaczego wcale nie jest to ta ,,gorsza'' ścieżka kariery, dlaczego walidacja nie równa się testowaniu i kto może zrobić karierę w walidacji. Opowiemy sobie o kilku przypadkach, gdy walidacji zabrakło i jakie były tego skutki. O walidacji będę mówił głównie z perspektywy produktów Intela i cyberbezpieczeństwa, ale nie zabraknie przykładów z innych dziedzin.\n\nO prelegencie:\n\nJakub Chilczuk - pracuje w Intelu ponad 2 lata, zajmując się psuciem rzeczy oraz wytykaniem błędów deweloperom. Obecnie pracuje z procesorami Intel Xeon, a poprzednio z Intel Optane. Prywatnie interesuje się i działa z cyberbezpieczeństwem.\n\nO firmie:\n\nIntel Corporation - amerykańska międzynarodowa korporacja i firma technologiczna z siedzibą w Santa Clara w Kalifornii, zarejestrowana w stanie Delaware. Intel jest jednym z największych na świecie pod względem przychodów producentów chipów półprzewodnikowych. Intel to nie tylko procesory, ale też chociażby karty graficzne, sieciowe. Swoim pracownikom oferuje owoce w biurze przez cały tydzień, nie tylko w czwartki.\n\nmeetit.live to wydarzenia cykliczne w postaci wieczornych wykładów obejmujących tematykę powiązaną z tą podejmowaną na Wydziale Matematyki i Informatyki UMK we wszystkich obszarach prowadzonych studiów. Planujemy spotykać się w każdą drugą środę miesiąca. Liczymy na to, że spotkania te będą okazją do wzajemnego poznania się i integracji członków społeczności oraz sympatyków naszego wydziału. Więcej informacji na stronie: https://meetit.live."
+            },
+            {
+               "title": "Prezentacje projektów zespołowych",
+               "date": "30 kwietnia 2024",
+               "abstract": "*14 czerwca 2024, godz. 10:00* w sali S9 odbędą się prezentacje *projektów zespołowych* realizowanych przez studentów III roku Matematyki stosowanej. Serdecznie zapraszamy!"
+            },
+            {
+               "title": "Toruński Festiwal Nauki i Sztuki, 21.04.2024",
+               "date": "11 kwietnia 2024",
+               "abstract": "21 kwietnia na WMiI zapraszamy na bloku imprez \"Otwarty umysł - nauka do kwadratu\" podczas 22. Toruńskiego Festiwalu Nauki i Sztuki! Oto imprezy na naszym Wydziale:\n\n* Piknik naukowy: od 9:30 do 14:30 całe rodziny mogę zanurzyć się świat matematycznych zabaw, gier i zagadek.\n* Wystawę projektów komputerowych: w godzinach 9:30-14:30 przyjdź i wejdź do świata elektroniki, komputerów i oprogramowania. Zobacz projekty tworzone na WMiI!\n* Gry z nagrodami: escape room (na zapisy), mistrzostwa w grę w kości (na zapisy) oraz gra terenowa po budynku Wydziału (od 9:30 do 14:30).\n* Wykłady:\n\t* 10:00-11:15 Czego nie wiedzą matematycy?\n\t* 11:30-12:45, Co łączy ocalałych z Titanica, diamenty Tiffany'ego i amerykańskie samochody z lat 70.? O otwartych zbiorach danych.\n\t* 13:00 – 14:15, Otwarte oprogramowanie: przeobrażenie cyfrowej przyszłości.\n\nPełny program festiwalu znajdziesz na www.festiwal.torun.pl (link: http://www.festiwal.torun.pl), a nasze imprezy poznasz klikając w link https://tiny.pl/dr5z3"
+            }
+         ],
+         "articles": [],
+         "stray_text": ""
+      },
+      {
+         "section_title": "Szybkie linki",
+         "news": [],
+         "articles": [
+            "* Studia stacjonarne (link: https://www.mat.umk.pl/web/wmii/studia-stacjonarne-i-i-ii-stopnia)\n* Studia niestacjonarne (link: https://www.mat.umk.pl/web/wmii/studia/studia-niestacjonarne)\n* Strefa kandydata na studia (link: https://www.mat.umk.pl/web/wmii/rekrutacja)"
+         ],
+         "stray_text": ""
+      },
+      {
+         "section_title": "Konferencje na Wydziale",
+         "news": [
+            {
+               "title": "XX Konferencja \"Informatyka w Edukacji\", IwE2024",
+               "date": "13 maja 2024",
+               "abstract": "W dniach 25-27 czerwca 2024 na WMiI odbędzie się jubileuszowa XX Konferencja \"Informatyka w Edukacji\", IwE2024. Tematem przewodnim jubileuszowej edycji konferencji jest: Kształcenie informatyczne drogą do cyfrowej transformacji społeczeństwa.\n\nKonferencja kierowana jest do nauczycieli szkolnych i akademickich, naukowców, metodyków, instytucji edukacyjnych, ministerstw, ośrodków metodycznych, firm edukacyjnych i wszystkich zainteresowanych rozwojem edukacji informatycznej w naszym kraju i na świecie. Szczegółowe informacje o konferencji, zasady zgłaszania wystąpień, warsztatów i publikacji znajdują się na stronie https://iwe.mat.umk.pl. Serdecznie zapraszamy!"
+            },
+            {
+               "title": "XIX Konferencja \"Informatyka w Edukacji\", IwE2023",
+               "date": "31 lipca 2023",
+               "abstract": "W dniach *22-24 września 2023* na WMiI odbędzie się XIX Konferencja \"Informatyka w Edukacji\", IwE2023. Tematem przewodnim tegorocznej edycji konferencji jest: *Edukacja informatyczna - wyzwania współczesnego świata*.\nKonferencja kierowana jest do nauczycieli szkolnych i akademickich, naukowców, metodyków, instytucji edukacyjnych, ministerstw, ośrodków metodycznych, firm edukacyjnych i wszystkich zainteresowanych rozwojem edukacji informatycznej w naszym kraju i na świecie. Szczegółowe informacje o konferencji, zasady zgłaszania wystąpień, warsztatów i publikacji znajdują się na stronie https://iwe.mat.umk.pl. Serdecznie zapraszamy!"
+            }
+         ],
+         "articles": [],
+         "stray_text": ""
+      },
+      {
+         "section_title": "Informacje / інформації",
+         "news": [],
+         "articles": [
+            "*** Internetowy, polsko-ukraiński słownik szkolnych pojęć matematycznych / польсько-український інтернет-словник шкільних математичних термінів. ***\n\nЦя ініціатива є реакцією на проблеми під час використання популярних інтернет-додатків для перекладу, оскільки вони часто роблять помилки у перекладі математичної термінології. Перша версія словника доступна за адресою: https://ua.mat.umk.pl/\nInicjatywa jest odpowiedzią na trudności towarzyszące posługiwaniu się popularnymi internetowymi aplikacjami do tłumaczenia, ponieważ przy specjalistycznych pojęciach często popełniają one błędy. Pierwsza wersja słownika jest dostępna pod adresem: https://ua.mat.umk.pl/\n\n*** Rekrutacja/набір ***\n\nВи можете вивчати математику або інформатику на факультеті математики та інформатики Університету Миколи Коперника в Торуні! Набір триває. Студенти, які переїжджають з українських вищих навчальних закладів, можуть зареєструватися на навчання до Університету Миколая Коперника в Торуні. Пропозиція стосується лише студентів українських вищих навчальних закладів, які були змушені покинути свою країну внаслідок початку війни. Навчання на факультеті математики та інформатики ведеться польською мовою. Зареєструватися можна тут: https://irk.umk.pl/pl/offer/PUA2021/\n\nMożesz studiować matematykę lub informatykę na Wydziale Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika w Toruniu! Rekrutacja trwa. Osoby przenoszące się z uczelni ukraińskich mogą zarejestrować się na studia na UMK w Toruniu. Oferta skierowana jest wyłącznie do studentów uczelni ukraińskich, którzy w wyniku wybuchu wojny zostali zmuszeni do opuszczenia swojego kraju. Studia na Wydziale Matematyki i Informatyki prowadzone są w języku polskim. Zarejestrować można się tu: https://irk.umk.pl/pl/offer/PUA2021/"
+         ],
+         "stray_text": ""
+      },
+      {
+         "section_title": "Studiuj u Nas",
+         "news": [],
+         "articles": [
+            "(link: https://www.mat.umk.pl/web/wmii/rekrutacja/informatyka) (link: https://www.mat.umk.pl/web/wmii/rekrutacja/analiza-danych) (link: https://www.mat.umk.pl/web/wmii/rekrutacja/matematyka-stosowana) (link: https://www.mat.umk.pl/web/wmii/rekrutacja/matematyka) (link: https://www.mat.umk.pl/web/wmii/rekrutacja/studia-doktoranckie) (link: https://www.mat.umk.pl/web/wmii/rekrutacja/matematyka-i-ekonomia)"
+         ],
+         "stray_text": ""
+      }
+   ]
+}

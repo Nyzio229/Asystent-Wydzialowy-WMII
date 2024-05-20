@@ -30,7 +30,10 @@ class TestModuleDescriptor(BaseModel):
         module_name = self.module_name
         file_path = self.dir_path / f"{module_name}.py"
 
-        spec = importlib.util.spec_from_file_location(module_name, file_path)
+        spec = importlib.util.spec_from_file_location(
+            module_name, file_path
+        )
+
         module = importlib.util.module_from_spec(spec)
 
         spec.loader.exec_module(module)
@@ -63,8 +66,8 @@ class TestModuleDescriptor(BaseModel):
         ))
 
         assert len(exported_classes) == 1, (
-            f"Expected exactly one exported test class named '{test_class_name}', "
-            f"got: {exported_classes}"
+            f"Expected exactly one exported test class "
+            f"named '{test_class_name}', got: {exported_classes}"
         )
 
         test_class = exported_classes[0]
@@ -89,7 +92,8 @@ def get_test_module_descriptors(
         paths = glob.glob(glob_path)
 
         assert len(paths) == 1, (
-            f"Expected exactly one 'test_*.py' script at '{dir_path}', got: {paths}"
+            f"Expected exactly one 'test_*.py' "
+            f"script at '{dir_path}', got: {paths}"
         )
 
         script_path = paths[0]
@@ -103,12 +107,18 @@ def get_test_module_descriptors(
     return test_module_descriptors
 
 def get_script_subdirs_paths() -> list[Path]:
-    dir_paths = [Path(x[0]) for x in os.walk(".") if x[0] != "."]
+    dir_paths = [
+        Path(x[0])
+        for x in os.walk(".")
+        if x[0] != "."
+    ]
 
-    skipped_dirs = {"test_cases", "__pycache__"}
+    dirs_to_skip = {
+        "test_cases", "__pycache__"
+    }
 
     dir_paths = list(filter(
-        lambda path: path.name not in skipped_dirs,
+        lambda path: path.name not in dirs_to_skip,
         dir_paths
     ))
 
@@ -123,7 +133,10 @@ def extend_sys_path(dir_paths: list[Path]) -> None:
     sys.path += dir_paths
 
 def run_test(test_class: Type[unittest.TestCase]) -> None:
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(test_class)
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(
+        test_class
+    )
+
     unittest.TextTestRunner().run(suite)
 
 def run_tests(
@@ -135,11 +148,15 @@ def run_tests(
 
     extend_sys_path(dir_paths)
 
-    test_module_descriptors = get_test_module_descriptors(dir_paths)
+    test_module_descriptors = get_test_module_descriptors(
+        dir_paths
+    )
 
     if test_dir_filter:
         test_module_descriptors = list(filter(
-            lambda descriptor: test_dir_filter(descriptor.dir_path),
+            lambda descriptor: test_dir_filter(
+                descriptor.dir_path
+            ),
             test_module_descriptors
         ))
 
