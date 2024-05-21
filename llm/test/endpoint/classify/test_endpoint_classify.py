@@ -1,15 +1,10 @@
 from typing import Literal, Type, TypeVar, Optional
 
-from pydantic import BaseModel
+from test_text_endpoint import TextTestCase, TestTextEndpoint
 
-from test_endpoint import TestEndpoint
+T = TypeVar("T", bound=TextTestCase)
 
-class MinimalClassifyTestCase(BaseModel):
-    text: str
-
-T = TypeVar("T", bound=MinimalClassifyTestCase)
-
-class TestEndpointClassify(TestEndpoint):
+class TestEndpointClassify(TestTextEndpoint):
     def __init__(
         self,
         label: Literal["chat", "navigation"],
@@ -19,7 +14,7 @@ class TestEndpointClassify(TestEndpoint):
         self._label = label
 
         super().__init__(
-            "classify", test_case_type, None,
+            "classify", test_case_type,
             *args, **kwargs
         )
 
@@ -51,26 +46,13 @@ class TestEndpointClassify(TestEndpoint):
 
         self.assertEqual(response_metadata, expected_metadata)
 
-    def _translate_test_cases(
-        self,
-        test_cases: list[T]
-    ) -> list[T]:
-        translated = list(map(
-            lambda test_case: test_case.model_copy(
-                update=dict(
-                    text=self._translate(test_case.text)
-                )
-            ),
-            test_cases
-        ))
-
-        return translated
-
     def _get_expected_responses(self) -> list[dict[str]]:
         return list(map(
             lambda test_case: dict(
                 label=self._label,
-                metadata=getattr(test_case, "metadata", None)
+                metadata=getattr(
+                    test_case, "metadata", None
+                )
             ),
             self._test_cases
         ))

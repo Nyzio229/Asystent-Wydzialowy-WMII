@@ -10,26 +10,33 @@ import requests
 from pydantic import BaseModel
 
 class Config(BaseModel):
-    docs_upload_url: str
-    translation_url: str
+    docs_upload_host: str
+    translation_host: str
 
 _config = Config(
-    docs_upload_url="http://158.75.112.151:9123",
-    translation_url="https://99c1-188-146-248-103.ngrok-free.app/Translation"
+    docs_upload_host="http://158.75.112.151:9123",
+    translation_host="https://ec1e-188-146-248-103.ngrok-free.app"
 )
 
 class Document(BaseModel):
     page_content: str
-    metadata: Optional[
-        dict[str, str | int | list[str]]
-    ] = None
+    metadata: dict[
+        str, str | int | list[str]
+    ] = {}
 
 def make_dir(path: Path) -> None:
-    path.mkdir(parents=True, exist_ok=True)
+    path.mkdir(
+        parents=True,
+        exist_ok=True
+    )
 
-def translate(message: str, lang_from: str, lang_to: str) -> str:
+def translate(
+    message: str,
+    lang_from: str,
+    lang_to: str
+) -> str:
     response = requests.post(
-        _config.translation_url,
+        f"{_config.translation_host}/Translation",
         json=dict(
             message=message,
             translateFrom=lang_from,
@@ -44,10 +51,26 @@ def translate(message: str, lang_from: str, lang_to: str) -> str:
 
     return translated
 
-T = TypeVar("T", bound=BaseModel)
-U = TypeVar("U", bound=BaseModel)
+_LANG_PL = "pl"
+_LANG_EN = "en-US"
 
-def load_json(
+def translate_pl_to_en(
+    message: str
+) -> str:
+    return translate(
+        message, _LANG_PL, _LANG_EN
+    )
+
+def translate_en_to_pl(
+    message: str
+) -> str:
+    return translate(
+        message, _LANG_EN, _LANG_PL
+    )
+
+T = TypeVar("T", bound=BaseModel)
+
+def read_json(
     file_path: Path
 ) -> dict | list:
     with open(file_path, encoding="utf8") as file:
@@ -67,17 +90,18 @@ def save_json(
 def get_cached_translation(
     pl_path: Path,
     cache_path: Path,
-    translator: Callable[[list[T]], list[U]],
+    translator: Callable[
+        [list[T]], list[T]
+    ],
     model_type: Type[T],
     as_list: bool = True,
     with_pl: bool = False,
     serialize: bool = False,
-    translated_model_type: Optional[Type[U]] = None,
     overwrite_existing: bool = False,
     create_pl_data: Optional[Callable[[], T]] = None
 ):
     def _serialize(
-        data: T | U | list[T] | list[U]
+        data: T | list[T]
     ) -> dict[str] | list[dict[str]]:
         if not as_list:
             data = [data]
@@ -98,12 +122,12 @@ def get_cached_translation(
 
         save_json(pl_path, pl_data)
     else:
-        pl_data = load_json(pl_path)
+        pl_data = read_json(pl_path)
 
     def _deserialize(
         serialized: dict[str] | list[dict[str]],
-        output_model_type: Type[T] | Type[U]
-    ) -> T | U | list[T] | list[U]:
+        output_model_type: Type[T]
+    ) -> T | list[T]:
         if not as_list:
             serialized = [serialized]
 
@@ -127,10 +151,10 @@ def get_cached_translation(
     if cache_exists:
         print(f"   * Używanie tłumaczeń z cache'a: '{cache_path}'")
 
-        translated = load_json(cache_path)
+        translated = read_json(cache_path)
 
         translated = _deserialize(
-            translated, translated_model_type or model_type
+            translated, model_type
         )
     else:
         translated = translator(pl_data)
@@ -159,7 +183,7 @@ def get_cached_translation(
     return translated
 
 def upload_docs(api_path: str, **kwargs) -> None:
-    url = f"{_config.docs_upload_url}/{api_path}"
+    url = f"{_config.docs_upload_host}/{api_path}"
 
     response = requests.post(
         url,

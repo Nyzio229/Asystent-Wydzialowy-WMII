@@ -1,15 +1,20 @@
 import os
 import glob
 
-import scrap
-
 import urllib.parse
 
 from pathlib import Path
 
 from typing import Optional
 
-from utils import Document, load_json, get_cached_translation, translate
+import scrap
+
+from utils import (
+    Document,
+    read_json,
+    get_cached_translation,
+    translate_pl_to_en
+)
 
 def _get_tags_from_url(url: str) -> list[str]:
     path = urllib.parse.urlparse(url.lower()).path
@@ -52,7 +57,9 @@ def _create_docs(
 
     def _append_doc(
         page_content: str,
-        doc_metadata: dict[str, str | int | list[str]],
+        doc_metadata: dict[
+            str, str | int | list[str]
+        ],
         metadata: Optional[dict[str]] = None
     ) -> None:
         if metadata:
@@ -120,7 +127,9 @@ def _create_docs(
                     )
                 )
 
-            for i, article in enumerate(entry["articles"]):
+            for i, article in enumerate(
+                entry["articles"]
+            ):
                 _append_doc(
                     page_content=article,
                     doc_metadata=doc_metadata,
@@ -138,18 +147,16 @@ def _create_docs(
                 )
         else:
             raise ValueError(
-                f"Unexpected 'page_content' keys: {keys}"
+                f"Unexpected combination of 'page_content' keys: {keys}"
             )
 
     return docs
 
 def _translate_scrapped_doc(
-    doc: Document,
-    lang_from: str,
-    lang_to: str
+    doc: Document
 ) -> Document:
     def _translate(message: str) -> str:
-        translated = translate(message, lang_from, lang_to)
+        translated = translate_pl_to_en(message)
 
         # sometimes DeepL translates university name incorrectly
         translated = translated.replace(
@@ -182,17 +189,12 @@ def _translate_scrapped_doc(
     return translated
 
 def _translate_scrapped_docs(
-    docs: list[Document],
-    lang_from: str,
-    lang_to: str
+    docs: list[Document]
 ) -> list[Document]:
-    print(f"   * Tłumaczenie ('{lang_from}' -> '{lang_to}')...")
+    print("   * Tłumaczenie (pl -> en)...")
 
     translated = list(map(
-        lambda doc: _translate_scrapped_doc(
-            doc, lang_from, lang_to
-        ),
-        docs
+        _translate_scrapped_doc, docs
     ))
 
     return translated
@@ -212,9 +214,6 @@ def fetch_scrapped_faculty_webpages() -> list[Document]:
             f"Run '{scrap.__name__}.py' first"
         ))
 
-    lang_from = "pl"
-    lang_to = "en-US"
-
     translated_docs: list[Document] = []
 
     for i, file_path in enumerate(file_paths):
@@ -229,12 +228,10 @@ def fetch_scrapped_faculty_webpages() -> list[Document]:
         translated = get_cached_translation(
             pl_path=parent_path / "pl" / file_name,
             cache_path=parent_path / "translated" / file_name,
-            translator=lambda docs: _translate_scrapped_docs(
-                docs, lang_from, lang_to
-            ),
+            translator=_translate_scrapped_docs,
             model_type=Document,
             create_pl_data=lambda: _create_docs(
-                load_json(file_path)
+                read_json(file_path)
             )
         )
 

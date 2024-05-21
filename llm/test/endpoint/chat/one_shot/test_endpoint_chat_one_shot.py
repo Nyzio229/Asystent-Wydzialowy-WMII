@@ -1,21 +1,11 @@
-from typing import Optional
+from test_text_endpoint import TextTestCase, TestTextEndpoint
 
-from pydantic import BaseModel
-
-from test_endpoint import TestEndpoint
-
-class ChatOneShotTestCase(BaseModel):
-    text: str
-
-class ChatTestCase(BaseModel):
-    messages: list[dict[str, str]]
-
-class TestEndpointChatOneShot(TestEndpoint):
+class TestEndpointChatOneShot(TestTextEndpoint):
     def __init__(
         self, *args, **kwargs
     ) -> None:
         super().__init__(
-            "chat", ChatOneShotTestCase, ChatTestCase,
+            "chat", TextTestCase,
             *args, **kwargs
         )
 
@@ -26,23 +16,20 @@ class TestEndpointChatOneShot(TestEndpoint):
     ) -> None:
         pass
 
-    def _translate_test_cases(
+    def _get_endpoint_params(
         self,
-        test_cases: list[ChatOneShotTestCase]
-    ) -> list[ChatTestCase]:
-        translated = list(map(
-            lambda test_case: ChatTestCase(
-                messages=[
-                    dict(
-                        role="user",
-                        content=self._translate(test_case.text)
-                    )
-                ]
-            ),
-            test_cases
-        ))
-
-        return translated
+        test_case: TextTestCase
+    ) -> dict[
+        str, list[dict[str, str]]
+    ]:
+        return dict(
+            messages=[
+                dict(
+                    role="user",
+                    content=test_case.text
+                )
+            ]
+        )
 
     def _get_expected_responses(self) -> None:
         return None

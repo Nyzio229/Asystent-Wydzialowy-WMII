@@ -183,7 +183,7 @@ def _format_place_name(place: str) -> str:
 
     return place
 
-def _load_json(
+def _read_json(
     file_path: Path
 ) -> dict | list:
     with open(file_path, encoding="utf8") as file:
@@ -195,7 +195,7 @@ def _get_synonyms() -> list[SynonymsContainer]:
     global _synonyms
 
     if not _synonyms:
-        synonyms_list = _load_json(
+        synonyms_list = _read_json(
             _PLACES_DIR_PATH / "synonyms.json"
         )
 
@@ -249,7 +249,7 @@ def _get_places() -> tuple[
         def _read_complex_places(file_name: str) -> list[Place]:
             places: list[Place] = []
 
-            complex_places = _load_json(
+            complex_places = _read_json(
                 _PLACES_DIR_PATH / file_name
             )
 

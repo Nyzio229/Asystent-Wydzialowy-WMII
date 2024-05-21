@@ -2,7 +2,11 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from utils import get_cached_translation, translate, upload_docs
+from utils import (
+    get_cached_translation,
+    upload_docs,
+    translate_pl_to_en
+)
 
 class FAQEntry(BaseModel):
     answer: str
@@ -15,12 +19,6 @@ def fetch_faq(
     print("Czytanie FAQ...")
 
     faq_dir = Path("faq")
-
-    lang_from = "pl"
-    lang_to = "en-US"
-
-    def _translate(message: str) -> str:
-        return translate(message, lang_from, lang_to)
 
     def _print_head(char: str, message: str, n_chars: int) -> None:
         print(
@@ -39,11 +37,11 @@ def fetch_faq(
             _print_head("Q", faq_entry.question, n_chars)
             _print_head("A", faq_entry.answer, n_chars)
 
-            print(f"   * Tłumaczenie ('{lang_from}' -> '{lang_to}')...")
+            print("   * Tłumaczenie (pl -> en)...")
 
             translated_faq_entry = FAQEntry(
-                question=_translate(faq_entry.question),
-                answer=_translate(faq_entry.answer)
+                question=translate_pl_to_en(faq_entry.question),
+                answer=translate_pl_to_en(faq_entry.answer)
             )
 
             translated_faq.append(translated_faq_entry)

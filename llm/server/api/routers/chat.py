@@ -34,10 +34,11 @@ def _rag(
     system_message = (
         f"{get_extended_system_message()}\n\n"
         "Here is information fetched from the faculty websites that contain "
-        "reliable facts that may help you provide a better (and factually correct) answer "
-        "(don't let the user know that this information is provided to you, "
+        "reliable facts that may help you provide a better (and factually correct) "
+        "answer (don't let the user know that this information is provided to you, "
         "but you can say that you do have access to data from some of faculty websites) "
-        "(if none of the information answer the question then just say that you don't know the answer):"
+        "(if none of the information answer the question then just say that you don't "
+        "know the answer):"
         f"{doc_sep}{{context}}"
     )
 
@@ -70,7 +71,8 @@ def _rag(
         role="assistant",
         content=(
             "Hi, I'm MikoAI, an AI assistant for students at "
-            "Nicolaus Copernicus University (UMK), faculty of Mathematics and Computer Science (WMiI) "
+            "Nicolaus Copernicus University (UMK), "
+            "faculty of Mathematics and Computer Science (WMiI) "
             "in Toruń, Poland. How can I help you?"
         )
     ))

@@ -18,9 +18,9 @@ from common import common, LOGGER
 
 class Document(BaseModel):
     page_content: str
-    metadata: Optional[
-        dict[str, str | int | list[str]]
-    ] = None
+    metadata: dict[
+        str, str | int | list[str]
+    ] = {}
 
 class UploadRAGDocsRequest(BaseModel):
     docs: list[Document]
@@ -113,7 +113,10 @@ def _split_docs(
 
     LOGGER.setLevel(logging.DEBUG)
 
-    LOGGER.debug(f"Splitting documents ({len(docs)})...")
+    LOGGER.debug(
+        "Splitting documents (n_docs=%d)...",
+        len(docs)
+    )
 
     for i, doc in enumerate(docs):
         sub_docs = text_splitter.split_documents([doc])
@@ -126,7 +129,10 @@ def _split_docs(
 
         chunked_docs += sub_docs
 
-    LOGGER.debug("Finished splitting.")
+    LOGGER.debug(
+        "Finished splitting (n_docs=%d).",
+        len(chunked_docs)
+    )
 
     return chunked_docs
 
@@ -156,7 +162,9 @@ def _insert_header(header: str, content: str) -> str:
 
 def _insert_tags_header(
     doc: str,
-    metadata: dict[str, str | int | list[str]]
+    metadata: dict[
+        str, str | int | list[str]
+    ]
 ) -> str:
     tags: Optional[
         list[str]
@@ -346,18 +354,10 @@ async def upload_rag_docs(
 
     doc_id_key = retriever.id_key
 
-    docs = _split_docs(
-        docs,
-        RecursiveCharacterTextSplitter(
-            chunk_size=1024,
-            chunk_overlap=0
-        ),
-        doc_id_key
-    )
-
-    doc_ids = _generate_doc_ids(len(docs))
-
-    def _chunk_docs(chunk_size: int) -> list[LangchainDocument]:
+    def _chunk_docs(
+        chunk_size: int,
+        doc_ids: Optional[list[int]] = None
+    ) -> list[LangchainDocument]:
         chunked_docs = _split_docs(
             docs,
             RecursiveCharacterTextSplitter(
@@ -370,11 +370,20 @@ async def upload_rag_docs(
 
         return chunked_docs
 
+    docs = _chunk_docs(
+        chunk_size=512
+    )
+
+    doc_ids = _generate_doc_ids(len(docs))
+
     # split docs before adding headers to the original docs
     # so that the headers don't get split as/into chunks
     # (but add headers before adding summaries/questions
     # so that the hedears are seen by the LLM during generation)
-    vector_store_docs = _chunk_docs(chunk_size=200)
+    vector_store_docs = _chunk_docs(
+        chunk_size=200,
+        doc_ids=doc_ids
+    )
 
     for doc in docs:
         _insert_doc_headers(doc)

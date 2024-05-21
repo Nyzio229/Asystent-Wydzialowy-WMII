@@ -16,16 +16,20 @@ import wikipedia
 
 from pydantic import BaseModel
 
-from scrap import soup_for
+from scrap import get_soup
 
-from utils import get_cached_translation, get_misc_docs_file_path, translate
+from utils import (
+    get_cached_translation,
+    get_misc_docs_file_path,
+    translate_pl_to_en
+)
 
 def _get_academic_year_organization_file_path() -> tuple[
     str, Path, bool
 ]:
     base_url = "https://www.umk.pl/uczelnia/dokumenty/rok_akademicki"
 
-    soup = soup_for(base_url)
+    soup = get_soup(base_url)
 
     latest_year: int = None
     latest_pdf_name: str = None
@@ -70,9 +74,6 @@ class AcademicYearOrganization(BaseModel):
     file_content: str
     remote_file_path: str
 
-def _translate(message: str) -> str:
-    return translate(message, "pl", "en-US")
-
 def _fix_whitespaces(string: str) -> str:
     # zamień 2 lub więcej spacji na 1
     string = re.sub(" +", " ", string)
@@ -116,7 +117,7 @@ def get_academic_year_organization() -> AcademicYearOrganization:
     dir_path = file_path.parent
 
     def _translate_ayo(ayo: AcademicYearOrganization) -> AcademicYearOrganization:
-        translated = _translate(ayo.file_content)
+        translated = translate_pl_to_en(ayo.file_content)
 
         # sometimes it's translated incorrectly
         translated = translated.replace(
@@ -173,7 +174,7 @@ def get_umk_wiki_page() -> WikipediaPage:
         return page
 
     def _translate_page(page: WikipediaPage) -> WikipediaPage:
-        translated = _translate(page.page_content)
+        translated = translate_pl_to_en(page.page_content)
 
         # sometimes it's translated incorrectly
         translated = translated.replace(

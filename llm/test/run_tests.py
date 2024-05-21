@@ -127,7 +127,7 @@ def get_script_subdirs_paths() -> list[Path]:
 def extend_sys_path(dir_paths: list[Path]) -> None:
     dir_paths = list(map(str, dir_paths))
 
-    # append `".."`` to be able to import from `baza_wiedzy``
+    # append `".."`` to be able to import from `knowledge_base``
     dir_paths.append("..")
 
     sys.path += dir_paths
@@ -170,20 +170,24 @@ def run_tests(
 
     base_cwd = os.getcwd()
 
-    for descriptor in test_module_descriptors:
+    for i, descriptor in enumerate(
+        test_module_descriptors
+    ):
         test_class = descriptor.get_test_class()
 
         # change cwd in order to see the "test_cases" dir
         os.chdir(descriptor.dir_path)
+
+        print(
+            f"[{i+1}/{n_tests}] Running test ({descriptor.module_name})... "
+        )
 
         run_test(test_class)
 
         os.chdir(base_cwd)
 
 def main() -> None:
-    run_tests(
-        lambda path: "navigation" in path.parts
-    )
+    run_tests()
 
 if __name__ == "__main__":
     main()

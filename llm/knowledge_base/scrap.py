@@ -435,7 +435,7 @@ def get_filtered_text(
 
     return text
 
-def soup_for(url: str) -> bs4.BeautifulSoup:
+def get_soup(url: str) -> bs4.BeautifulSoup:
     # bez "User-Agent" jest błąd 404
     user_agent = (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -494,7 +494,7 @@ def get_data_from_portlets(
             title_link = title.find("a", recursive=False)
 
             if title_link:
-                new_soup = soup_for(title_link["href"])
+                new_soup = get_soup(title_link["href"])
                 news = new_soup.find("div", "news-return").parent
 
             title = get_filtered_text(title, with_links=False)
@@ -650,7 +650,7 @@ def save(path: str, urls: list[str]) -> None:
         data = dict(
             origin=url,
             page_content=get_page_content(
-                soup_for(url)
+                get_soup(url)
             )
         )
 

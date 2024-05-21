@@ -6,32 +6,28 @@ from typing import Optional
 
 from datetime import datetime
 
+from argparse import Namespace
+
 import spacy
 
 from pydantic import BaseModel
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance
-
 from qdrant_client.http.exceptions import UnexpectedResponse
 
 from llama_cpp import Llama, ChatCompletionRequestMessage
 
-from langchain.storage import LocalFileStore
-
 from langchain_core.vectorstores import VectorStore
-
-from langchain.retrievers.multi_vector import MultiVectorRetriever
-
 from langchain_core.retrievers import RetrieverOutputLike
-
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 
-from langchain_core.retrievers import RetrieverOutputLike
+from langchain.storage import LocalFileStore
+from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 
 from config import config
@@ -93,121 +89,129 @@ class Common:
 
         return response
 
-LOGGER_NAME = "mikoAI"
-LOGGER = logging.getLogger(LOGGER_NAME)
+    def initialize_from_cmd_line_args(
+        self,
+        cmd_line_args: Namespace
+    ) -> None:
+        self.nlp = spacy.load("en_core_web_md")
 
-common: Common = Common()
-
-def init_common(cmd_line_args):
-    common.nlp = spacy.load("en_core_web_md")
-
-    common.llm = Llama(
-        model_path=cmd_line_args.model,
-        n_ctx=cmd_line_args.n_ctx,
-        n_gpu_layers=cmd_line_args.n_gpu_layers,
-        chat_format="chatml",
-        verbose=False
-    )
-
-    common.embedder = HuggingFaceEmbeddings(
-        model_name=config.embed.model,
-        model_kwargs=dict(
-            trust_remote_code=True
+        self.llm = Llama(
+            model_path=cmd_line_args.model,
+            n_ctx=cmd_line_args.n_ctx,
+            n_gpu_layers=cmd_line_args.n_gpu_layers,
+            chat_format="chatml",
+            verbose=False
         )
-    )
 
-    vector_store_config = config.vector_store
-    vector_store_client_config = vector_store_config.client
-    vector_store_client = QdrantClient(
-        url=vector_store_client_config.url,
-        api_key=vector_store_client_config.api_key
-    )
+        self.embedder = HuggingFaceEmbeddings(
+            model_name=config.embed.model,
+            model_kwargs=dict(
+                trust_remote_code=True
+            )
+        )
 
-    def _create_langchain_vector_store(collection_name: str) -> VectorStore:
-        try:
-            vector_store_client.get_collection(collection_name)
-        except UnexpectedResponse:
-            vector_store_client.create_collection(
-                collection_name=collection_name,
-                vectors_config=VectorParams(
-                    size=768,
-                    distance=Distance.COSINE
+        vector_store_config = config.vector_store
+        vector_store_client_config = vector_store_config.client
+        vector_store_client = QdrantClient(
+            url=vector_store_client_config.url,
+            api_key=vector_store_client_config.api_key
+        )
+
+        def _create_langchain_vector_store(
+            collection_name: str
+        ) -> VectorStore:
+            try:
+                vector_store_client.get_collection(collection_name)
+            except UnexpectedResponse:
+                vector_store_client.create_collection(
+                    collection_name=collection_name,
+                    vectors_config=VectorParams(
+                        size=768,
+                        distance=Distance.COSINE
+                    )
                 )
+
+            vector_store = Qdrant(
+                client=vector_store_client,
+                collection_name=collection_name,
+                embeddings=self.embedder
             )
 
-        vector_store = Qdrant(
-            client=vector_store_client,
-            collection_name=collection_name,
-            embeddings=common.embedder
+            return vector_store
+
+        self.faq_vector_store = {}
+
+        self.vector_store_client = vector_store_client
+
+        for lang, collection_name in (
+            vector_store_config.faq_collection_for_lang.items()
+        ):
+            self.faq_vector_store[lang] = _create_langchain_vector_store(
+                collection_name
+            )
+
+        rag_collection_name = vector_store_config.rag_collection_name
+
+        self.rag_vector_store = _create_langchain_vector_store(
+            rag_collection_name
         )
 
-        return vector_store
-
-    common.faq_vector_store = {}
-
-    common.vector_store_client = vector_store_client
-
-    for lang, collection_name in (
-        vector_store_config.faq_collection_for_lang.items()
-    ):
-        common.faq_vector_store[lang] = _create_langchain_vector_store(
-            collection_name
+        self.rag_retriever = MultiVectorRetriever(
+            vectorstore=self.rag_vector_store,
+            byte_store=LocalFileStore(
+                f"{rag_collection_name}_parent_file_store"
+            ),
+            search_kwargs=dict(
+                k=8
+            )
         )
 
-    rag_collection_name = vector_store_config.rag_collection_name
+        prompt = ChatPromptTemplate.from_messages([
+            MessagesPlaceholder("chat_history"),
+            ("user", "{input}")
+        ])
 
-    common.rag_vector_store = _create_langchain_vector_store(
-        rag_collection_name
-    )
+        def _summarize_chat_history(prompt: ChatPromptValue) -> str:
+            system_prompt = (
+                "Given a chat history and the latest user question "
+                "which might reference context in the chat history, "
+                "formulate a standalone question which can be FULLY "
+                "understood without the chat history. "
+                "Do NOT answer the question, just reformulate it "
+                "if needed and otherwise return it as is "
+                "(you act like the user asking the question):"
+            )
 
-    common.rag_retriever = MultiVectorRetriever(
-        vectorstore=common.rag_vector_store,
-        byte_store=LocalFileStore(
-            f"{rag_collection_name}_parent_file_store"
-        ),
-        search_kwargs=dict(
-            k=5
+            messages = _langchain_chat_prompt_to_llama_messages(prompt)
+
+            messages = [
+                f'{message["role"]}: {message["content"]}'
+                for message in messages
+            ]
+
+            chat_history = "\n".join(messages)
+
+            prompt = (
+                f"{system_prompt}\n\n"
+                f"{chat_history}\n\n"
+                "Reformulated question:"
+            )
+
+            summary = self.invoke_llm(prompt)
+
+            LOGGER.setLevel(logging.DEBUG)
+
+            LOGGER.debug("[History aware retriever]")
+            LOGGER.debug(" * prompt: %s", prompt)
+            LOGGER.debug(" * summary: %s", summary)
+
+            return summary
+
+        self.history_aware_retriever = create_history_aware_retriever(
+            llm=_summarize_chat_history,
+            retriever=self.rag_retriever,
+            prompt=prompt
         )
-    )
-
-    prompt = ChatPromptTemplate.from_messages([
-        MessagesPlaceholder("chat_history"),
-        ("user", "{input}")
-    ])
-
-    def _summarize_chat_history(prompt: ChatPromptValue) -> str:
-        system_prompt = (
-            "Given a chat history and the latest user question "
-            "which might reference context in the chat history, "
-            "formulate a standalone question which can be FULLY "
-            "understood without the chat history. "
-            "Do NOT answer the question, just reformulate it "
-            "if needed and otherwise return it as is "
-            "(you act like the user asking the question):"
-        )
-
-        messages = _langchain_chat_prompt_to_llama_messages(prompt)
-        messages = [f'{message["role"]}: {message["content"]}'
-                    for message in messages]
-
-        prompt = "\n".join(messages)
-        prompt = f"{system_prompt}\n\n{prompt}\n\nReformulated question:"
-
-        summary = common.invoke_llm(prompt)
-
-        LOGGER.setLevel(logging.DEBUG)
-
-        LOGGER.debug("[History aware retriever]")
-        LOGGER.debug(" * prompt: %s", prompt)
-        LOGGER.debug(" * summary: %s", summary)
-
-        return summary
-
-    common.history_aware_retriever = create_history_aware_retriever(
-        llm=_summarize_chat_history,
-        retriever=common.rag_retriever,
-        prompt=prompt
-    )
 
 def chat_completion(
     llm: Llama,
@@ -228,19 +232,26 @@ def chat_completion(
     LOGGER.debug(
         " * messages: %s",
         json.dumps([
-            message | dict(
-                content=list(filter(
-                    lambda x: x,
-                    message["content"].splitlines()
-                ))
-            )
-            for message in messages
-        ], ensure_ascii=False, indent=3)
+                message | dict(
+                    content=list(filter(
+                        lambda x: x,
+                        message["content"].splitlines()
+                    ))
+                )
+                for message in messages
+            ],
+            ensure_ascii=False,
+            indent=3
+        )
     )
 
     LOGGER.debug(" * response: %s", response)
 
     return response
+
+LOGGER = logging.getLogger("MikoAI")
+
+common: Common = Common()
 
 def _convert_langchain_message_role_to_llama(role: str) -> str:
     # mapping from langchain to llama2 role
@@ -311,7 +322,9 @@ def chat_with_default_system_message(
     llm_inference_params: LLMInferenceParams,
     extend_system_message: bool = False
 ) -> str:
-    def _message_mapping(message: Message) -> dict[str, str]:
+    def _message_mapping(
+        message: Message
+    ) -> dict[str, str]:
         role = _convert_langchain_message_role_to_llama(
             message.role
         )
@@ -323,7 +336,8 @@ def chat_with_default_system_message(
 
     system_message = (
         get_extended_system_message()
-        if extend_system_message else _SYSTEM_MESSAGE
+        if extend_system_message
+        else _SYSTEM_MESSAGE
     )
 
     system_message = Message(
@@ -332,12 +346,13 @@ def chat_with_default_system_message(
     )
 
     messages = [system_message] + messages
-    messages = list(map(_message_mapping, messages))
+
+    messages = list(map(
+        _message_mapping, messages
+    ))
 
     response = chat_completion(
-        llm,
-        messages,
-        llm_inference_params
+        llm, messages, llm_inference_params
     )
 
     return response
@@ -369,8 +384,7 @@ def log_endpoint_call(
     def _log_model(name: str, model: BaseModel) -> str:
         LOGGER.debug(
             "-> %s:\n%s",
-            name,
-            model.model_dump_json(indent=3)
+            name, model.model_dump_json(indent=3)
         )
 
     _log_model("request", request)
