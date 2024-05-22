@@ -371,7 +371,7 @@ async def upload_rag_docs(
         return chunked_docs
 
     docs = _chunk_docs(
-        chunk_size=512
+        chunk_size=1024
     )
 
     doc_ids = _generate_doc_ids(len(docs))

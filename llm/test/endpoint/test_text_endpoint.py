@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from test_endpoint import TestEndpoint
 
-from knowledge_base.utils import translate_pl_to_en
+from knowledge_base.src.utils import translate_pl_to_en
 
 class TextTestCase(BaseModel):
     text: str

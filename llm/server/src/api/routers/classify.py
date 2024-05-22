@@ -565,14 +565,21 @@ async def classify(
         query: str,
         places: list[Place]
     ) -> Optional[dict[str, Optional[Place]]]:
-        punctuation = {".", ",", "?", "!"}
+        punctuation = {
+            ".", ",", "?", "!"
+        }
 
         words = _split_preserve_punctuation(
             query.lower(), punctuation
         )
 
-        source_words = {"from"}
-        destination_words = {"to", "into", "where", "for"}
+        source_words = {
+            "from"
+        }
+
+        destination_words = {
+            "to", "into", "where", "for"
+        }
 
         stops = source_words | destination_words | punctuation
 
@@ -691,7 +698,7 @@ async def classify(
 
     if metadata:
         LOGGER.debug(
-            "Got navigation metadata using brute force"
+            "Got navigation metadata using brute force:"
         )
 
         for key, value in metadata.items():

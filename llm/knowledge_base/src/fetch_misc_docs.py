@@ -21,6 +21,7 @@ from scrap import get_soup
 from utils import (
     get_cached_translation,
     get_misc_docs_file_path,
+    make_dir,
     translate_pl_to_en
 )
 
@@ -57,6 +58,10 @@ def _get_academic_year_organization_file_path() -> tuple[
 
     if file_path.exists():
         return remote_file_path, file_path, True
+
+    make_dir(
+        file_path.parent
+    )
 
     with open(file_path, "wb") as file:
         response = requests.get(
@@ -155,8 +160,7 @@ def get_umk_wiki_page() -> WikipediaPage:
         os.path.join(
             "wikipedia",
             page_title
-        ),
-        is_dir=True
+        )
     )
 
     def _create_pl_data() -> WikipediaPage:

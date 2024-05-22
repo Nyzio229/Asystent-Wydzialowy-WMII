@@ -1,4 +1,3 @@
-import os
 import re
 
 from pathlib import Path
@@ -16,7 +15,10 @@ from urllib.parse import (
 import bs4
 import requests
 
-from utils import save_json
+from utils import (
+    get_docs_root_dir_path,
+    save_json
+)
 
 def remove_query_param_like(
     url: str,
@@ -54,7 +56,10 @@ def get_text(tag: bs4.Tag, with_links=True) -> str:
         "button", "label", "strong"
     }
 
-    _single_newline_blocks = {"p", "li", "div","tr", "br"}
+    _single_newline_blocks = {
+        "p", "li", "div","tr", "br"
+    }
+
     assert _single_newline_blocks.isdisjoint(
         _inline_elements
     ), "Blocking elements cannot be inline"
@@ -637,13 +642,10 @@ def get_page_content(
 
     return first + second
 
-def save(path: str, urls: list[str]) -> None:
-    path = Path(path)
-    path.mkdir(parents=True, exist_ok=True)
-
+def save(save_path: Path, urls: list[str]) -> None:
     for i, url in enumerate(urls):
         name = urlparse(url).path.strip("/").replace("/", ".")
-        file_path = path / f"{i+1}_{name}.json"
+        file_path = save_path / f"{i+1}_{name}.json"
 
         print(">", f"[{i+1}/{len(urls)}]", file_path)
 
@@ -699,11 +701,8 @@ def resolve_urls(sub_pages: dict[str, list]) -> list[str]:
 
     return urls
 
-def get_dump_dir_path() -> str:
-    return os.path.join(
-        "scrapped_faculty_webpages",
-        "raw"
-    )
+def get_dump_dir_path() -> Path:
+    return get_docs_root_dir_path() / "scrapped_faculty_webpages" / "raw"
 
 def main() -> None:
     sub_pages = {

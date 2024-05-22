@@ -162,7 +162,7 @@ class Common:
                 f"{rag_collection_name}_parent_file_store"
             ),
             search_kwargs=dict(
-                k=8
+                k=5
             )
         )
 
@@ -240,8 +240,7 @@ def chat_completion(
                 )
                 for message in messages
             ],
-            ensure_ascii=False,
-            indent=3
+            ensure_ascii=False, indent=3
         )
     )
 
@@ -291,6 +290,7 @@ _SYSTEM_MESSAGE = (
     "Mathematics and Computer Science (WMiI) in Toruń, Poland. "
     "Your main task is responding to students' questions regarding "
     "their studies, but you can also engage in a friendly informal chat. "
+    "You can also navigate the user through a virtual map of the university. "
     "Always answer as helpfully as possible, while being safe. "
     "Your answers should not include any harmful, unethical, racist, "
     "sexist, toxic, dangerous, or illegal content. If a question "

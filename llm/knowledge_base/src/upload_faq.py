@@ -1,9 +1,8 @@
-from pathlib import Path
-
 from pydantic import BaseModel
 
 from utils import (
     get_cached_translation,
+    get_docs_root_dir_path,
     upload_docs,
     translate_pl_to_en
 )
@@ -16,42 +15,63 @@ def fetch_faq(
     with_pl: bool,
     serialize: bool
 ):
-    print("Czytanie FAQ...")
-
-    faq_dir = Path("faq")
-
-    def _print_head(char: str, message: str, n_chars: int) -> None:
+    def _print_head(
+        char: str,
+        message: str,
+        n_chars: int
+    ) -> None:
         print(
             f"   {char}:",
             f"{message[:n_chars]}"
             f'{"..." if len(message) > n_chars else ""}'
         )
 
-    def _translate_faq(faq: list[FAQEntry]) -> list[FAQEntry]:
+    def _translate_faq(
+        faq: list[FAQEntry]
+    ) -> list[FAQEntry]:
         translated_faq: list[FAQEntry] = []
 
         for i, faq_entry in enumerate(faq):
             print(">", f"[{i+1}/{len(faq)}]:")
 
             n_chars = 100
-            _print_head("Q", faq_entry.question, n_chars)
-            _print_head("A", faq_entry.answer, n_chars)
+
+            _print_head(
+                "Q", faq_entry.question, n_chars
+            )
+
+            _print_head(
+                "A", faq_entry.answer, n_chars
+            )
 
             print("   * Tłumaczenie (pl -> en)...")
 
             translated_faq_entry = FAQEntry(
-                question=translate_pl_to_en(faq_entry.question),
-                answer=translate_pl_to_en(faq_entry.answer)
+                question=translate_pl_to_en(
+                    faq_entry.question
+                ),
+                answer=translate_pl_to_en(
+                    faq_entry.answer
+                )
             )
 
             translated_faq.append(translated_faq_entry)
 
-            _print_head("Tł_Q", translated_faq_entry.question, n_chars)
-            _print_head("Tł_A", translated_faq_entry.answer, n_chars)
+            _print_head(
+                "Tł_Q", translated_faq_entry.question, n_chars
+            )
+
+            _print_head(
+                "Tł_A", translated_faq_entry.answer, n_chars
+            )
 
             print("-" * int(n_chars*1.25))
 
         return translated_faq
+
+    print("Czytanie FAQ...")
+
+    faq_dir = get_docs_root_dir_path() / "faq"
 
     faq = get_cached_translation(
         pl_path=faq_dir / "pl.json",
@@ -70,23 +90,22 @@ def main() -> None:
         serialize=True
     )
 
-    def _make_lang_faq(
-        faq: list[dict[str]],
-        lang: str
-    ) -> dict[str]:
-        return dict(
-            faq=faq,
-            lang=lang
-        )
-
     print("\nPrzesyłanie do bazy wektorowej...")
+
+    lang_faqs = list(map(
+        lambda lang_with_faq: dict(
+            lang=lang_with_faq[0],
+            faq=lang_with_faq[1]
+        ),
+        dict(
+            pl=faq,
+            en=translated_faq
+        ).items()
+    ))
 
     upload_docs(
         "upload_faq",
-        lang_faqs=[
-            _make_lang_faq(faq, "pl"),
-            _make_lang_faq(translated_faq, "en")
-        ]
+        lang_faqs=lang_faqs
     )
 
 if __name__ == "__main__":

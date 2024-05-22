@@ -1,0 +1,90 @@
+[
+   {
+      "answer": "Aby uzyskać zaświadczenie o statusie studenta, należy napisać wiadomość e-mail i poprosić o jego wydanie. Jego skan zostanie wysłany na Twoją pocztę elektroniczną. Możesz również pójść do dziekanatu i poprosić o nie osobiście.",
+      "question": "Jak uzyskać zaświadczenie o statusie studenta?"
+   },
+   {
+      "answer": "Praktyki studenckie są obowiązkowe dla studentów naszego wydziału. Po więcej szczegółowych informacji o praktykach studenckich najlepiej skontaktuj się z opiekunem praktyk mgr. Andrzejem Polewczyńskim bądź wejdź na stronę https://www.mat.umk.pl/web/wmii/sprawy-studenckie/praktyki-zawodowe.",
+      "question": "Jak wygląda sprawa praktyk studenckich?"
+   },
+   {
+      "answer": "Większość podań znajduje się na stronie wydziałowej. Oto link do nich: https://www.mat.umk.pl/web/wmii/aktualnosci-dziekanatu. Jeśli potrzebnego podania nie ma na stronie, musisz pójść osobiście do dziekanatu i zapytać o nie.",
+      "question": "Gdzie znaleźć podania?"
+   },
+   {
+      "answer": "Aby uzyskać świadczenia, takie jak stypendium socjalne, stypendium rektora lub kredyt studencki, zapoznaj się z informacjami pod tym linkiem: https://www.umk.pl/studenci/stypendia-i-kredyty. Znajdziesz tam konkretne terminy składania wniosków, stawki świadczeń i wiele innych informacji.",
+      "question": "Jak mogę uzyskać stypendium bądź kredyt studencki?"
+   },
+   {
+      "answer": "Zgodnie z Regulaminem Studiów, aby zmienić kierunek studiów, konieczne jest zaliczenie pierwszego roku studiów w całości. Przeniesienia są możliwe z początkiem roku akademickiego. W dniach 20-27 września można składać w dziekanacie podania skierowane do Pani Dziekan z prośbą o przeniesienie na dany kierunek. Podanie należy napisać samodzielnie, nie ma gotowych druków.",
+      "question": "Chciałbym zmienić kierunek studiów, jak mogę to zrobić?"
+   },
+   {
+      "answer": "Jeżeli zamierzasz zmienić uczelnię, należy napisać podanie o zgodę na przeniesienie skierowane do Pani Dziekan i złożyć ten wniosek w dziekanacie. W dziekanacie będzie również możliwy odbiór zaświadczenia o statusie studenta (z okresem studiowania itd.) oraz Karty Przebiegu Studiów zawierającej wykaz wszystkich przedmiotów i ocen. Podanie należy napisać samodzielnie, nie ma gotowych druków.",
+      "question": "Chciałbym zmienić uczelnię. Co muszę zrobić?"
+   },
+   {
+      "answer": "Aby zmienić grupę ćwiczeniową bądź laboratoryjną, konieczne jest wypełnienie odpowiedniego druku ze strony internetowej wraz z podpisami prowadzącego/prowadzących zajęcia.",
+      "question": "Chcę zmienić grupę. Jak to zrobić?"
+   },
+   {
+      "answer": "Aby zmienić hasło do konta wydziałowego należy udać się na stronę https://www.mat.umk.pl/group/wmii/zmiana-hasla. Po zalogowaniu się na stronie aktualnymi danymi pojawi się możliwość zmiana obecnego hasła na nowe.",
+      "question": "Jak mogę zmienić hasło do konta wydziałowego?"
+   },
+   {
+      "answer": "Aby ustawić hasło do VPN należy udać się pod ten link: https://www.mat.umk.pl/group/wmii/ustawianie-hasla-vpn. Następnie po zalogowaniu się danymi wydziałowymi będziesz mógł ustawić hasło do VPN.",
+      "question": "Jak mogę ustawić hasło do VPN?"
+   },
+   {
+      "answer": "Aby sprawdzić rezerwację sal udaj się pod adres https://www.mat.umk.pl/group/wmii/rezerwacje-sal. Możesz tutaj, po uprzednim zalogowaniu się danymi wydziałowymi, sprawdzić, która z sal jest zarejestrowana w danym czasie. Możesz także poprosić o rezerwację wybranej sali poprzez naciśnięcie ikonki koperty w interesujących Cię godzinach. Zostaniesz poproszony o uzasadnienie potrzeby rezerwacji.",
+      "question": "Jak mogę zarezerwować salę bądź sprawdzić rezerwację sal?"
+   },
+   {
+      "answer": "Aktualny semestralny plan zajęć znajduje się pod tym adresem: https://plan.mat.umk.pl.",
+      "question": "Jak mogę sprawdzić plan semestralny?"
+   },
+   {
+      "answer": "Informacje dotyczące poczty wydziałowej znajdują się pod tym adresem: https://www.mat.umk.pl/group/wmii/system-komputerowy-wydzialu. Znajduje się tu również Regulamin użytkownika systemu komputerowego Wydziału Matematyki i Informatyki.",
+      "question": "Gdzie mogę znaleźć informacje o poczcie wydziałowej?"
+   },
+   {
+      "answer": "Sprawdź na stronie https://www.mat.umk.pl/group/wmii/siec-radiowa-na-wmii. Znajduje się tam instrukcja konfiguracji dostępu do sieci mat bądź eduroam.",
+      "question": "Gdzie mogę znaleźć pomoc w konfiguracji sieci wydziałowej?"
+   },
+   {
+      "answer": "Dziekanat jest otwarty w poniedziałki, wtorki i czwartki w godzinach 11:00-14:00 oraz w piątki w godzinach 11:00-15:00.",
+      "question": "W jakich godzinach otwarty jest dziekanat?"
+   },
+   {
+      "answer": "Bar wydziałowy otwarty jest od poniedziałku do czwartku w godzinach 9:00-16:30, w piątki w godzinach 9:00-15:00, w soboty w godzinach 9:30-15:00 oraz w niedziele w godzinach 10:00-14:00.",
+      "question": "W jakich godzinach otwarty jest bar wydziałowy?"
+   },
+   {
+      "answer": "UMK oferuje miejsca w domach studenckich. cennik oraz regulamin znajdziesz tutaj: https://www.umk.pl/studenci/akademiki.",
+      "question": "Jakie są dostępne opcje zakwaterowania dla studentów na terenie uczelni lub w jej pobliżu?"
+   },
+   {
+      "answer": "Wszelkie regulaminy dotyczące korzystania z zasobów biblioteki znajdują się pod tym adresem: https://www.bu.umk.pl/regulaminy.",
+      "question": "Jakie są zasady dotyczące korzystania z biblioteki uczelnianej, w tym wypożyczania książek i dostępu do baz danych online?"
+   },
+   {
+      "answer": "Nasza biblioteka wydziałowa otwarta jest od poniedziałku do piątku w godzinach 9:00-16:00. Zdarza się, że te godziny w konkretnych dniach ulegają zmianie, o czym studenci są informowani drogą mailową. Przed udaniem się do biblioteki sprawdź więc pocztę wydziałową.",
+      "question": "W jakich godzinach otwarta jest biblioteka wydziałowa?"
+   },
+   {
+      "answer": "Biblioteka Uniwersytecka przy ulicy Gagarina 13 otwarta jest od poniedziałku do piątku w godzinach 8:00-20:00, w sobotę w godzinach 9:00-14:00 oraz w niedzielę w godzinach 9:00-16:00.",
+      "question": "W jakich godzinach otwarta jest biblioteka uniwersytecka?"
+   },
+   {
+      "answer": "Uczelnia oferuje program wymiany studenckiej w ramach programu Erasmus+. Koordyantorem tego programu na naszej uczelni jest dr hab. Aleksander Zaigrajew. Po więcej informacji wejdź na stronę https://www.mat.umk.pl/web/wmii/erasmus-1.",
+      "question": "Czy uczelnia oferuje programy wymiany międzynarodowej dla studentów informatyki. Jeśli tak, jakie są kryteria uczestnictwa?"
+   },
+   {
+      "answer": "Uczelnia oferuje Biuro Karier, w którym znajdują się oferty pracy, stażu, praktyk, prac dorywczych oraz wolontariatów. Należy się tam udać po wcześniejszym umówieniu wizyty. Usługi na rzecz studentów i absolwentów UMK są bezpłatne. Więcej informacji znajduje się pod adresem https://www.umk.pl/studenci/biuro-karier.",
+      "question": "Czy istnieją możliwości uzyskania doradztwa kariery lub wsparcia w poszukiwaniu pracy dla studentów kończących studia?"
+   },
+   {
+      "answer": "Głównym narzędziem komunikacyjnym na naszym wydziale jest poczta wydziałowa (mat.umk.pl). Inne używane narzędzia i platformy to między innymi mail uniwersytecki (stud.umk.pl), Moodle uniwersytecki (moodle.umk.pl) oraz wydziałowy (moodle.mat.umk.pl), komunikator BBB (BigBlueButton) czy MS Teams.",
+      "question": "Jakie są dostępne narzędzia i platformy do komunikacji oraz współpracy między studentami i wykładowcami na uczelni?"
+   }
+]

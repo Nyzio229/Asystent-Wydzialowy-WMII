@@ -3,7 +3,9 @@ import argparse
 from config import config
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="LLM chat completion/embedding server")
+    parser = argparse.ArgumentParser(
+        description="LLM server"
+    )
 
     cmd_line_config = config.command_line
 
@@ -23,20 +25,20 @@ def parse_args():
     parser.add_argument(
         "-m",
         "--model",
-        help="Path to the model file (.gguf)",
+        help="Path to the LLM weights file (.gguf)",
         required=True
     )
 
     parser.add_argument(
         "--n_ctx",
-        help="Context window size",
+        help="LLM context window size",
         default=cmd_line_config.n_ctx,
         type=int
     )
 
     parser.add_argument(
         "--n_gpu_layers",
-        help="Number of GPU layers",
+        help="LLM number of GPU layers",
         default=cmd_line_config.n_gpu_layers,
         type=int
     )

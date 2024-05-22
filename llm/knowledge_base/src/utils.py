@@ -26,8 +26,7 @@ class Document(BaseModel):
 
 def make_dir(path: Path) -> None:
     path.mkdir(
-        parents=True,
-        exist_ok=True
+        parents=True, exist_ok=True
     )
 
 def translate(
@@ -82,10 +81,14 @@ def save_json(
     file_path: Path,
     data: dict | list
 ) -> None:
-    make_dir(file_path.parent)
+    make_dir(
+        file_path.parent
+    )
 
     with open(file_path, "w", encoding="utf8") as file:
-        json.dump(data, file, ensure_ascii=False, indent=3)
+        json.dump(
+            data, file, ensure_ascii=False, indent=3
+        )
 
 def get_cached_translation(
     pl_path: Path,
@@ -100,6 +103,12 @@ def get_cached_translation(
     overwrite_existing: bool = False,
     create_pl_data: Optional[Callable[[], T]] = None
 ):
+    if not create_pl_data:
+        assert not overwrite_existing, (
+            "'overwrite_existing' cannot be `True` if "
+            "'create_pl_data' is unspecified"
+        )
+
     def _serialize(
         data: T | list[T]
     ) -> dict[str] | list[dict[str]]:
@@ -107,7 +116,8 @@ def get_cached_translation(
             data = [data]
 
         serialized = list(map(
-            lambda entry: entry.model_dump(), data
+            lambda entry: entry.model_dump(),
+            data
         ))
 
         if not as_list:
@@ -118,7 +128,15 @@ def get_cached_translation(
     will_create_pl_data = overwrite_existing or not pl_path.exists()
 
     if will_create_pl_data:
-        pl_data = _serialize(create_pl_data())
+        assert create_pl_data, (
+            "'create_pl_data' cannot be `None` if Polish data is to be created. "
+            "Perhaps the data was assumed to have been created in another way, "
+            "but the file got deleted?"
+        )
+
+        pl_data = _serialize(
+            create_pl_data()
+        )
 
         save_json(pl_path, pl_data)
     else:
@@ -141,7 +159,9 @@ def get_cached_translation(
 
         return deserialized
 
-    pl_data = _deserialize(pl_data, model_type)
+    pl_data = _deserialize(
+        pl_data, model_type
+    )
 
     cache_exists = (
         not will_create_pl_data and
@@ -149,7 +169,9 @@ def get_cached_translation(
     )
 
     if cache_exists:
-        print(f"   * Używanie tłumaczeń z cache'a: '{cache_path}'")
+        print(
+            f"   * Używanie tłumaczeń z cache'a: '{cache_path}'"
+        )
 
         translated = read_json(cache_path)
 
@@ -175,7 +197,11 @@ def get_cached_translation(
         if with_pl:
             pl_data = _serialize(pl_data)
 
-        translated = _serialize(translated) if cache_exists else serialized
+        translated = (
+            _serialize(translated)
+            if cache_exists
+            else serialized
+        )
 
     if with_pl:
         return pl_data, translated
@@ -193,13 +219,10 @@ def upload_docs(api_path: str, **kwargs) -> None:
 
     response.raise_for_status()
 
+def get_docs_root_dir_path() -> Path:
+    return Path("docs")
+
 def get_misc_docs_file_path(
-    relative_file_path: str,
-    is_dir: bool = False
+    relative_file_path: str
 ) -> Path:
-    file_path = Path("misc_docs") / relative_file_path
-
-    dir_path = file_path if is_dir else file_path.parent
-    dir_path.mkdir(parents=True, exist_ok=True)
-
-    return file_path
+    return get_docs_root_dir_path() / "misc" / relative_file_path

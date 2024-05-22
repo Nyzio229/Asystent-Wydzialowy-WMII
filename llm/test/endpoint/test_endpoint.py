@@ -2,6 +2,8 @@ import abc
 
 import json
 
+import time
+
 import unittest
 
 from pathlib import Path
@@ -12,7 +14,7 @@ import requests
 
 from pydantic import BaseModel
 
-from knowledge_base.utils import (
+from knowledge_base.src.utils import (
     get_cached_translation,
     save_json
 )
@@ -21,8 +23,15 @@ T = TypeVar("T", bound=BaseModel)
 
 class TestCaseResult(BaseModel):
     passed: bool
-    response: dict[str, Any]
+
+    test_params: dict[str, Any]
+
+    response: Optional[dict[str, Any]]
     expected_response: Optional[dict[str, Any]]
+
+    error: Optional[dict[str, Any]]
+
+    execution_time: float
 
 class TestEndpoint(unittest.TestCase):
     __TEST_CASES_DIR = "test_cases"
@@ -47,7 +56,7 @@ class TestEndpoint(unittest.TestCase):
         self._test_cases = self._get_translated_test_cases()
         self._expected_responses = self._get_expected_responses()
 
-        self._last_response: dict[str] = {}
+        self._last_response: Optional[dict[str]] = None
 
         if not self._expected_responses:
             return
@@ -112,7 +121,7 @@ class TestEndpoint(unittest.TestCase):
         response = requests.post(
             self._api_url,
             json=kwargs,
-            timeout=20
+            timeout=30
         )
 
         response.raise_for_status()
@@ -129,18 +138,22 @@ class TestEndpoint(unittest.TestCase):
         def _log_field(name: str, field) -> None:
             if isinstance(field, dict):
                 field = json.dumps(
-                    field,
-                    ensure_ascii=False,
-                    indent=3
+                    field, ensure_ascii=False, indent=3
                 )
 
             print(">", f"{name}: {field}")
 
-        endpoint_params = self._get_endpoint_params(test_case)
+        self._last_response = None
+
+        endpoint_params = self._get_endpoint_params(
+            test_case
+        )
 
         _log_field("Endpoint params", endpoint_params)
 
-        response = self._call_remote_endpoint(**endpoint_params)
+        response = self._call_remote_endpoint(
+            **endpoint_params
+        )
 
         _log_field("Response", response)
 
@@ -163,17 +176,35 @@ class TestEndpoint(unittest.TestCase):
     ) -> TestCaseResult:
         failed = True
 
-        with self.subTest(test_id):
-            self._run_test_case(
-                test_case, expected_response
-            )
+        error: Optional[dict[str]] = None
 
-            failed = False
+        with self.subTest(test_id):
+            start_time = time.time()
+
+            try:
+                self._run_test_case(
+                    test_case, expected_response
+                )
+            except requests.RequestException as e:
+                error = dict(
+                    exception=repr(e)
+                )
+            else:
+                failed = False
+
+        end_time = time.time()
+
+        elapsed_time = end_time-start_time
 
         test_case_result = TestCaseResult(
             passed=not failed,
+            test_params=test_case.model_dump(),
             response=self._last_response,
-            expected_response=expected_response
+            expected_response=expected_response,
+            error=error,
+            execution_time=round(
+                elapsed_time, 2
+            )
         )
 
         return test_case_result
@@ -214,13 +245,25 @@ class TestEndpoint(unittest.TestCase):
 
             _print_boundary()
 
-        serialized_test_case_results: list[
-            dict[str]
-        ] = list(map(
-            lambda test_case_result: test_case_result.model_dump(
+        def _serialize_test_case_result(
+            test_case_result: TestCaseResult
+        ) -> dict[str]:
+            if test_case_result.passed:
+                excluded_fields = {
+                    "expected_response"
+                }
+            else:
+                excluded_fields = None
+
+            serialized = test_case_result.model_dump(
+                exclude=excluded_fields,
                 exclude_none=True
-            ),
-            test_case_results
+            )
+
+            return serialized
+
+        serialized_test_case_results = list(map(
+            _serialize_test_case_result, test_case_results
         ))
 
         test_result_file_path = Path(

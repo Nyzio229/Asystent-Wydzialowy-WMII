@@ -200,10 +200,8 @@ def _translate_scrapped_docs(
     return translated
 
 def fetch_scrapped_faculty_webpages() -> list[Document]:
-    dump_dir_path = scrap.get_dump_dir_path()
-
-    glob_path = os.path.join(
-        dump_dir_path, "*.json"
+    glob_path = str(
+        scrap.get_dump_dir_path() / "*.json"
     )
 
     file_paths = glob.glob(glob_path)
