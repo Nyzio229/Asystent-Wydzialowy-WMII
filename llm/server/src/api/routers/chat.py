@@ -33,11 +33,11 @@ def _rag(
 
     system_message = (
         f"{get_extended_system_message()}\n\n"
-        "Here is information fetched from the faculty websites that contain "
+        "Here is information fetched from the faculty's websites that contains "
         "reliable facts that may help you provide a better (and factually correct) "
         "answer (don't let the user know that this information is provided to you, "
-        "but you can say that you do have access to data from some of faculty websites) "
-        "(if none of the information answer the question then just say that you don't "
+        "but you can say that you do have access to data from some of faculty's websites) "
+        "(if none of the information answers the question then just say that you don't "
         "know the answer):"
         f"{doc_sep}{{context}}"
     )
@@ -48,10 +48,38 @@ def _rag(
         ("user", "{input}")
     ])
 
-    chat_chain = create_stuff_documents_chain(
-        llm=lambda prompt: langchain_chat_completion(
+
+    messages = messages.copy()
+
+    # insert a system message at the beginning
+    # so that the history aware retriever reformulates the user's question
+    # likely adding the faculty and university name (which should help
+    # get a more accurate embedding)
+    messages.insert(0, Message(
+        role="system",
+        content=(
+            "Your name is MikoAI and you are an AI assistant for students at "
+            "Nicolaus Copernicus University (UMK), "
+            "faculty of Mathematics and Computer Science (WMiI) "
+            "in Toruń, Poland."
+        )
+    ))
+
+    def _invoke_llm(prompt: ChatPromptTemplate) -> str:
+        # skip the newly added system message (that was
+        # only used for user query reformulation purposes)
+        # (it has index 1 because the original system message
+        # is the first)
+        prompt.messages.pop(1)
+
+        response = langchain_chat_completion(
             llm, prompt, llm_inference_params
-        ),
+        )
+
+        return response
+
+    chat_chain = create_stuff_documents_chain(
+        llm=_invoke_llm,
         prompt=prompt,
         document_separator=doc_sep
     )
@@ -60,22 +88,6 @@ def _rag(
         retriever=common.history_aware_retriever,
         combine_docs_chain=chat_chain
     )
-
-    messages = messages.copy()
-
-    # insert an assistant message at the beginning
-    # so that the history aware retriever reformulates the user's question
-    # likely adding the faculty and university name (which should help
-    # get a more accurate embedding)
-    messages.insert(0, Message(
-        role="assistant",
-        content=(
-            "Hi, I'm MikoAI, an AI assistant for students at "
-            "Nicolaus Copernicus University (UMK), "
-            "faculty of Mathematics and Computer Science (WMiI) "
-            "in Toruń, Poland. How can I help you?"
-        )
-    ))
 
     input_message = messages.pop()
 

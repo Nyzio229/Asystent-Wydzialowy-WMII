@@ -171,7 +171,9 @@ class Common:
             ("user", "{input}")
         ])
 
-        def _summarize_chat_history(prompt: ChatPromptValue) -> str:
+        def _summarize_chat_history(
+            prompt: ChatPromptValue
+        ) -> str:
             system_prompt = (
                 "Given a chat history and the latest user question "
                 "which might reference context in the chat history, "
@@ -182,7 +184,9 @@ class Common:
                 "(you act like the user asking the question):"
             )
 
-            messages = _langchain_chat_prompt_to_llama_messages(prompt)
+            messages = _langchain_chat_prompt_to_llama_messages(
+                prompt
+            )
 
             messages = [
                 f'{message["role"]}: {message["content"]}'
@@ -198,6 +202,8 @@ class Common:
             )
 
             summary = self.invoke_llm(prompt)
+
+            summary = summary.strip()
 
             LOGGER.setLevel(logging.DEBUG)
 
