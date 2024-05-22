@@ -9,6 +9,8 @@ public partial class LoadingPage : ContentPage
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
+        await Task.Delay(100);
+        loadingGif.IsAnimationPlaying = true;
         if (await IsAuthenticated())
         {
             await Shell.Current.GoToAsync("///MainPage");

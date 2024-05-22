@@ -11,7 +11,7 @@ namespace WMiIApp.Services
 {
     public class EmployeesService
     {
-        //const string uri = "https://174b-188-146-254-12.ngrok-free.app/";
+        //const string uri = "https://kamilficerman.github.io/sth.json";
         const string uriMain = App.uri + "WmiIEmployes";
         readonly HttpClient httpClient;
 

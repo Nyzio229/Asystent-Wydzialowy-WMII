@@ -14,13 +14,32 @@
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="0.2*,0.8*">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                    Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                    Value="#3F4152" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
                 <Image Source="{Binding FlyoutIcon}"
                        Margin="5"
-                       HeightRequest="35" />
+                       HeightRequest="35"/>
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
                        VerticalTextAlignment="Center" 
-                       TextColor="#FFFFFF"/>
+                       TextColor="#FFFFFF"
+                       FontSize="18"/>
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
@@ -70,7 +89,7 @@
                 Route="MapPage2"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Pracownicy" Icon="chat_icon.png">
+    <FlyoutItem Title="Pracownicy" Icon="employees_icon.png">
         <ShellContent
             ContentTemplate="{DataTemplate local:EmployeesPage}"
             Route="EmployeesPage"/>

@@ -61,7 +61,7 @@ namespace WMiIApp.ViewModels
             await Task.Delay(3000);
         }
 
-        //odpowiedzi na sztywno
+        ////odpowiedzi na sztywno
         //[RelayCommand]
         //async Task Send()
         //{
@@ -80,14 +80,22 @@ namespace WMiIApp.ViewModels
         //    await PutTaskDelay();
         //    IsAnimated = false;
 
-        //    Text = "Wbrew powszechnemu przekonaniu, Lorem Ipsum nie jest po prostu przypadkowym tekstem. " +
-        //        "Ma swoje korzenie w klasycznej literaturze łacińskiej z 45 r. p.n.e., co czyni go ponad 2000 lat starym.";
+        //    Text = "jakas tam tresc wiadomosci";
 
 
         //    Message messageReceived = new Message();
         //    messageReceived.Content = Text;
         //    messageReceived.Role = "assistant";
         //    messageReceived.IsSent = false;
+
+        //    //
+        //    messageReceived.IsFAQ = true;
+        //    IsEnabled = true;
+        //    AcceptFAQCommand.NotifyCanExecuteChanged();
+        //    RejectFAQCommand.NotifyCanExecuteChanged();
+        //    CanBeSent = false;
+        //    SendCommand.NotifyCanExecuteChanged();
+        //    //
 
         //    Items.Add(messageReceived);
         //    Text = string.Empty;
@@ -104,23 +112,47 @@ namespace WMiIApp.ViewModels
             SendCommand.NotifyCanExecuteChanged();
         }
         [RelayCommand(CanExecute = nameof(CanManageFAQ))]
-        void RejectFAQ(Message msg)
+        async Task RejectFAQ(Message msg)
         {
-            for (int i = Items.Count - 1; i >= 0; i--)
+            try
             {
-                if (Items[i] == msg)
+                for (int i = Items.Count - 1; i >= 0; i--)
                 {
-                    Items.RemoveAt(i);
-                    Items.RemoveAt(i-1);
-                    break;
+                    if (Items[i] == msg)
+                    {
+                        Items.RemoveAt(i);
+                        Items.RemoveAt(i-1);
+                        ItemsEN.RemoveAt(i);
+                        ItemsEN.RemoveAt(i-1);
+                        break;
+                    }
+                }
+                IsEnabled = false;
+                CanBeSent = true;
+                AcceptFAQCommand.NotifyCanExecuteChanged();
+                RejectFAQCommand.NotifyCanExecuteChanged();
+                SendCommand.NotifyCanExecuteChanged();
+
+                IsAnimated = true;
+                //LLM
+                if (await GetLLM() == false)
+                {
+                    IsAnimated = false;
+                    return;
+                }
+
+                //translacja
+                if (await TranslateFromENToPL() == false)
+                {
+                    IsAnimated = false;
+                    return;
                 }
             }
-            IsEnabled = false;
-            CanBeSent = true;
-            AcceptFAQCommand.NotifyCanExecuteChanged();
-            RejectFAQCommand.NotifyCanExecuteChanged();
-            SendCommand.NotifyCanExecuteChanged();
-            //dodać żeby szło dalej do llma
+            catch
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+            }
+            
         }
         private bool CanManageFAQ()
         {
@@ -146,7 +178,7 @@ namespace WMiIApp.ViewModels
             }
             catch (HttpRequestException)
             {
-                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak z tłumaczeniem...", "OK");
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...Sprawdź połączenie z internetem.", "OK");
                 return false;
             }
             catch (Exception)
@@ -179,7 +211,7 @@ namespace WMiIApp.ViewModels
                         //ogólne
                         return true;
                     default:
-                        await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak... (kategoryzacja)", "OK");
+                        await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
                         return false;
                 }
             }
@@ -269,6 +301,65 @@ namespace WMiIApp.ViewModels
             }
         }
 
+        async Task<bool> GetLLM()
+        {
+            try
+            {
+                Message messageReceived = new()
+                {
+                    Role = "assistant",
+                    IsSent = false,
+                    Content = await messageService.GetMessageFromMain(ItemsEN)
+                };
+                ItemsEN.Add(messageReceived);
+                return true;
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...Sprawdź połączenie z internetem.", "OK");
+                return false;
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+                return false;
+            }
+            finally
+            {
+                Text = string.Empty;
+            }
+        }
+
+        async Task<bool> TranslateFromENToPL()
+        {
+            try
+            {
+                Message messageTranslatedFromEN = new()
+                {
+                    Role = "user",
+                    IsSent = false,
+                    Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
+                };
+                IsAnimated = false;
+                Items.Add(messageTranslatedFromEN);
+                return true;
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...Sprawdź połączenie z internetem.", "OK");
+                return false;
+            }
+            catch (Exception)
+            {
+                await Shell.Current.DisplayAlert("Błąd!", "Coś poszło nie tak...", "OK");
+                return false;
+            }
+            finally
+            {
+                Text = string.Empty;
+            }
+        }
+
         //odpowiedzi z serwera
         [RelayCommand(CanExecute = nameof(CanSend))]
         async Task Send()
@@ -287,6 +378,7 @@ namespace WMiIApp.ViewModels
             //translacja
             if (await TranslateFromPLToEN() == false)
             {
+                IsAnimated = false;
                 return;
             }
 
@@ -300,60 +392,23 @@ namespace WMiIApp.ViewModels
             //FAQ
             if (await GetFaq() == false)
             {
+                IsAnimated = false;
                 return;
             }
 
             //LLM
-            try
+            if (await GetLLM() == false)
             {
-                Message messageReceived = new()
-                {
-                    Role = "assistant",
-                    IsSent = false,
-                    Content = await messageService.GetMessageFromMain(ItemsEN)
-                };
-                ItemsEN.Add(messageReceived);
-            }
-            catch (HttpRequestException e)
-            {
-                await Shell.Current.DisplayAlert("Error!", e.Message + "LLM", "OK");
+                IsAnimated = false;
                 return;
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message + "LLM", "OK");
-                return;
-            }
-            finally
-            {
-                Text = string.Empty;
             }
 
             //translacja
-            try
+            if (await TranslateFromENToPL() == false)
             {
-                Message messageTranslatedFromEN = new()
-                {
-                    Role = "user",
-                    IsSent = false,
-                    Content = await messageService.TranslateMessage(ItemsEN, "en", "pl")
-                };
                 IsAnimated = false;
-                Items.Add(messageTranslatedFromEN);
+                return;
             }
-            catch (HttpRequestException e)
-            {
-                await Shell.Current.DisplayAlert("Error!", e.Message + "Translacja", "OK");
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message + "Translacja", "OK");
-            }
-            finally
-            {
-                Text = string.Empty;
-            }
-
         }
 
         [RelayCommand]

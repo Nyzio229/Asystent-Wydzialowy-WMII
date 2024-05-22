@@ -5,10 +5,15 @@
              x:Class="WMiIApp.MapPage2"
              Title="II piętro"
              BackgroundColor="#2C3333"
-             xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp">
+             xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             HideSoftInputOnTapped="True">
     <ContentPage.Resources>
         <drawable:GraphicsDrawable2 x:Key="drawable" />
     </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#1E1C26"/>
+    </ContentPage.Behaviors>
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
         <Label

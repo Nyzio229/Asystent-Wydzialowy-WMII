@@ -2,7 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WMiIApp.EmailAuthPage"
-             Title="EmailAuthPage">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#1E1C26"
+             HideSoftInputOnTapped="True">
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#1E1C26"/>
+    </ContentPage.Behaviors>
     <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -10,19 +15,35 @@
         </Grid.RowDefinitions>
         <Label 
             Text="Wpisz adres e-mail:"
+            TextColor="#FFFFFF"
             HorizontalOptions="Center"
             VerticalOptions="End"
-            Grid.Row="0" Padding="20"/>
+            Grid.Row="0" Padding="20"
+            FontSize="16"/>
         <Grid Grid.Row="1" RowDefinitions="Auto, Auto" RowSpacing="10">
-            <Entry
-                x:Name="entry"
-                MaximumWidthRequest="300"
-                Grid.Row="0"/>
+            <Border Stroke="#3F4152" StrokeThickness="5" MaximumWidthRequest="400">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20,20,20,20" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="entry"
+                    MaximumWidthRequest="400"
+                    Grid.Row="0"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="#3F4152"
+                    TextChanged="entry_TextChanged"/>
+            </Border>
+            <Image x:Name="loadingGif" Source="dots2.gif" Grid.Row="1" MaximumHeightRequest="80" IsVisible="False" IsAnimationPlaying="False"/>
             <Button
+                x:Name="nextStepButton"
                 Text="Dalej"
+                TextColor="#FFFFFF"
                 MaximumWidthRequest="80"
                 Grid.Row="1" 
-                Clicked="Button_Clicked"/>
+                Clicked="Button_Clicked"
+                BackgroundColor="#0277FA"
+                IsVisible="True"
+                CornerRadius="20"/>
         </Grid>
     </Grid>
 </ContentPage>

@@ -3,6 +3,7 @@ using WMiIApp.ViewModels;
 using WMiIApp.Services;
 using CommunityToolkit.Maui;
 using banditoth.MAUI.DeviceId;
+using WMiIApp.Handlers;
 
 namespace WMiIApp
 {
@@ -19,7 +20,13 @@ namespace WMiIApp
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .ConfigureMauiHandlers(handlers =>
+                 {
+#if ANDROID || IOS || WINDOWS
+                     handlers.AddHandler<SearchBar, SearchBarExHandler>();
+#endif
+                 });
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -7,11 +7,13 @@
              xmlns:model="clr-namespace:WMiIApp.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:MainViewModel"
-             Shell.BackgroundColor="#1E1C26">
+             Shell.BackgroundColor="#1E1C26"
+             HideSoftInputOnTapped="True">
     <ContentPage.Resources>
         <local:FromIsSentToHorizontalOptionConverter x:Key="FromIsSentToHorizontalOptionConverter" />
         <local:FromIsSentToMessageColorConverter x:Key="FromIsSentToMessageColorConverter" />
         <local:FromIsFAQToIsEnabledConverter x:Key="FromIsFAQToIsEnabledConverter"/>
+        <local:FromIsFAQToIsVisibleConverter x:Key="FromIsFAQToIsVisibleConverter"/>
     </ContentPage.Resources>
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="#1E1C26"/>
@@ -28,21 +30,27 @@
                         <Grid Padding="5,5" ColumnDefinitions=".5*, .5*">
                             <Frame BackgroundColor="{Binding IsSent, Converter={StaticResource FromIsSentToMessageColorConverter}}" 
                                    BorderColor="{Binding Source={RelativeSource Self}, Path=BackgroundColor}" CornerRadius="30"
-                                   Grid.ColumnSpan="2">
+                                   Grid.ColumnSpan="2" IsVisible="{Binding IsFAQ, Converter={StaticResource FromIsFAQToIsVisibleConverter}}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding TappedCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
                                                           NumberOfTapsRequired="2" CommandParameter="{Binding Content}"/>
                                 </Frame.GestureRecognizers>
                                 <Label Text="{Binding Content}" FontSize="16" TextColor="#FFFFFF"/>
                             </Frame>
-                            <Button x:Name="accept" BackgroundColor="Green" Grid.Column="0"  
+                            <ImageButton x:Name="accept" BackgroundColor="Green" Grid.Column="0"  
+                                    Source="check_icon.png"
+                                    MaximumHeightRequest="80"
                                     IsVisible="{Binding IsFAQ}"
                                     Command="{Binding AcceptFAQCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
-                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"/>
-                            <Button x:Name="reject" BackgroundColor="Red" Grid.Column="1" 
+                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"
+                                    CornerRadius="30"/>
+                            <ImageButton x:Name="reject" BackgroundColor="Red" Grid.Column="1"
+                                    Source="cancel_icon.png"
+                                    MaximumHeightRequest="80"
                                     IsVisible="{Binding IsFAQ}"
                                     Command="{Binding RejectFAQCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
-                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"/>
+                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"
+                                    CornerRadius="30"/>
                         </Grid>
                     </VerticalStackLayout>
 
@@ -68,7 +76,9 @@
                     <RoundRectangle CornerRadius="20,20,20,20" />
                 </Border.StrokeShape>
                 <Editor x:Name="entry" Placeholder="Napisz wiadomość..." PlaceholderColor="#CFCFCF" Text="{Binding Text}"
-                TextColor="#FFFFFF" AutoSize="TextChanges" BackgroundColor="#3F4152" MinimumHeightRequest="10"/>
+                        TextColor="#FFFFFF" AutoSize="TextChanges" BackgroundColor="#3F4152" MinimumHeightRequest="10" Focused="entry_Focused"
+                        IsTextPredictionEnabled="True" IsSpellCheckEnabled="True"/>
+
             </Border>
         </Grid>
 
