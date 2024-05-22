@@ -47,10 +47,15 @@ async def faq(
 
         docs.append(doc)
 
-    result = FAQResult(faq=[FAQEntry(
-        question=doc["page_content"],
-        answer=doc["metadata"]["answer"]
-    ) for doc in docs])
+    result = FAQResult(
+        faq=[
+            FAQEntry(
+                question=doc["page_content"],
+                answer=doc["metadata"]["answer"]
+            )
+            for doc in docs
+        ]
+    )
 
     log_endpoint_call("faq", request, result)
 

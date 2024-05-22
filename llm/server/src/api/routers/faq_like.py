@@ -30,8 +30,12 @@ async def faq_like(
         score_threshold=config.api.faq_like.score_threshold
     )
 
-    faq_ids = [x.metadata["_id"] for x in result]
-    result = FAQLikeResult(faq_ids=faq_ids)
+    result = FAQLikeResult(
+        faq_ids=[
+            x.metadata["_id"]
+            for x in result
+        ]
+    )
 
     log_endpoint_call("faq_like", request, result)
 
