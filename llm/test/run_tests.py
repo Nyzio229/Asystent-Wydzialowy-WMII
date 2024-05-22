@@ -161,6 +161,7 @@ def run_tests(
         ))
 
     n_tests = len(test_module_descriptors)
+
     print(
         f"Found {n_tests} test{'' if n_tests == 1 else 's'}:"
     )
