@@ -257,5 +257,19 @@
             "source": "l3",
             "destination": "l10"
         }
+    },
+    {
+        "text": "Gdzie znajduje się s3?",
+        "metadata": {
+            "source": null,
+            "destination": "S3"
+        }
+    },
+    {
+        "text": "Jak dojść do gabinetu A105 z klubu studenckiego?",
+        "metadata": {
+            "source": "klub studencki",
+            "destination": "A105"
+        }
     }
 ]

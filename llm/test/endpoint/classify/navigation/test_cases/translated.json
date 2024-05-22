@@ -49,7 +49,7 @@
       }
    },
    {
-      "text": "I am in the L1 class, and I need to reach lesk. Can you help me?",
+      "text": "I am in the L1 class, and I need to reach lesku. Can you help me?",
       "metadata": {
          "source": "L1",
          "destination": "lesk"
@@ -210,28 +210,28 @@
       }
    },
    {
-      "text": "Where is S9?",
+      "text": "Where is the S9?",
       "metadata": {
-          "source": null,
-          "destination": "s9"
+         "source": null,
+         "destination": "s9"
       }
    },
    {
-      "text": "How to get from toilet in the basement to the meeting room?",
+      "text": "How do you get from the basement toilet to the meeting room?",
       "metadata": {
          "source": "WC piwnica",
          "destination": "sala spotkań"
       }
    },
    {
-      "text": "How do I get from le2 from le23 to the nice place called the le6 to le7. How to get from l1 to l5",
+      "text": "How to get from le2 from le23 to a nice place called le6 to le7. How to get from l1 to l5",
       "metadata": {
          "source": "l1",
          "destination": "l5"
       }
    },
    {
-      "text": "How do I get from l2 from l23 to the nice place called the l6 to l7. How to get from l1 to l5",
+      "text": "How to get from l2 from l23 to a cool place called l6 to l7. How to get from l1 to l5?",
       "metadata": {
          "source": "l2",
          "destination": "l6"
@@ -256,6 +256,20 @@
       "metadata": {
          "source": "l3",
          "destination": "l10"
+      }
+   },
+   {
+      "text": "Where is the s3 located?",
+      "metadata": {
+         "source": null,
+         "destination": "S3"
+      }
+   },
+   {
+      "text": "How to get to the A105 office from the student club?",
+      "metadata": {
+         "source": "klub studencki",
+         "destination": "A105"
       }
    }
 ]

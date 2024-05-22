@@ -2,48 +2,61 @@ import abc
 
 import json
 
+import time
+
 import unittest
 
 from pathlib import Path
 
-from typing import Type, TypeVar, Optional
+from typing import Any, Type, TypeVar, Optional
 
 import requests
 
 from pydantic import BaseModel
 
-from baza_wiedzy.utils import get_cached_translation, translate
+from knowledge_base.src.utils import (
+    get_cached_translation,
+    save_json
+)
 
 T = TypeVar("T", bound=BaseModel)
-U = TypeVar("U", bound=BaseModel)
+
+class TestCaseResult(BaseModel):
+    passed: bool
+
+    test_params: dict[str, Any]
+
+    response: Optional[dict[str, Any]]
+    expected_response: Optional[dict[str, Any]]
+
+    error: Optional[dict[str, Any]]
+
+    execution_time: float
 
 class TestEndpoint(unittest.TestCase):
-    lang_from = "pl"
-    lang_to = "en-US"
-
-    _TEST_CASES_DIR = "test_cases"
-    _SERVER_URL = "http://158.75.112.151:9123"
+    __TEST_CASES_DIR = "test_cases"
+    __SERVER_URL = "http://158.75.112.151:9123"
 
     def __init__(
         self,
         endpoint: str,
         test_case_type: Type[T],
-        translated_test_case_type: Optional[Type[U]] = None,
         *args, **kwargs
     ) -> None:
         super().__init__(*args, **kwargs)
 
-        self._api_url = f"{self._SERVER_URL}/{endpoint}"
+        self._api_url = f"{self.__SERVER_URL}/{endpoint}"
 
         self._test_case_type = test_case_type
-        self._translated_test_case_type = (
-            translated_test_case_type or test_case_type
-        )
 
-        self._test_cases_dir = Path(self._TEST_CASES_DIR)
+        self._test_cases_dir = Path(
+            self.__TEST_CASES_DIR
+        )
 
         self._test_cases = self._get_translated_test_cases()
         self._expected_responses = self._get_expected_responses()
+
+        self._last_response: Optional[dict[str]] = None
 
         if not self._expected_responses:
             return
@@ -64,34 +77,42 @@ class TestEndpoint(unittest.TestCase):
     ) -> None:
         pass
 
-    @abc.abstractmethod
-    def _translate_test_cases(
+    def _get_endpoint_params(
         self,
-        test_cases: list[T]
-    ) -> list[U]:
+        test_case: T
+    ) -> dict[str]:
+        return test_case.model_dump()
+
+    @abc.abstractmethod
+    def _translate_test_case(
+        self,
+        test_case: T
+    ) -> T:
         pass
 
     @abc.abstractmethod
     def _get_expected_responses(self) -> Optional[list[dict[str]]]:
         pass
 
-    @classmethod
-    def _translate(cls, message: str) -> str:
-        return translate(message, cls.lang_from, cls.lang_to)
+    def _get_translated_test_cases(self) -> list[T]:
+        def _translate_test_cases(
+            test_cases: list[T]
+        ) -> list[T]:
+            print("   * Tłumaczenie (pl -> en)...")
 
-    @classmethod
-    def _translate_back(cls, message: str) -> str:
-        return translate(message, cls.lang_to, cls.lang_from)
+            translated = list(map(
+                self._translate_test_case, test_cases
+            ))
 
-    def _get_translated_test_cases(self) -> list[U]:
+            return translated
+
         dir_path = self._test_cases_dir
         translated = get_cached_translation(
             pl_path=dir_path / "pl.json",
             cache_path=dir_path / "translated.json",
-            translator=self._translate_test_cases,
+            translator=_translate_test_cases,
             with_pl=False,
-            model_type=self._test_case_type,
-            translated_model_type=self._translated_test_case_type
+            model_type=self._test_case_type
         )
 
         return translated
@@ -100,7 +121,7 @@ class TestEndpoint(unittest.TestCase):
         response = requests.post(
             self._api_url,
             json=kwargs,
-            timeout=20
+            timeout=30
         )
 
         response.raise_for_status()
@@ -111,27 +132,32 @@ class TestEndpoint(unittest.TestCase):
 
     def _run_test_case(
         self,
-        test_case: U,
+        test_case: T,
         expected_response: Optional[dict[str]]
     ) -> None:
-        attr_names = list(test_case.model_fields.keys())
-
-        attrs = {
-            name: getattr(test_case, name)
-            for name in attr_names
-        }
-
         def _log_field(name: str, field) -> None:
             if isinstance(field, dict):
-                field = json.dumps(field, ensure_ascii=False, indent=3)
+                field = json.dumps(
+                    field, ensure_ascii=False, indent=3
+                )
 
             print(">", f"{name}: {field}")
 
-        _log_field("Endpoint params", attrs)
+        self._last_response = None
 
-        response = self._call_remote_endpoint(**attrs)
+        endpoint_params = self._get_endpoint_params(
+            test_case
+        )
+
+        _log_field("Endpoint params", endpoint_params)
+
+        response = self._call_remote_endpoint(
+            **endpoint_params
+        )
 
         _log_field("Response", response)
+
+        self._last_response = response
 
         if not expected_response:
             return
@@ -139,9 +165,49 @@ class TestEndpoint(unittest.TestCase):
         _log_field("Expecting", expected_response)
 
         self._assert_api_response(
-            response,
-            expected_response
+            response, expected_response
         )
+
+    def _get_test_case_result(
+        self,
+        test_case: T,
+        expected_response: Optional[dict[str]],
+        test_id: str
+    ) -> TestCaseResult:
+        failed = True
+
+        error: Optional[dict[str]] = None
+
+        with self.subTest(test_id):
+            start_time = time.time()
+
+            try:
+                self._run_test_case(
+                    test_case, expected_response
+                )
+            except requests.RequestException as e:
+                error = dict(
+                    exception=repr(e)
+                )
+            else:
+                failed = False
+
+        end_time = time.time()
+
+        elapsed_time = end_time-start_time
+
+        test_case_result = TestCaseResult(
+            passed=not failed,
+            test_params=test_case.model_dump(),
+            response=self._last_response,
+            expected_response=expected_response,
+            error=error,
+            execution_time=round(
+                elapsed_time, 2
+            )
+        )
+
+        return test_case_result
 
     def test_endpoint(self) -> None:
         def _print_boundary() -> None:
@@ -149,20 +215,62 @@ class TestEndpoint(unittest.TestCase):
 
         test_cases = self._test_cases
 
+        n_test_cases = len(test_cases)
+
         class_name = self.__class__.__name__
 
         expected_responses = self._expected_responses
 
-        for i, test_case in enumerate(test_cases):
+        test_case_results: list[TestCaseResult] = []
+
+        for i, (test_case, expected_response) in enumerate(
+            zip(
+                test_cases,
+                expected_responses
+                if expected_responses
+                else [None] * n_test_cases
+            )
+        ):
             _print_boundary()
 
-            test_id = f"{i+1}/{len(test_cases)}"
+            test_id = f"{i+1}/{n_test_cases}"
 
             print(f"Test ('{class_name}') [{test_id}]\n")
 
-            expected_response = expected_responses[i] if expected_responses else None
+            test_case_result = self._get_test_case_result(
+                test_case, expected_response, test_id
+            )
 
-            with self.subTest(test_id):
-                self._run_test_case(test_case, expected_response)
+            test_case_results.append(test_case_result)
 
             _print_boundary()
+
+        def _serialize_test_case_result(
+            test_case_result: TestCaseResult
+        ) -> dict[str]:
+            if test_case_result.passed:
+                excluded_fields = {
+                    "expected_response"
+                }
+            else:
+                excluded_fields = None
+
+            serialized = test_case_result.model_dump(
+                exclude=excluded_fields,
+                exclude_none=True
+            )
+
+            return serialized
+
+        serialized_test_case_results = list(map(
+            _serialize_test_case_result, test_case_results
+        ))
+
+        test_result_file_path = Path(
+            "test_result.json"
+        )
+
+        save_json(
+            test_result_file_path,
+            serialized_test_case_results
+        )

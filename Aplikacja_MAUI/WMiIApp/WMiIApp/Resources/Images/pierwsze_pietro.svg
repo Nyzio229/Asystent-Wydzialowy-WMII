@@ -8,12 +8,13 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="1pietroSVG.svg"
+   sodipodi:docname="1pietroSVG_test.svg"
    inkscape:export-filename="1pietroSVG.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
@@ -26,9 +27,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.50791975"
-     inkscape:cx="576.86278"
-     inkscape:cy="282.52495"
+     inkscape:zoom="1.0158395"
+     inkscape:cx="583.26143"
+     inkscape:cy="279.07952"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -36,13 +37,57 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs1" />
+     id="defs1">
+    <linearGradient
+       id="linearGradient39"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop39" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop40" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient37"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop37" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop38" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient37"
+       id="linearGradient38"
+       x1="160.77347"
+       y1="87.710138"
+       x2="196.30726"
+       y2="87.710138"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient39"
+       id="linearGradient40"
+       x1="186.7444"
+       y1="88.865941"
+       x2="196.30726"
+       y2="88.865941"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
   <g
      inkscape:label="PierwszePietro"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     style="display:inline">
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.865;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65490198;stroke:#150000;stroke-width:0.865;stroke-dasharray:none;stroke-opacity:1"
        id="ss2"
        width="18.767773"
        height="28.620852"
@@ -52,10 +97,10 @@
        class="room" />
     <path
        id="rect6"
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.883;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.883;stroke-dasharray:none;stroke-opacity:1"
        d="m 9.609543,37.833548 0.002,0.468304 0.0127,4.682491 0.0116,4.214706 7.35464,-0.02009 -0.0115,-4.214706 11.27739,-0.0308 -0.014,-5.150792 z" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.852839;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.852839;stroke-dasharray:none;stroke-opacity:1"
        id="b208"
        width="18.662636"
        height="6.1116881"
@@ -64,7 +109,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.850381;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.850381;stroke-dasharray:none;stroke-opacity:1"
        id="b207"
        width="18.547792"
        height="6.1141453"
@@ -72,28 +117,20 @@
        y="54.863152"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-2"
-       cx="18.883934"
-       cy="57.817291"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="15.245041"
        y="58.694145"
        id="text4-1-7"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4-1-1"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="15.245041"
          y="58.694145">B207</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.850382;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.850382;stroke-dasharray:none;stroke-opacity:1"
        id="b206"
        width="18.547794"
        height="6.1141453"
@@ -101,28 +138,20 @@
        y="61.808456"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-0"
-       cx="18.627895"
-       cy="64.672447"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="14.989"
        y="65.549301"
        id="text4-1-9"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4-1-3"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="14.989"
          y="65.549301">B206</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.852839;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.852839;stroke-dasharray:none;stroke-opacity:1"
        id="b205"
        width="18.662636"
        height="6.1116881"
@@ -130,28 +159,20 @@
        y="68.714417"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-07"
-       cx="18.728485"
-       cy="72.007141"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="15.089591"
        y="72.883995"
        id="text4-1-6"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4-1-11"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="15.089591"
          y="72.883995">B205</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.8114;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.8114;stroke-dasharray:none;stroke-opacity:1"
        id="b204"
        width="18.586832"
        height="5.5547595"
@@ -159,28 +180,20 @@
        y="75.50174"
        transform="matrix(0.99999693,-0.00247601,0.00301245,0.99999546,0,0)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-3"
-       cx="18.971865"
-       cy="78.334488"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
-       x="15.332969"
-       y="79.211342"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+       x="15.137002"
+       y="79.438248"
        id="text4-1-0"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4-1-115"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
-         x="15.332969"
-         y="79.211342">B204</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+         x="15.137002"
+         y="79.438248">B204</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.708051;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.708051;stroke-dasharray:none;stroke-opacity:1"
        id="b202"
        width="18.80777"
        height="4.18016"
@@ -188,28 +201,20 @@
        y="86.226913"
        transform="matrix(0.99999895,-0.00145053,0.0051421,0.99998678,0,0)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.816507;stroke-opacity:1"
-       id="path4-10-1"
-       cx="19.311937"
-       cy="88.284142"
-       rx="4.3732891"
-       ry="1.8414104"
-       transform="matrix(0.99999736,-0.00229989,0.00324313,0.99999474,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:2.93592px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.816507;stroke-opacity:1"
-       x="14.357088"
-       y="97.015549"
-       id="text4-1-64"
-       transform="matrix(1.0897146,-0.00250623,0.00297612,0.91766466,0,0)"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+       x="14.973287"
+       y="89.470772"
+       id="text4-1-0-5-0"
+       transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
-         id="tspan4-1-7"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.816508"
-         x="14.357088"
-         y="97.015549">B202</tspan></text>
+         id="tspan4-1-115-7-5"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+         x="14.973287"
+         y="89.470772">B202</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.708051;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.708051;stroke-dasharray:none;stroke-opacity:1"
        id="b203"
        width="18.80777"
        height="4.18016"
@@ -217,28 +222,20 @@
        y="81.757393"
        transform="matrix(0.99999895,-0.00145053,0.0051421,0.99998678,0,0)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.850977;stroke-opacity:1"
-       id="path4-10-31"
-       cx="19.163853"
-       cy="83.769493"
-       rx="4.9591618"
-       ry="1.763869"
-       transform="matrix(0.99999811,-0.00194277,0.00383926,0.99999263,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.05986px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.850977;stroke-opacity:1"
-       x="12.656238"
-       y="100.16615"
-       id="text4-1-2"
-       transform="matrix(1.1856474,-0.00230345,0.00323812,0.84341478,0,0)"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+       x="15.160844"
+       y="85.09549"
+       id="text4-1-0-5"
+       transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
-         id="tspan4-1-18"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.850978"
-         x="12.656238"
-         y="100.16615">B203</tspan></text>
+         id="tspan4-1-115-7"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-dasharray:none;stroke-opacity:1"
+         x="15.160844"
+         y="85.09549">B203</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.970263;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.970263;stroke-dasharray:none;stroke-opacity:1"
        id="b217"
        width="18.31072"
        height="8.0625935"
@@ -247,28 +244,20 @@
        transform="matrix(0.9999976,-0.00219065,0.00340484,0.9999942,0,0)"
        inkscape:label="b217"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-56"
-       cx="46.780113"
-       cy="41.411381"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.321327"
        y="42.590282"
        id="text4-1-1-07"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-5"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.321327"
          y="42.590282">B217</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.848066;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.848066;stroke-dasharray:none;stroke-opacity:1"
        id="b218"
        width="18.439926"
        height="6.1164608"
@@ -277,28 +266,20 @@
        transform="rotate(-0.15648)"
        inkscape:label="b218"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-7"
-       cx="46.982548"
-       cy="48.512959"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.523762"
        y="49.69186"
        id="text4-1-1-84"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-0"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.523762"
          y="49.69186">B218</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.848065;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.848065;stroke-dasharray:none;stroke-opacity:1"
        id="b219"
        width="18.439924"
        height="6.1164608"
@@ -307,33 +288,25 @@
        transform="rotate(-0.15648)"
        inkscape:label="b219"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-07"
-       cx="46.965206"
-       cy="54.862934"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.50642"
        y="56.041836"
        id="text4-1-1-56"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-20"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.50642"
          y="56.041836">B219</tspan><tspan
          sodipodi:role="line"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.50642"
          y="60.010586"
          id="tspan3" /></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.848639;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.848639;stroke-dasharray:none;stroke-opacity:1"
        id="b220"
        width="18.466595"
        height="6.1158876"
@@ -342,28 +315,20 @@
        transform="rotate(-0.15648)"
        inkscape:label="b220"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-35"
-       cx="46.947865"
-       cy="61.21291"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.489079"
        y="62.391811"
        id="text4-1-1-8"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-44"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.489079"
          y="62.391811">B220</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.849362;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.849362;stroke-dasharray:none;stroke-opacity:1"
        id="b221"
        width="18.500229"
        height="6.1151657"
@@ -372,28 +337,20 @@
        transform="rotate(-0.15648)"
        inkscape:label="b221"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-0"
-       cx="47.124531"
-       cy="67.767693"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.665745"
        y="68.946594"
        id="text4-1-1-5"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-4"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.665745"
          y="68.946594">B221</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.84951;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.84951;stroke-dasharray:none;stroke-opacity:1"
        id="b222"
        width="18.507193"
        height="6.115016"
@@ -402,28 +359,20 @@
        transform="rotate(-0.15648)"
        inkscape:label="b222"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-3"
-       cx="46.912457"
-       cy="74.177444"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.453671"
        y="75.356346"
        id="text4-1-1-6"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-2"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.453671"
          y="75.356346">B222</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.895624;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.895624;stroke-dasharray:none;stroke-opacity:1"
        id="b223"
        width="18.468271"
        height="6.811234"
@@ -432,28 +381,20 @@
        transform="matrix(0.99999715,-0.00238668,0.00312519,0.99999512,0,0)"
        inkscape:label="b223"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071-5"
-       cx="47.423553"
-       cy="80.793442"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.964767"
        y="81.972343"
        id="text4-1-1-0"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2-8"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.964767"
          y="81.972343">B223</tspan></text>
     <rect
-       style="fill:#cbebfa;fill-opacity:0.764706;stroke:#150000;stroke-width:0.895157;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#666887;fill-opacity:0.7647059;stroke:#150000;stroke-width:0.895157;stroke-dasharray:none;stroke-opacity:1"
        id="stairs3"
        width="28.374096"
        height="7.7295475"
@@ -462,7 +403,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.882999;stroke-dasharray:none;stroke-opacity:1"
        id="pm2"
        width="21.348341"
        height="19.940758"
@@ -471,7 +412,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.01017;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.01017;stroke-dasharray:none;stroke-opacity:1"
        id="rect11"
        width="7.3799405"
        height="6.5588512"
@@ -544,7 +485,7 @@
        transform="rotate(-0.15648)" />
     <path
        id="stairs2"
-       style="fill:#cbebfa;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.860977"
+       style="fill:#666887;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.860977"
        d="m 51.270243,8.257261 12.924815,-0.0353 0.0545,19.960525 -12.924805,0.0353 z m 9.952625,20.317504 -7.056435,-0.01812 -10e-4,-0.7224 7.056425,0.01812 z"
        class="room" />
     <rect
@@ -612,7 +553,7 @@
        y="17.607761"
        transform="rotate(-0.15648)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
        id="l10"
        width="22.894314"
        height="20.079151"
@@ -621,7 +562,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
        id="l11"
        width="22.894314"
        height="20.079151"
@@ -630,7 +571,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
        id="l12"
        width="22.894314"
        height="20.079151"
@@ -639,7 +580,7 @@
        transform="rotate(-0.15648)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.861908;stroke-opacity:1"
        id="wc2"
        width="22.894314"
        height="20.079151"
@@ -647,101 +588,45 @@
        y="8.3977203"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4"
-       cx="17.825224"
-       cy="20.196894"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-6"
-       cx="41.299587"
-       cy="16.712872"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-1"
-       cx="75.938843"
-       cy="17.893803"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-5"
-       cx="100.02122"
-       cy="18.065777"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-55"
-       cx="124.0983"
-       cy="18.534977"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0"
-       cx="148.0475"
-       cy="18.502338"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="15.244657"
        y="21.076639"
        id="text4"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="15.244657"
          y="21.076639">SS2</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10"
-       cx="18.553276"
-       cy="51.201275"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="14.914381"
        y="52.078129"
        id="text4-1"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan4-1"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="14.914381"
          y="52.078129">B208</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="145.56335"
        y="19.55176"
        id="text5"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan5"
-         style="stroke-width:0.883"
+         style="stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="145.56335"
          y="19.55176">WC</tspan></text>
     <path
        id="korytarz2"
-       style="fill:#caebf9;fill-opacity:0.764706;stroke:#000000;stroke-width:1.17033;stroke-opacity:1"
+       style="fill:#666887;fill-opacity:0.7647059;stroke:#000000;stroke-width:1.17033;stroke-opacity:1"
        d="m 134.01294,28.234151 4.2e-4,0.137386 -96.164307,0.262634 -3e-5,-0.01033 -9.04795,0.02471 0.0403,14.76228 -11.9366,0.03261 0.0112,4.102986 11.9366,-0.03261 0.11716,42.898501 9.04794,-0.0247 -0.14667,-53.70448 96.164307,-0.262635 0.10764,39.411165 25.21845,-0.0689 -0.12999,-47.597521 z" />
     <rect
        style="fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:0.85737;stroke-dasharray:none;stroke-opacity:1"
@@ -769,38 +654,38 @@
        transform="rotate(-0.15648)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#caebf9;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#caebf9;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="121.6348"
        y="19.666174"
        id="text16"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan16"
-         style="stroke:none;stroke-width:0.883"
+         style="stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="121.6348"
          y="19.666174">L12</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#caebf9;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#caebf9;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="97.705566"
        y="19.197298"
        id="text17"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan17"
-         style="stroke-width:0.883"
+         style="stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="97.705566"
          y="19.197298">L11</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#caebf9;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#caebf9;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="73.306808"
        y="19.079042"
        id="text18"
        transform="rotate(-0.15648)"><tspan
          sodipodi:role="line"
          id="tspan18"
-         style="stroke-width:0.883"
+         style="stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="73.306808"
          y="19.079042">L10</tspan></text>
     <rect
@@ -813,18 +698,18 @@
        transform="matrix(-0.0079002,0.99996879,-0.99999961,-8.8214296e-4,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:2.97325px;fill:#cbebfa;fill-opacity:0.764706;stroke:none;stroke-width:0.826891;stroke-opacity:1"
+       style="font-size:3.04263338px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217427;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="38.798435"
        y="17.430698"
        id="text19"
        transform="matrix(0.98608646,-0.00269311,0.00276962,1.0141023,0,0)"><tspan
          sodipodi:role="line"
          id="tspan19"
-         style="stroke-width:0.826892"
+         style="stroke-width:0.00217427;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263338px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="38.798435"
          y="17.430698">PM2</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65490198;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
        id="rect13-4"
        width="6.8735051"
        height="5.8178186"
@@ -832,7 +717,7 @@
        y="41.242134"
        transform="rotate(-0.15648)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
        id="rect13-9"
        width="6.8735051"
        height="5.8178186"
@@ -840,7 +725,7 @@
        y="34.973274"
        transform="rotate(-0.15648)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.812811;stroke-opacity:1"
        id="rect13"
        width="6.8735051"
        height="5.8178186"
@@ -849,7 +734,7 @@
        transform="rotate(-0.15648)" />
     <path
        id="korytarz"
-       style="fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.861869;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#666887;fill-opacity:0.7647059;stroke:#0b0b0b;stroke-width:0.861869;stroke-dasharray:none;stroke-opacity:1"
        d="m 192.65348,198.65775 h -25.48475 v -0.12764 h 15.94373 v -14.59394 h -2.23759 v -0.11938 h 2.01538 v -35.7141 h 8.35246 v -19.90627 h -8.41137 v -3.72277 l 0.54518,-0.002 -0.13281,-34.738452 h 0.0703 l -0.0935,-34.288345 -0.28887,5.17e-4 V 34.10352 h -8.53178 v 20.970296 l -0.65784,0.0016 -0.0568,-20.978564 -14.09681,0.03876 0.0568,20.978565 -0.10232,5.16e-4 0.0568,20.669535 11.53883,-0.0315 5.2e-4,0.3638 -0.2279,5.2e-4 0.092,33.783472 h -0.21342 v 2.75642 h -30.31184 v 35.45003 h 30.47152 v 35.70996 h 2.21176 v 0.11938 h -14.00125 v 14.59394 h 5.0798 v 0.12764 h -9.8547 v 6.56859 h 38.26847 z" />
     <rect
        style="display:inline;fill:#495356;fill-opacity:0.764368;stroke:#7b7f7b;stroke-width:0.950723;stroke-dasharray:none;stroke-opacity:1"
@@ -861,60 +746,39 @@
        transform="matrix(-0.00327711,-0.99999463,0.99139399,0.130912,0,0)"
        inkscape:transform-center-x="-6.6980001"
        inkscape:transform-center-y="1.7037874" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
-       id="path4-0-3-4-7-2-1-2-5"
-       cx="166.70999"
-       cy="188.53287"
-       rx="2.479085"
-       ry="1.1908884" />
     <text
        xml:space="preserve"
-       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       style="font-size:3.04263339px;fill:#cbebfa;fill-opacity:0.764706;stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:0.96513247;stroke-dasharray:none"
        x="161.37422"
        y="192.96507"
        id="text1-3-3-4-4-3"
        transform="scale(1.0202231,0.98017777)"><tspan
          sodipodi:role="line"
-         style="stroke:none;stroke-width:0.464148"
+         style="stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:0.96513247;stroke-dasharray:none"
          x="161.37422"
          y="192.96507"
          id="tspan2-1-1-2-8-2">F105</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
-       id="path4-0-3-4-7-2-1-2-52"
-       cx="166.66353"
-       cy="191.51772"
-       rx="2.479085"
-       ry="1.1908884" />
     <text
        xml:space="preserve"
-       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       style="font-size:3.04263339px;fill:#cbebfa;fill-opacity:0.764706;stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="161.32867"
        y="196.01028"
        id="text1-3-3-4-4-5"
        transform="scale(1.0202231,0.98017777)"><tspan
          sodipodi:role="line"
-         style="stroke:none;stroke-width:0.464148"
+         style="stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="161.32867"
          y="196.01028"
          id="tspan2-1-1-2-8-6">F107</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.494381;stroke-opacity:1"
-       id="path4-0-3-4-7-2-1-2-7"
-       cx="166.71228"
-       cy="194.455"
-       rx="2.479085"
-       ry="1.1908884" />
     <text
        xml:space="preserve"
-       style="font-size:1.77764px;fill:#cbebfa;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.464148"
+       style="font-size:3.04263339px;fill:#cbebfa;fill-opacity:0.764706;stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="161.37645"
        y="199.00697"
        id="text1-3-3-4-4-6"
        transform="scale(1.0202231,0.98017777)"><tspan
          sodipodi:role="line"
-         style="stroke:none;stroke-width:0.464148"
+         style="stroke:none;stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="161.37645"
          y="199.00697"
          id="tspan2-1-1-2-8-5">F108</tspan></text>
@@ -1001,7 +865,7 @@
        y="55.339302"
        transform="rotate(-0.15648)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.30192;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.30192;stroke-opacity:0.945098"
        id="f209"
        width="6.2130985"
        height="23.016121"
@@ -1009,28 +873,20 @@
        y="200.22617"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-6-0"
-       cx="211.1832"
-       cy="-149.99873"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(89.788233)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="207.64073"
        y="-148.95221"
        id="text5-0-7-6"
        transform="rotate(89.788233)"><tspan
          sodipodi:role="line"
          id="tspan5-3-5-2"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="207.64073"
          y="-148.95221">F209</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.30192;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.30192;stroke-opacity:0.945098"
        id="f204"
        width="6.2130985"
        height="23.016121"
@@ -1038,32 +894,24 @@
        y="200.12138"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-7"
-       cx="207.40468"
-       cy="-199.09602"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(90.905554)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="203.86234"
        y="-198.02988"
        id="text5-0-3"
        transform="rotate(90.905554)"><tspan
          sodipodi:role="line"
          id="tspan5-3-8"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="203.86234"
          y="-198.02988">F204</tspan></text>
     <path
        id="rect18"
-       style="fill:#cbebfa;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.829;stroke-opacity:0.945098"
        d="m 142.42342,194.73801 7e-5,0.0243 -0.23875,8.2e-4 0.0634,23.2047 5.40379,-0.0148 -0.0506,-18.5373 6.79955,-0.0185 -0.0128,-4.69169 z" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.927936;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.927936;stroke-opacity:0.945098"
        id="f208"
        width="8.0550413"
        height="17.193974"
@@ -1071,28 +919,20 @@
        y="206.20152"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-6-99"
-       cx="215.11642"
-       cy="-158.26027"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(89.788233)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="211.57396"
        y="-157.21375"
        id="text5-0-7-1"
        transform="rotate(89.788233)"><tspan
          sodipodi:role="line"
          id="tspan5-3-5-99"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="211.57396"
          y="-157.21375">F208</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.927936;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.927936;stroke-opacity:0.945098"
        id="f206"
        width="8.0550413"
        height="17.193974"
@@ -1100,28 +940,20 @@
        y="206.18413"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-6-7"
-       cx="213.66418"
-       cy="-176.97723"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(89.788233)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="210.12172"
        y="-175.93071"
        id="text5-0-7-5"
        transform="rotate(89.788233)"><tspan
          sodipodi:role="line"
          id="tspan5-3-5-6"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="210.12172"
          y="-175.93071">F206</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.0261;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.0261;stroke-opacity:0.945098"
        id="f207"
        width="9.9060268"
        height="17.095808"
@@ -1129,28 +961,20 @@
        y="206.25975"
        transform="rotate(-0.15648)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-6-9"
-       cx="214.95482"
-       cy="-168.24117"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(89.788233)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="211.41235"
        y="-167.19464"
        id="text5-0-7-9"
        transform="rotate(89.788233)"><tspan
          sodipodi:role="line"
          id="tspan5-3-5-9"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="211.41235"
          y="-167.19464">F207</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.0261;stroke-opacity:0.945098"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.0261;stroke-opacity:0.945098"
        id="f205"
        width="9.9060268"
        height="17.095808"
@@ -1223,7 +1047,7 @@
        y="-173.04004"
        transform="rotate(90)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.829"
        id="s8"
        width="13.489336"
        height="25.101894"
@@ -1231,18 +1055,8 @@
        y="-199.11702"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-3-1"
-       cx="-187.28073"
-       cy="-25.573971"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-179.51467)"
-       inkscape:transform-center-x="-11.370524"
-       inkscape:transform-center-y="-0.063940924" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.959631"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.959631"
        id="s7"
        width="25.415695"
        height="16.043179"
@@ -1251,7 +1065,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.955311"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.955311"
        id="s6"
        width="15.38396"
        height="16.054617"
@@ -1259,29 +1073,19 @@
        y="-199.06625"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-3-1-0"
-       cx="-192.21201"
-       cy="-66.681473"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-179.51467)"
-       inkscape:transform-center-x="-11.370524"
-       inkscape:transform-center-y="-0.063940924" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="font-size:3.04263339px;fill:#10698f;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="189.79375"
        y="69.265343"
        id="text1-3"><tspan
          sodipodi:role="line"
          id="tspan1-78"
-         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
+         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="189.79375"
          y="69.265343">S6</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.829"
        id="dziekanat_studencki"
        width="36.245926"
        height="11.280196"
@@ -1290,7 +1094,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.959631"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.959631"
        id="s5"
        width="25.415695"
        height="16.043179"
@@ -1298,19 +1102,9 @@
        y="-199.11043"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-3-1-0-3"
-       cx="-192.2717"
-       cy="-87.240433"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-179.51467)"
-       inkscape:transform-center-x="-11.370524"
-       inkscape:transform-center-y="-0.063940924" />
     <path
        id="dziekanat"
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.962156"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.962156"
        d="m 199.21202,102.78217 h -16.1284 v 25.41409 h 8.03641 v 19.81835 h 7.9964 v -19.81835 h 0.0956 z"
        class="room" />
     <rect
@@ -1482,7 +1276,7 @@
        y="-149.3876"
        transform="rotate(90.643629)" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.829"
        id="spot"
        width="11.729857"
        height="11.612559"
@@ -1491,7 +1285,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.817524"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.817524"
        id="e214"
        width="5.0709748"
        height="11.589087"
@@ -1499,28 +1293,20 @@
        y="-170.72729"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-463"
-       cx="164.02751"
-       cy="164.14351"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="139.16748"
-       y="189.98857"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="138.70787"
+       y="189.98732"
        id="text5-0-2-6"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-5"
-         style="stroke-width:0.845591"
-         x="139.16748"
-         y="189.98857">E214</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="138.70787"
+         y="189.98732">E214</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.817524"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.817524"
        id="e213"
        width="5.0709748"
        height="11.589087"
@@ -1528,28 +1314,20 @@
        y="-170.72333"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-9"
-       cx="164.02979"
-       cy="169.9644"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="139.16943"
-       y="196.69043"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="138.70982"
+       y="196.68918"
        id="text5-0-2-69"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-1"
-         style="stroke-width:0.845591"
-         x="139.16943"
-         y="196.69043">E213</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="138.70982"
+         y="196.68918">E213</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.817524"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.817524"
        id="e212"
        width="5.0709748"
        height="11.589087"
@@ -1557,28 +1335,20 @@
        y="-170.74112"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-3"
-       cx="164.09503"
-       cy="176.13364"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="139.22612"
-       y="203.79337"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="138.76651"
+       y="203.79211"
        id="text5-0-2-3"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-10"
-         style="stroke-width:0.845591"
-         x="139.22612"
-         y="203.79337">E212</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="138.76651"
+         y="203.79211">E212</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.817524"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.817524"
        id="e211"
        width="5.0709748"
        height="11.589087"
@@ -1586,28 +1356,20 @@
        y="-170.73715"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-99"
-       cx="164.29185"
-       cy="181.95491"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="139.39706"
-       y="210.49567"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="138.93745"
+       y="210.49442"
        id="text5-0-2-5"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-7"
-         style="stroke-width:0.845591"
-         x="139.39706"
-         y="210.49567">E211</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="138.93745"
+         y="210.49442">E211</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.730964"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.730964"
        id="s4"
        width="12.664559"
        height="16.217365"
@@ -1616,7 +1378,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.0937"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.0937"
        id="e203"
        width="5.472568"
        height="15.867638"
@@ -1625,7 +1387,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.02384"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.02384"
        id="e202"
        width="4.7747903"
        height="15.937494"
@@ -1634,7 +1396,7 @@
        transform="rotate(90)"
        class="room" />
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.09885"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.09885"
        id="e204"
        width="5.526063"
        height="15.862484"
@@ -1642,28 +1404,20 @@
        y="-199.05202"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-4"
-       cx="190.31091"
-       cy="175.39389"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
        x="161.99585"
        y="202.94165"
        id="text5-0-2-76"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-8"
-         style="stroke-width:0.845591"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
          x="161.99585"
          y="202.94165">E204</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:1.02708"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:1.02708"
        id="e207"
        width="4.8060646"
        height="15.934252"
@@ -1671,28 +1425,20 @@
        y="-199.10149"
        transform="rotate(90)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-46"
-       cx="189.97069"
-       cy="181.85855"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="161.70035"
-       y="210.38472"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="162.15996"
+       y="210.38597"
        id="text5-0-2-0"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-4"
-         style="stroke-width:0.845591"
-         x="161.70035"
-         y="210.38472">E207</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="162.15996"
+         y="210.38597">E207</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.821805"
+       style="fill:#4e2ff8;fill-opacity:0.65411437;stroke:#000000;stroke-width:0.821805"
        id="wc"
        width="14.273325"
        height="15.641878"
@@ -1702,222 +1448,109 @@
        class="room" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="font-size:3.04263339px;fill:#10698f;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="185.21086"
        y="28.117548"
        id="text1"><tspan
          sodipodi:role="line"
          id="tspan1"
-         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
+         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="185.21086"
          y="28.117548">S8</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-3-1-9"
-       cx="-191.88632"
-       cy="-45.46537"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-179.51467)"
-       inkscape:transform-center-x="-11.370524"
-       inkscape:transform-center-y="-0.063940924" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.829"
+       style="font-size:3.04263339px;fill:#10698f;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="189.64778"
        y="48.047249"
        id="text1-2"><tspan
          sodipodi:role="line"
          id="tspan1-7"
-         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
+         style="fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="189.64778"
          y="48.047249">S7</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
+       style="font-size:3.04263339px;fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="189.77271"
        y="89.909798"
        id="text2"><tspan
          sodipodi:role="line"
          id="tspan2"
-         style="stroke-width:0.829"
+         style="stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="189.77271"
          y="89.909798">S5</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6"
-       cx="191.38838"
-       cy="191.97353"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="188.90424"
        y="193.02295"
        id="text5-0"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan5-3"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="188.90424"
          y="193.02295">WC</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68"
-       cx="191.32703"
-       cy="163.49837"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="162.87839"
-       y="189.24579"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="161.95917"
+       y="189.24329"
        id="text5-0-2"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7"
-         style="stroke-width:0.845591"
-         x="162.87839"
-         y="189.24579">E202</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.845591;stroke-opacity:1"
-       id="path4-0-6-68-8"
-       cx="191.12669"
-       cy="169.31012"
-       rx="4.7852092"
-       ry="1.8049207"
-       transform="matrix(0.99999788,-0.00206026,0.00362034,0.99999345,0,0)" />
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="161.95917"
+         y="189.24329">E202</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.04049px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.84559;stroke-opacity:1"
-       x="162.70439"
-       y="195.93712"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+       x="161.78517"
+       y="195.93462"
        id="text5-0-2-7"
        transform="matrix(1.1513457,-0.00237207,0.00314444,0.86854238,0,0)"><tspan
          sodipodi:role="line"
          id="tspan5-3-7-3"
-         style="stroke-width:0.845591"
-         x="162.70439"
-         y="195.93712">E203</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-6-6"
-       cx="214.48387"
-       cy="-186.87634"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(89.788233)" />
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-width:0.00222344;stroke-dasharray:none;stroke-opacity:1"
+         x="161.78517"
+         y="195.93462">E203</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.264;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="210.94141"
        y="-185.82982"
        id="text5-0-7"
        transform="rotate(89.788233)"><tspan
          sodipodi:role="line"
          id="tspan5-3-5"
-         style="stroke-width:0.883"
+         style="stroke-width:0.264;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:none;stroke-opacity:1;stroke-dasharray:none"
          x="210.94141"
          y="-185.82982">F205</tspan></text>
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-0-3-1-0-3-8"
-       cx="-165.81467"
-       cy="-93.577522"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-179.51467)"
-       inkscape:transform-center-x="-11.370524"
-       inkscape:transform-center-y="-0.063940924" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
+       style="font-size:3.04263339px;fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
        x="163.09706"
        y="96.022552"
        id="text2-0"><tspan
          sodipodi:role="line"
          id="tspan2-9"
-         style="stroke-width:0.829"
+         style="stroke-width:0.00217981;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
          x="163.09706"
          y="96.022552">DS</tspan></text>
-    <g
-       id="g1"
-       transform="translate(0.05143333,26.458328)">
-      <ellipse
-         style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-         id="path4-0-3-1-0-3-7"
-         cx="-192.2717"
-         cy="-87.240433"
-         rx="4.3400478"
-         ry="2.1700239"
-         transform="rotate(-179.51467)"
-         inkscape:transform-center-x="-11.370524"
-         inkscape:transform-center-y="-0.063940924" />
-      <text
-         xml:space="preserve"
-         style="font-size:3.175px;fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
-         x="190.27036"
-         y="90.075684"
-         id="text2-1"><tspan
-           sodipodi:role="line"
-           id="tspan2-5"
-           style="stroke-width:0.829"
-           x="190.27036"
-           y="90.075684">D</tspan></text>
-    </g>
-    <g
-       id="g2"
-       transform="translate(-0.34979101,66.096237)">
-      <ellipse
-         style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-         id="path4-0-3-1-0-3-7-1"
-         cx="-192.2717"
-         cy="-87.240433"
-         rx="4.3400478"
-         ry="2.1700239"
-         transform="rotate(-179.51467)"
-         inkscape:transform-center-x="-11.370524"
-         inkscape:transform-center-y="-0.063940924" />
-      <text
-         xml:space="preserve"
-         style="font-size:3.175px;fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.829"
-         x="189.92918"
-         y="89.947746"
-         id="text2-1-2"><tspan
-           sodipodi:role="line"
-           id="tspan2-5-2"
-           style="stroke-width:0.829"
-           x="189.92918"
-           y="89.947746">S4</tspan></text>
-      <ellipse
-         style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-         id="path4-0-3-1-0-3-7-1-5"
-         cx="-166.28212"
-         cy="-85.148895"
-         rx="4.3400478"
-         ry="2.1700239"
-         transform="rotate(-179.51467)"
-         inkscape:transform-center-x="-11.370524"
-         inkscape:transform-center-y="-0.063940924" />
-      <text
-         xml:space="preserve"
-         style="font-size:2.41722px;fill:#f9fdfe;fill-opacity:0.764706;stroke:none;stroke-width:0.631145"
-         x="161.45056"
-         y="88.0933"
-         id="text2-1-2-0"
-         transform="scale(1.0073508,0.9927028)"><tspan
-           sodipodi:role="line"
-           id="tspan2-5-2-4"
-           style="stroke-width:0.631145"
-           x="161.45056"
-           y="88.0933">SPOT</tspan></text>
-    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#f9fdfe;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00217981;stroke-opacity:1;stroke-dasharray:none"
+       x="189.73906"
+       y="120.48387"
+       id="text2-0-1"><tspan
+         sodipodi:role="line"
+         id="tspan2-9-0"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.00217981;stroke:#0b0b0b;stroke-opacity:1;stroke-dasharray:none"
+         x="189.73906"
+         y="120.48387">D</tspan></text>
     <rect
-       style="fill:#10698f;fill-opacity:0.764368;stroke:#150000;stroke-width:0.840912;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#432fb9;fill-opacity:1;stroke:#150000;stroke-width:0.840912;stroke-dasharray:none;stroke-opacity:1"
        id="b224"
        width="18.041142"
        height="6.146636"
@@ -1925,25 +1558,39 @@
        y="84.35997"
        transform="matrix(0.99999757,-0.0022048,0.003383,0.99999428,0,0)"
        class="room" />
-    <ellipse
-       style="fill:#10698f;fill-opacity:0.764706;stroke:#000000;stroke-width:0.882999;stroke-opacity:1"
-       id="path4-10-071"
-       cx="47.368065"
-       cy="87.575211"
-       rx="4.3400478"
-       ry="2.1700239"
-       transform="rotate(-0.15647997)" />
     <text
        xml:space="preserve"
-       style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       style="font-size:3.04263339px;fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-dasharray:none"
        x="43.909279"
        y="88.754112"
        id="text4-1-1"
        transform="rotate(-0.15647997)"><tspan
          sodipodi:role="line"
          id="tspan4-1-2"
-         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.883"
+         style="fill:#e6f6fb;fill-opacity:0.764706;stroke:#0b0b0b;stroke-width:0.00232181;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.04263339px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-opacity:1;stroke-dasharray:none"
          x="43.909279"
          y="88.754112">B224</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:0.654902;stroke:#0b0b0b;stroke-width:0.00217981;stroke-opacity:1;stroke-dasharray:none"
+       x="160.59753"
+       y="155.80908"
+       id="text6"><tspan
+         sodipodi:role="line"
+         id="tspan6"
+         style="fill:#ffffff;fill-opacity:0.654902;stroke:#0b0b0b;stroke-width:0.00217981;stroke-opacity:1;stroke-dasharray:none"
+         x="160.59753"
+         y="155.80908">SPOT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:3.04263px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:0.654902;stroke:#0b0b0b;stroke-width:0.00217981;stroke-dasharray:none;stroke-opacity:1"
+       x="189.60455"
+       y="155.78572"
+       id="text7"><tspan
+         sodipodi:role="line"
+         id="tspan7"
+         style="stroke:#0b0b0b;stroke-width:0.00217981;stroke-dasharray:none;stroke-opacity:1"
+         x="189.60455"
+         y="155.78572">S4</tspan></text>
   </g>
 </svg>

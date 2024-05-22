@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 obj/
 bin/
+
+test_result.json

@@ -1,0 +1,33 @@
+{
+   "origin": "https://www.mat.umk.pl/web/wmii/otwarta-pracownia-komputerowa",
+   "page_content": [
+      {
+         "title": "Otwarte Laboratorium Komputerowe: informacje ogólne",
+         "body": "*** Otwarte Laboratorium Komputerowe ***\nOtwarte Laboratorium Komputerowe (OLK) zostało stworzone po to, aby umożliwić Wam dostęp do urządzeń niedostępnych na co dzień. Przygotowaliśmy mini laboratoria wyposażone w urządzenia firmy Apple (iMac, iPhone, iPad, Watch), Microsoft (HoloLens, Surface Studio), Google (Pixel,Nexus).\nDo laboratoriów będziecie mieli otwarty dostęp od 8 do 20! *Zawsze, gdy otwarty jest wydział, a zatem od poniedziałku do piątki oraz w weekendy zjazdów studiów niestacjonarnych i podyplomowych.*\nJeśli realizujecie projekt, który wymaga dostępu do tych urządzeń, złóżcie podanie, a otrzymacie możliwość pobierania klucza. Podanie należy złożyć w portierni (do odpowiedniej skrzynki).\n\n*** Z OLK mogą korzystać: ***\n1. Pracownicy, którzy realizują projekt, wymagający dostępu do urządzeń dostępnych w pracowni;\n2. Studenci, którzy realizują projekt, wymagający dostępu do urządzeń dostępnych w pracowni:\n\t* w ramach pracy dyplomowej;\n\t* w ramach zadania z przedmiotu;\n\t* w ramach programowania zespołowego."
+      },
+      {
+         "title": "Procedura uzyskania uprawnień",
+         "body": "1. Pracownik lub student składa podanie o udzielenie dostępu do OPK, opiniowane przez opiekuja - pracownika WMII UMK. Podanie należy złożyć w portierni (do odpowiedniej skrzynki)\n2. Na podstawie podania, student zostaje dopisany do listy uprawnionych do pobierania klucza do OPK.\n3. Na stronie mat.umk.pl w sekcji dostępnej po zalogowaniu, uprawniony powinien zarezerwować termin wykorzystania pracowni (aby uniknąć konfliktów)\n4. Uprawnienia przyznawane są na cały rok akademicki.\n\n*** Wypożyczenie sprzętu z pracowni. ***\nWypożyczenie sprzętu przez pracownika w celu wykorzystania na zajęciach lub pokazach (seminarium, programowanie zespołowe, itp.) jest możliwe po indywidualnych ustaleniach z LESK."
+      },
+      {
+         "title": "Dostępne urządzenia",
+         "body": "*** Laboratorium LPK 1 ***\nApple Watch\nApple iPhone 7 Plus\nApple iMac\n\n*** Laboratorium LPK 2 ***\nApple iPad\nApple iMac\n\n*** Laboratorium LPK 3 ***\nKomputer PC Windows 10\nMicrosoft Hololens\n\n*** Laboratorium LPK 5 ***\nGoogle Pixel\nSmartwatch Motorola 360\n\n*** Laboratorium LPK 6 ***\nMicrosoft Surface Studio"
+      },
+      {
+         "section_title": "Otwarte Laboratorium Komputerowe",
+         "news": [],
+         "articles": [
+            "Otwarte Laboratorium Komputerowe pozwala na dostęp do nowoczesnych urządzeń komputerowych."
+         ],
+         "stray_text": ""
+      },
+      {
+         "section_title": "Zawartość Boxów",
+         "news": [],
+         "articles": [
+            "Każdy z boxów w OLK oferuje możliwość skorzystania z pewnego typu urządzeń: Apple, Microsoft i Google."
+         ],
+         "stray_text": ""
+      }
+   ]
+}

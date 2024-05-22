@@ -1,0 +1,90 @@
+[
+   {
+      "answer": "To obtain a certificate of student status, you need to write an email and request it. A scan of it will be sent to your email. You can also go to the dean's office and ask for it in person.",
+      "question": "How do I get a certificate of student status?"
+   },
+   {
+      "answer": "Student internships are mandatory for students of our department. For more detailed information about student internships, it is best to contact the internship supervisor Andrew Polewczynski, M.A., or go to https://www.mat.umk.pl/web/wmii/sprawy-studenckie/praktyki-zawodowe.",
+      "question": "What is the case for student internships?"
+   },
+   {
+      "answer": "Most of the applications are on the departmental website. Here is a link to them: https://www.mat.umk.pl/web/wmii/aktualnosci-dziekanatu. If the application you need is not on the site, you must go in person to the dean's office and ask for it.",
+      "question": "Where to find applications?"
+   },
+   {
+      "answer": "To obtain benefits such as a social grant, rector's scholarship or student loan, read the information at this link: https://www.umk.pl/studenci/stypendia-i-kredyty. There you will find specific application deadlines, benefit rates and much more information.",
+      "question": "How do I get a scholarship or student loan?"
+   },
+   {
+      "answer": "According to the Academic Regulations, in order to change majors, it is necessary to pass the first year of study in full. Transfers are possible at the beginning of the academic year. From September 20-27, you can submit applications to the dean's office, addressed to Ms. Dean, requesting a transfer to a particular major. The application should be written independently, there are no ready-made forms.",
+      "question": "I would like to change my major, how can I do it?"
+   },
+   {
+      "answer": "If you intend to change universities, you should write an application for permission to transfer addressed to your dean and submit this application to the dean's office. At the dean's office you will also be able to pick up a certificate of student status (with the period of study, etc.) and a Study Progress Card listing all subjects and grades. You should write the application yourself, there are no ready-made forms.",
+      "question": "I would like to change universities. What do I need to do?"
+   },
+   {
+      "answer": "To change the exercise or laboratory group, it is necessary to fill out the appropriate form from the website, along with the signatures of the instructor(s).",
+      "question": "I want to change the group. How do I do it?"
+   },
+   {
+      "answer": "To change your departmental account password, go to https://www.mat.umk.pl/group/wmii/zmiana-hasla. After logging in with your current credentials, you will be given the option to change your current password to a new one.",
+      "question": "How do I change my departmental account password?"
+   },
+   {
+      "answer": "To set your VPN password, go to this link: https://www.mat.umk.pl/group/wmii/ustawianie-hasla-vpn. Then, after logging in with your departmental credentials, you will be able to set your VPN password.",
+      "question": "How do I set a password for the VPN?"
+   },
+   {
+      "answer": "To check room reservations go to https://www.mat.umk.pl/group/wmii/rezerwacje-sal. Here you can, after logging in with your departmental data, see which room is registered at any given time. You can also request a reservation for the room of your choice by pressing the envelope icon during the hours you are interested in. You will be asked to justify the need for the reservation.",
+      "question": "How can I book a room or check room reservations?"
+   },
+   {
+      "answer": "The current semester schedule can be found at this link: https://plan.mat.umk.pl.",
+      "question": "How can I check the semester plan?"
+   },
+   {
+      "answer": "Departmental mail information can be found at this address: https://www.mat.umk.pl/group/wmii/system-komputerowy-wydzialu. User Regulations for the computer system of the Department of Mathematics and Computer Science can also be found here.",
+      "question": "Where can I find information about departmental mail?"
+   },
+   {
+      "answer": "Check https://www.mat.umk.pl/group/wmii/siec-radiowa-na-wmii. There you will find instructions on how to configure mat or eduroam network access.",
+      "question": "Where can I find help with setting up my departmental network?"
+   },
+   {
+      "answer": "The dean's office is open on Mondays, Tuesdays and Thursdays from 11:00 am to 2:00 pm and on Fridays from 11:00 am to 3:00 pm.",
+      "question": "What hours is the dean's office open?"
+   },
+   {
+      "answer": "The departmental bar is open Monday through Thursday from 9:00 a.m. to 4:30 p.m., Fridays from 9:00 a.m. to 3:00 p.m., Saturdays from 9:30 a.m. to 3:00 p.m. and Sundays from 10:00 a.m. to 2:00 p.m.",
+      "question": "What hours is the faculty bar open?"
+   },
+   {
+      "answer": "UMK offers places in student dormitories. price list and regulations can be found here: https://www.umk.pl/studenci/akademiki.",
+      "question": "What accommodation options are available for students on or near the university?"
+   },
+   {
+      "answer": "All regulations regarding the use of library resources can be found at this link: https://www.bu.umk.pl/regulaminy.",
+      "question": "What are the rules for using the university library, including borrowing books and accessing online databases?"
+   },
+   {
+      "answer": "Our departmental library is open Monday through Friday from 9:00 a.m. to 4:00 p.m. Sometimes these hours on specific days are changed, which students are informed about by email. So check your departmental mail before going to the library.",
+      "question": "What hours is the departmental library open?"
+   },
+   {
+      "answer": "The University Library at 13 Gagarin Street is open Monday through Friday from 8:00 am to 8:00 pm, Saturday from 9:00 am to 2:00 pm and Sunday from 9:00 am to 4:00 pm.",
+      "question": "What hours is the university library open?"
+   },
+   {
+      "answer": "The university offers a student exchange program under the Erasmus+ program. The coordinator of this program at our university is Alexander Zaigraev, PhD. For more information, go to https://www.mat.umk.pl/web/wmii/erasmus-1.",
+      "question": "Does the university offer international exchange programs for computer science students. If so, what are the criteria for participation?"
+   },
+   {
+      "answer": "The university offers a Career Office with job, internship, apprenticeship, casual work and volunteer opportunities. You should go there by appointment. Services for UMK students and graduates are free of charge. For more information, visit https://www.umk.pl/studenci/biuro-karier.",
+      "question": "Are there opportunities for career counseling or job search support for graduating students?"
+   },
+   {
+      "answer": "The main communication tool in our department is departmental mail (mat.umk.pl). Other tools and platforms used include university mail (stud.umk.pl), university Moodle (moodle.umk.pl) and departmental Moodle (moodle.mat.umk.pl), BBB messenger (BigBlueButton) or MS Teams.",
+      "question": "What tools and platforms are available for communication and collaboration between students and faculty at the university?"
+   }
+]

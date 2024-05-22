@@ -1,8 +1,10 @@
 from typing import Literal, Optional
 
-from test_endpoint_classify import MinimalClassifyTestCase, TestEndpointClassify
+from test_text_endpoint import TextTestCase
 
-class ClassifyTestCaseLabelNavigation(MinimalClassifyTestCase):
+from test_endpoint_classify import TestEndpointClassify
+
+class ClassifyTestCaseLabelNavigation(TextTestCase):
     metadata: dict[
         Literal["source", "destination"], Optional[str]
     ]
