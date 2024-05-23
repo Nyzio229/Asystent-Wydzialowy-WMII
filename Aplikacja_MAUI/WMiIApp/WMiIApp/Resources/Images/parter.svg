@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.7974891"
-     inkscape:cx="113.48117"
-     inkscape:cy="257.68377"
+     inkscape:zoom="1.1278199"
+     inkscape:cx="150.28995"
+     inkscape:cy="453.52986"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -1635,15 +1635,18 @@
        y="146.524" />
     <text
        xml:space="preserve"
-       style="font-size:2.89442952px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-       x="19.759901"
-       y="123.25261"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:2.46944px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       x="11.46564"
+       y="120.26667"
        id="text5-7"><tspan
          sodipodi:role="line"
-         id="tspan5-4"
-         style="stroke-width:0.883;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:2.89442952px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-         x="19.759901"
-         y="123.25261">SK</tspan></text>
+         id="tspan16"
+         x="11.46564"
+         y="120.26667">SALA</tspan><tspan
+         sodipodi:role="line"
+         id="tspan17"
+         x="11.46564"
+         y="123.35347">KONFERENCYJNA</tspan></text>
     <path
        id="galeria"
        style="fill:#666887;fill-opacity:0.7647059;stroke:#000000;stroke-width:0.558956;stroke-opacity:1"
@@ -1816,15 +1819,14 @@
        y="180.45001" />
     <text
        xml:space="preserve"
-       style="font-size:2.89442952px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-       x="25.320312"
-       y="174.84636"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:2.89443px;font-family:Arial;-inkscape-font-specification:'Arial, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+       x="31.292181"
+       y="177.50052"
        id="text5-6"><tspan
          sodipodi:role="line"
-         id="tspan5-90"
-         style="stroke-width:0.883;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:2.89442952px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-         x="25.320312"
-         y="174.84636">A</tspan></text>
+         id="tspan7"
+         x="31.292181"
+         y="177.50052">AULA</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.89442952px;fill:#cbebfa;fill-opacity:0.764706;stroke:#010101;stroke-width:0.829;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
