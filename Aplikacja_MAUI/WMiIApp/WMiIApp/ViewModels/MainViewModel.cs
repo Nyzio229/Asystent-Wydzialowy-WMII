@@ -204,8 +204,16 @@ namespace WMiIApp.ViewModels
                         //await Shell.Current.DisplayAlert("Error!", "-1 CATEGORY", "OK");
                         return true;
                     case "navigation":
-                        await Shell.Current.GoToAsync("///MapPage_1");
-                        await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
+                        if(!string.IsNullOrEmpty(classifyResponse.metadata.source))
+                        {
+                            App.sourceRoom = classifyResponse.metadata.source;
+                        }
+                        if (!string.IsNullOrEmpty(classifyResponse.metadata.destination))
+                        {
+                            App.destinationRoom = classifyResponse.metadata.destination;
+                        }
+                        await Shell.Current.GoToAsync("///MapPage0");
+                        //await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
                         return false;
                     case "chat":
                         //ogólne

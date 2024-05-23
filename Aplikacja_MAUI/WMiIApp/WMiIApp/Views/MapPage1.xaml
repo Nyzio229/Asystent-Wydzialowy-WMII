@@ -4,7 +4,7 @@
              xmlns:drawable="clr-namespace:WMiIApp.Models"
              x:Class="WMiIApp.MapPage1"
              Title="I piętro"
-             BackgroundColor="#2C3333"
+             BackgroundColor="#2F3142"
              xmlns:local="clr-namespace:WMiIApp;assembly=WMiIApp"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              HideSoftInputOnTapped="True">
@@ -18,7 +18,7 @@
         <StackLayout Orientation="Horizontal">
         <Label
           Text="I piętro"
-          TextColor="#E7F6F2"
+          TextColor="#FFFFFF"
           VerticalTextAlignment="Center"
           VerticalOptions="Center"
           FontSize="Medium"/>
@@ -47,12 +47,26 @@
             <StackLayout>
                 <!--<Entry x:Name="sourceEntry" TextChanged="OnSourceEntryTextChanged" Placeholder="Filtruj src..." />-->
                 <!--<Picker x:Name="sourcePicker" Title="Żródło" SelectedIndexChanged="OnSourcePickerSelectedIndexChanged" />-->
-                <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" />
-                <CollectionView x:Name="sourceRoomListView" SelectionMode="Single" SelectionChanged="OnSourceRoomListViewSelectionChanged">
+                <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" 
+                           PlaceholderColor="#CFCFCF" TextColor="#FFFFFF" BackgroundColor="#3F4152"
+                           CancelButtonColor="#FFFFFF"/>
+                <CollectionView x:Name="sourceRoomListView" SelectionMode="Single" SelectionChanged="OnSourceRoomListViewSelectionChanged"
+                                BackgroundColor="#3F4152">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="10">
-                                <Label Text="{Binding .}" />
+                                <Label Text="{Binding .}" TextColor="#FFFFFF"/>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"></VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#0277FA"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -60,19 +74,33 @@
 
                 <!--<Entry x:Name="destinationEntry" TextChanged="OnDestinationEntryTextChanged" Placeholder="Filtruj dest..." />-->
                 <!--<Picker x:Name="destinationPicker" Title="Cel" SelectedIndexChanged="OnDestinationPickerSelectedIndexChanged" />-->
-                <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"/>
-                <CollectionView x:Name="destinationRoomListView" SelectionMode="Single" SelectionChanged="OnDestinationRoomListViewSelectionChanged">
+                <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"
+                           PlaceholderColor="#CFCFCF" TextColor="#FFFFFF" BackgroundColor="#3F4152"
+                           CancelButtonColor="#FFFFFF"/>
+                <CollectionView x:Name="destinationRoomListView" SelectionMode="Single" SelectionChanged="OnDestinationRoomListViewSelectionChanged"
+                                BackgroundColor="#3F4152">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="10">
-                                <Label Text="{Binding .}" />
+                                <Label Text="{Binding .}" TextColor="#FFFFFF"/>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"></VisualState>
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#0277FA"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Button Text="Wyczyść trasę" Clicked="OnClearRouteClicked" Margin="5"/>
-                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" Margin="5"/>
+                <Button Text="Wyczyść trasę" Clicked="OnClearRouteClicked" Margin="5" CornerRadius="20" BackgroundColor="#0277FA" TextColor="#FFFFFF"/>
+                <Button Text="Wyznacz trasę" Clicked="OnCalculateRouteClicked" Margin="5" CornerRadius="20" BackgroundColor="#0277FA" TextColor="#FFFFFF"/>
             </StackLayout>
         </Grid>
 
