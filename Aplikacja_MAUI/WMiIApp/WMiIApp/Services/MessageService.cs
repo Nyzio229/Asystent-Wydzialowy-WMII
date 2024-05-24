@@ -17,6 +17,19 @@ namespace WMiIApp.Services
         public MessageService()
         {
             this.httpClient = new HttpClient();
+            Task task = Task.Run(async () =>
+            {
+                await InitializeHttpClient();
+            });
+            task.Wait();
+        }
+
+        async Task InitializeHttpClient()
+        {
+            string? deviceId = await SecureStorage.GetAsync("deviceId");
+            string? apikey = await SecureStorage.GetAsync("apikey");
+            httpClient.DefaultRequestHeaders.Add("device_id", deviceId);
+            httpClient.DefaultRequestHeaders.Add("api_key", apikey);
         }
 
         public async Task<string> GetMessageFromMain(ObservableCollection<Message> messages)
