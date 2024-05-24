@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.Verify;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -20,6 +21,8 @@ namespace ServerApiMikoAI.Controllers.Verify
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [SwaggerOperation(OperationId = "post")]
         public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request) {
 
             if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0) {
