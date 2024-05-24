@@ -56,6 +56,7 @@ class TestEndpoint(unittest.TestCase):
         self._test_cases = self._get_translated_test_cases()
         self._expected_responses = self._get_expected_responses()
 
+        self._last_error: Optional[dict[str]] = None
         self._last_response: Optional[dict[str]] = None
 
         if not self._expected_responses:
@@ -135,34 +136,48 @@ class TestEndpoint(unittest.TestCase):
         test_case: T,
         expected_response: Optional[dict[str]]
     ) -> None:
-        def _log_field(name: str, field) -> None:
-            if isinstance(field, dict):
-                field = json.dumps(
-                    field, ensure_ascii=False, indent=3
-                )
+        def _log(
+            name: str,
+            field: dict[str]
+        ) -> None:
+            field = json.dumps(
+                field, ensure_ascii=False, indent=3
+            )
 
-            print(">", f"{name}: {field}")
+            print(">", f"{name}:", field)
 
+        self._last_error = None
         self._last_response = None
 
         endpoint_params = self._get_endpoint_params(
             test_case
         )
 
-        _log_field("Endpoint params", endpoint_params)
+        _log("Endpoint params", endpoint_params)
 
-        response = self._call_remote_endpoint(
-            **endpoint_params
-        )
+        try:
+            response = self._call_remote_endpoint(
+                **endpoint_params
+            )
+        except requests.RequestException as e:
+            error = dict(
+                exception=repr(e)
+            )
 
-        _log_field("Response", response)
+            _log("Error", error)
+
+            self._last_error = error
+
+            raise
+
+        _log("Response", response)
 
         self._last_response = response
 
         if not expected_response:
             return
 
-        _log_field("Expecting", expected_response)
+        _log("Expecting", expected_response)
 
         self._assert_api_response(
             response, expected_response
@@ -176,21 +191,14 @@ class TestEndpoint(unittest.TestCase):
     ) -> TestCaseResult:
         failed = True
 
-        error: Optional[dict[str]] = None
-
         with self.subTest(test_id):
             start_time = time.time()
 
-            try:
-                self._run_test_case(
-                    test_case, expected_response
-                )
-            except requests.RequestException as e:
-                error = dict(
-                    exception=repr(e)
-                )
-            else:
-                failed = False
+            self._run_test_case(
+                test_case, expected_response
+            )
+
+            failed = False
 
         end_time = time.time()
 
@@ -201,7 +209,7 @@ class TestEndpoint(unittest.TestCase):
             test_params=test_case.model_dump(),
             response=self._last_response,
             expected_response=expected_response,
-            error=error,
+            error=self._last_error,
             execution_time=round(
                 elapsed_time, 2
             )
