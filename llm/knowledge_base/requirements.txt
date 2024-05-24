@@ -1,0 +1,5 @@
+beautifulsoup4==4.12.3
+pydantic==2.7.1
+pypdf==4.2.0
+Requests==2.32.2
+wikipedia==1.4.0

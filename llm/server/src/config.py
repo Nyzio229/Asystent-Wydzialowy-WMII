@@ -54,7 +54,7 @@ config = Config(
     ),
     api=Config.Api(
         faq_like=Config.Api.FaqLike(
-            score_threshold=0.6
+            score_threshold=0.75
         )
     )
 )
