@@ -16,12 +16,6 @@ from typing import Callable, Optional, Type
 
 from pydantic import BaseModel
 
-def to_camel_case(snake_case: str):
-    return "".join(
-        x.capitalize()
-        for x in snake_case.lower().split("_")
-    )
-
 class TestModuleDescriptor(BaseModel):
     dir_path: Path
     module_name: str
@@ -40,6 +34,13 @@ class TestModuleDescriptor(BaseModel):
 
         return module
 
+    @staticmethod
+    def _to_camel_case(snake_case: str) -> str:
+        return "".join(
+            x.capitalize()
+            for x in snake_case.lower().split("_")
+        )
+
     def get_test_class(self) -> Type[unittest.TestCase]:
         module = self.get_module()
 
@@ -53,7 +54,7 @@ class TestModuleDescriptor(BaseModel):
             )
         )
 
-        test_class_name = to_camel_case(module_name)
+        test_class_name = self._to_camel_case(module_name)
 
         exported_classes_with_names = list(filter(
             lambda pair: pair[0] == test_class_name,
