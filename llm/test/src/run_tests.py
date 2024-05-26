@@ -56,10 +56,10 @@ class TestModuleDescriptor(BaseModel):
 
         test_class_name = self._to_camel_case(module_name)
 
-        exported_classes_with_names = list(filter(
+        exported_classes_with_names = filter(
             lambda pair: pair[0] == test_class_name,
             exported_classes_with_names
-        ))
+        )
 
         exported_classes = list(map(
             lambda pair: pair[1],
