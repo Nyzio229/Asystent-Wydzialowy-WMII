@@ -6,6 +6,7 @@ using ServerApiMikoAI.Models.Verify;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace ServerApiMikoAI.Controllers.Verify
 {
@@ -14,10 +15,13 @@ namespace ServerApiMikoAI.Controllers.Verify
     public class VerifyDeviceController : ControllerBase
     {
         private readonly VerificationDataBaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public VerifyDeviceController(VerificationDataBaseContext context)
+        public VerifyDeviceController(VerificationDataBaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
+
         }
 
         [HttpPost]
@@ -78,8 +82,10 @@ namespace ServerApiMikoAI.Controllers.Verify
         // Metoda do szyfrowania klucza API
         private string EncryptApiKey(string apiKey) {
             using (Aes aesAlg = Aes.Create()) {
-                byte[] key = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Klucz szyfrowania (możesz użyć inny klucz)
-                byte[] iv = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Wektor inicjalizacyjny (możesz użyć inny wektor)
+                byte[] key = Encoding.UTF8.GetBytes(_configuration["EncryptionSettings:Key"]); // Klucz szyfrowania (możesz użyć inny klucz)
+                byte[] iv = Encoding.UTF8.GetBytes(_configuration["EncryptionSettings:IV"]); // Wektor inicjalizacyjny (możesz użyć inny wektor)
+
+
 
                 using (ICryptoTransform encryptor = aesAlg.CreateEncryptor(key, iv)) {
                     byte[] encryptedBytes = encryptor.TransformFinalBlock(Encoding.UTF8.GetBytes(apiKey), 0, apiKey.Length);

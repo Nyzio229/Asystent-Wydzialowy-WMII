@@ -9,6 +9,8 @@ using MailKit.Security;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.Verify;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ServerApiMikoAI.Controllers.Verify
 {
@@ -18,9 +20,11 @@ namespace ServerApiMikoAI.Controllers.Verify
     {
         private readonly VerificationDataBaseContext _context;
         private readonly EmailSettings _email;
-        public VerifyEmailController(VerificationDataBaseContext context)
+        private readonly IConfiguration _configuration;
+        public VerifyEmailController(VerificationDataBaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -69,7 +73,7 @@ namespace ServerApiMikoAI.Controllers.Verify
 
                 using (var smtp = new SmtpClient()) {
                     smtp.Connect("poczta1.mat.umk.pl", 587, SecureSocketOptions.StartTls);
-                    smtp.Authenticate("przybysz_mailer", "CY5Y8esWOgiQn7Z");
+                    smtp.Authenticate(_configuration["MailServerSettings:Login"], _configuration["MailServerSettings:Pswd"]);
                     smtp.Send(mail);
                     smtp.Disconnect(true);
                 }
