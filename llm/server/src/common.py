@@ -77,7 +77,10 @@ def _get_model_file_local_path(
         repo_id = "/".join(model_file_hf_path_parts)
 
         huggingface_hub.hf_hub_download(
-            repo_id, file_name
+            repo_id=repo_id,
+            filename=file_name,
+            local_dir=model_path,
+            local_dir_use_symlinks=False
         )
 
     return model_path
@@ -130,10 +133,12 @@ class Common:
     ) -> None:
         self.nlp = spacy.load("en_core_web_md")
 
+        model_path = _get_model_file_local_path(
+            cmd_line_args.model
+        )
+
         self.llm = Llama(
-            model_path=_get_model_file_local_path(
-                cmd_line_args.model
-            ),
+            model_path=str(model_path),
             n_ctx=cmd_line_args.n_ctx,
             n_gpu_layers=cmd_line_args.n_gpu_layers,
             chat_format="chatml",
