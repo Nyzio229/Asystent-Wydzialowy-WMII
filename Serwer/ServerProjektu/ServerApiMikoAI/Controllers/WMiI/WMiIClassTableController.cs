@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Net.Http;
 
@@ -18,6 +19,8 @@ namespace ServerApiMikoAI.Controllers.WMiI
             _httpClient = new HttpClient();
         }
         [HttpGet]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [SwaggerOperation(OperationId = "get")]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             try

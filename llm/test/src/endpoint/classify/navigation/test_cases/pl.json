@@ -1,9 +1,9 @@
 [
     {
-        "text": "Jak się mogę dostać do windy na pierwszym piętrze? Obecnie znajduję się w auli.",
+        "text": "Jak się mogę dostać do sali D111? Obecnie znajduję się w auli.",
         "metadata": {
             "source": "Aula",
-            "destination": "Winda (I piętro)"
+            "destination": "D111"
         }
     },
     {
@@ -28,10 +28,10 @@
         }
     },
     {
-        "text": "Jak mogę dotrzeć do windy na pierwszym piętrze, aby odwiedzić moje koleżanki w Auli?",
+        "text": "Jak mogę dotrzeć do baru?",
         "metadata": {
             "source": null,
-            "destination": "Winda (I piętro)"
+            "destination": "bar"
         }
     },
     {
@@ -105,10 +105,10 @@
         }
     },
     {
-        "text": "Jestem koło wejścia. Gdzie jest winda na parterze?",
+        "text": "Jestem koło wejścia. Gdzie jest aula?",
         "metadata": {
           "source": "wejście",
-          "destination": "winda (parter)"
+          "destination": "aula"
         }
     },
     {
@@ -238,9 +238,9 @@
         }
     },
     {
-        "text": "Jestem w windzie na 1. piętrze. Muszę do s9",
+        "text": "Jestem przy laboratorium L12. Muszę do s9.",
         "metadata": {
-            "source": "Winda (I piętro)",
+            "source": "l12",
             "destination": "s9"
         }
     },

@@ -1,9 +1,9 @@
 [
    {
-      "text": "How do I get to the elevator on the second floor? I am currently located in the auditorium.",
+      "text": "How do I get to room D111? I am currently located in the auditorium.",
       "metadata": {
          "source": "Aula",
-         "destination": "Winda (I piętro)"
+         "destination": "D111"
       }
    },
    {
@@ -28,10 +28,10 @@
       }
    },
    {
-      "text": "How can I get to the elevator on the second floor to visit my colleagues in the Auditorium?",
+      "text": "How do I get to the bar?",
       "metadata": {
          "source": null,
-         "destination": "Winda (I piętro)"
+         "destination": "bar"
       }
    },
    {
@@ -105,10 +105,10 @@
       }
    },
    {
-      "text": "I'm near the entrance. Where is the elevator on the first floor?",
+      "text": "I'm near the entrance. Where is the auditorium?",
       "metadata": {
          "source": "wejście",
-         "destination": "winda (parter)"
+         "destination": "aula"
       }
    },
    {
@@ -238,9 +238,9 @@
       }
    },
    {
-      "text": "I'm in the elevator on the 1st floor. I need to get to s9",
+      "text": "I'm at the L12 lab. I need to get to s9.",
       "metadata": {
-         "source": "Winda (I piętro)",
+         "source": "l12",
          "destination": "s9"
       }
    },
