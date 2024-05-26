@@ -89,11 +89,12 @@ def get_test_module_descriptors(
     test_module_descriptors: list[TestModuleDescriptor] = []
 
     for dir_path in dir_paths:
-        glob_path = str(dir_path / "test_*.py")
+        file_pattern = "test_*.py"
+        glob_path = str(dir_path / file_pattern)
         paths = glob.glob(glob_path)
 
         assert len(paths) == 1, (
-            f"Expected exactly one 'test_*.py' "
+            f"Expected exactly one '{file_pattern}' "
             f"script at '{dir_path}', got: {paths}"
         )
 
