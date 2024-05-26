@@ -1,4 +1,4 @@
-fastapi==0.111.0
+fastapi==0.110.3
 fuzzywuzzy==0.18.0
 huggingface_hub==0.21.4
 langchain==0.2.1
@@ -11,3 +11,4 @@ spacy==3.7.4
 uvicorn==0.29.0
 lm-format-enforcer==0.10.2
 llama_cpp_python==0.2.57
+https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1.tar.gz
