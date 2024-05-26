@@ -106,6 +106,39 @@ namespace WMiIApp.ViewModels
         {
             msg.IsFAQ = false;
             IsEnabled = false;
+
+            //odp tak na sztywno
+            try
+            {
+                for (int i = Items.Count - 1; i >= 0; i--)
+                {
+                    if (Items[i] == msg)
+                    {
+                        Message yesAnswer = new()
+                        {
+                            Content = "Tak!",
+                            IsSent = true,
+                            Role = "user"
+                        };
+                        Items.Insert(i, yesAnswer);
+                        Message yesAnswerEN = new()
+                        {
+                            Content = "Yes!",
+                            IsSent = true,
+                            Role = "user"
+                        };
+                        ItemsEN.Insert(i, yesAnswerEN);
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            //odp tak na sztywno
+
+            
             CanBeSent = true;
             AcceptFAQCommand.NotifyCanExecuteChanged();
             RejectFAQCommand.NotifyCanExecuteChanged();
@@ -212,6 +245,20 @@ namespace WMiIApp.ViewModels
                         {
                             App.destinationRoom = classifyResponse.metadata.destination;
                         }
+                        Message mapAnswer = new()
+                        {
+                            Content = "Udało mi się wyznaczyć trasę! Spójrz na mapę!",
+                            IsSent = false,
+                            Role = "assistant"
+                        };
+                        Items.Add(mapAnswer);
+                        Message mapAnswerEN = new()
+                        {
+                            Content = "I managed to map out the route! Take a look at the map!",
+                            IsSent = false,
+                            Role = "assistant"
+                        };
+                        ItemsEN.Add(mapAnswerEN);
                         await Shell.Current.GoToAsync("///MapPage0");
                         //await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
                         return false;

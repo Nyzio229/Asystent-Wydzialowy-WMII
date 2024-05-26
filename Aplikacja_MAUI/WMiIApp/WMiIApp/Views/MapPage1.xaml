@@ -43,13 +43,18 @@
         <!-- <Button Text="Pokaż menu" Clicked="OnShowMenuButtonClicked" HeightRequest="40" WidthRequest="400"/> -->
         <!-- Okno menu -->
 
-        <Grid x:Name="menuGrid" BackgroundColor="White" IsVisible="False">
+        <Grid x:Name="menuGrid" BackgroundColor="#1E1C26" IsVisible="False">
             <StackLayout>
                 <!--<Entry x:Name="sourceEntry" TextChanged="OnSourceEntryTextChanged" Placeholder="Filtruj src..." />-->
                 <!--<Picker x:Name="sourcePicker" Title="Żródło" SelectedIndexChanged="OnSourcePickerSelectedIndexChanged" />-->
-                <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" 
+                <Border Stroke="#3F4152" StrokeThickness="5" Margin="5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20,20,20,20" />
+                    </Border.StrokeShape>
+                    <SearchBar x:Name="sourceSearchBar" Placeholder="Wybierz miejsce startowe..." TextChanged="OnSourceSearchBarTextChanged" 
                            PlaceholderColor="#CFCFCF" TextColor="#FFFFFF" BackgroundColor="#3F4152"
                            CancelButtonColor="#FFFFFF"/>
+                </Border>
                 <CollectionView x:Name="sourceRoomListView" SelectionMode="Single" SelectionChanged="OnSourceRoomListViewSelectionChanged"
                                 BackgroundColor="#3F4152">
                     <CollectionView.ItemTemplate>
@@ -74,9 +79,14 @@
 
                 <!--<Entry x:Name="destinationEntry" TextChanged="OnDestinationEntryTextChanged" Placeholder="Filtruj dest..." />-->
                 <!--<Picker x:Name="destinationPicker" Title="Cel" SelectedIndexChanged="OnDestinationPickerSelectedIndexChanged" />-->
-                <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"
+                <Border Stroke="#3F4152" StrokeThickness="5" Margin="5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20,20,20,20" />
+                    </Border.StrokeShape>
+                    <SearchBar x:Name="destinationSearchBar" Placeholder="Wybierz miejsce docelowe..." TextChanged="OnDestinationSearchBarTextChanged"
                            PlaceholderColor="#CFCFCF" TextColor="#FFFFFF" BackgroundColor="#3F4152"
                            CancelButtonColor="#FFFFFF"/>
+                </Border>
                 <CollectionView x:Name="destinationRoomListView" SelectionMode="Single" SelectionChanged="OnDestinationRoomListViewSelectionChanged"
                                 BackgroundColor="#3F4152">
                     <CollectionView.ItemTemplate>
