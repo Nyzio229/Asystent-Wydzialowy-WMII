@@ -11,26 +11,59 @@ namespace ServerApiMikoAI.Controllers
     [Route("[controller]")]
     public class TranslationController : ControllerBase
     {
-        //private static Translator translator = new Translator("b7b072d0-f9c7-4820-8003-dcd228a1df91:fx");
+        private readonly AuthorizationService _authorizationService;
+        private static Translator translator = new Translator("b7b072d0-f9c7-4820-8003-dcd228a1df91:fx");
 
-        private static Translator translator = new Translator("f2a2b36d-035d-4a47-8440-b33db0b4ec8b:fx\r\n");
+        public TranslationController(AuthorizationService authorization)
+        {
+            _authorizationService = authorization;
+        }
+
 
         [HttpPost(Name = "Translate")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(OperationId = "post")]
-        public async Task<string> Post(TranslationMessage translationMessage)
+        public async Task<IActionResult> Post(TranslationMessage translationMessage)
         {
-            return await DeepLApi(translationMessage);
+            string deviceId = HttpContext.Request.Headers["device_id"];
+            string apiKey = HttpContext.Request.Headers["api_key"];
+
+            var isAuthorized = await _authorizationService.IsDeviceAuthorized(deviceId, apiKey);
+
+            if (!isAuthorized)
+            {
+                return Unauthorized("Invalid DeviceId or ApiKey.");
+            }
+
+            string result = await DeepLApi(translationMessage);
+
+            switch (result)
+            {
+                case "-1":
+                    return StatusCode(500, "Internal server error");
+                default:
+                    return Ok(result);
+            }
         }
 
         public static async Task<string> DeepLApi([Required] TranslationMessage translationMessage)
         {
-            var translatedMessage = await translator.TranslateTextAsync(
-              translationMessage.message,
-              translationMessage.translateFrom,
-              translationMessage.translateTo);
+            try
+            {
+                var translatedMessage = await translator.TranslateTextAsync(
+                    translationMessage.message,
+                    translationMessage.translateFrom,
+                    translationMessage.translateTo);
 
-            return translatedMessage.Text;
+                return translatedMessage.Text;
+
+            }
+            catch (Exception ex)
+            {
+                return "-1";
+            }
+
         }
     }
 }

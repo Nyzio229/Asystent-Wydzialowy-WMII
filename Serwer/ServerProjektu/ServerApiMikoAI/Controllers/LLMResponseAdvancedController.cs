@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using ServerApiMikoAI.Models.Classify;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.LLM;
 using Swashbuckle.AspNetCore.Annotations;
@@ -29,23 +30,48 @@ namespace ServerApiMikoAI.Controllers
     [Route("[controller]")]
     public class LLMResponseAdvancedController : ControllerBase
     {
-        //private static Translator translator = new Translator("b7b072d0-f9c7-4820-8003-dcd228a1df91:fx");
 
-        private readonly PostrgeSQLContext _context;
-        public LLMResponseAdvancedController(PostrgeSQLContext context)
+        private readonly AuthorizationService _authorizationService;
+
+        public LLMResponseAdvancedController(AuthorizationService authorization)
         {
-            _context = context;
+            _authorizationService = authorization;
         }
-        
+
         [HttpPost(Name = "LLMRequest - New")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(OperationId = "post")]
-        public async Task<string> Post(Message[] requestAdvanced)
+        public async Task<IActionResult> Post(Message[] requestAdvanced)
         {
-            return await LLMApiNew(requestAdvanced, _context);
+            string deviceId = HttpContext.Request.Headers["device_id"];
+            string apiKey = HttpContext.Request.Headers["api_key"];
+
+            var isAuthorized = await _authorizationService.IsDeviceAuthorized(deviceId, apiKey);
+
+            if (!isAuthorized)
+            {
+                return Unauthorized("Invalid DeviceId or ApiKey.");
+            }
+
+            string result = await LLMApiNew(requestAdvanced);
+
+            switch (result)
+            {
+                case "-1":
+                    return NotFound("Empty response");
+                case "-2":
+                    return StatusCode(400, "Response not Successful");
+                case "-3":
+                    return StatusCode(500, $"Internal server error");
+                default:
+                    return Ok(result);
+            }
         }
 
-        public static async Task<string> LLMApiNew([Required] Message[] requestAdvanced, PostrgeSQLContext context)
+        public static async Task<string> LLMApiNew([Required] Message[] requestAdvanced)
         {
             string apiUrl = "http://158.75.112.151:9123/chat";
 
@@ -58,44 +84,10 @@ namespace ServerApiMikoAI.Controllers
                 newItem.role = simpleMassage.role;
                 messages.Add(newItem);
             }
-            /*var translatedQuestion = await translator.TranslateTextAsync(
-              messages.Last().content,
-              LanguageCode.Polish,
-              LanguageCode.EnglishBritish);
-
-            Console.WriteLine($"Tłumaczenie pytania: '{messages.Last().content}' -> '{translatedQuestion}'");
-
-            
-            var messagesList = messages.ToList();
-            messagesList.RemoveAt(messagesList.Count - 1);
-            messages = messagesList.ToArray();
-
-            var newCurrentUserQuestion = new
-            {
-                content = translatedQuestion.Text,
-                role = "user"
-            };
-            messages = messages.Concat(new[] { newCurrentUserQuestion }).ToArray();*/
-
-
-
-
-
-            var temperature = 0.7;
-
-            var repeat_penalty = 1.176;
-
-            var top_k = 40;
-
-            var top_p = 0.1;
 
             var payload = new
             {
-                messages,
-                temperature,
-                repeat_penalty,
-                top_k,
-                top_p
+                messages
             };
 
             var jsonPayload = JsonConvert.SerializeObject(payload);
@@ -118,31 +110,18 @@ namespace ServerApiMikoAI.Controllers
                         {
                             string chatResponseMessage = chatResponse.text;
 
-                            /*TranslationMessage translationMessage = new TranslationMessage(chatResponseMessage, LanguageCode.English, "pl");
-                            var translatedResponse = await TranslationController.DeepLApi(translationMessage);
-                            var translatedResponse = await translator.TranslateTextAsync(
-                              chatResponseMessage,
-                              LanguageCode.EnglishBritish,
-                              LanguageCode.Polish);
-                            */
-                            //Console.WriteLine($"Tłumaczenie odpowiedzi: '{chatResponseMessage}' -> '{translatedResponse}'");
-               
-                            //return translatedResponse;
                             return chatResponseMessage;
-                            //return "To jest wiadnomość że poszło coś nie tak i serwer nie działa";
                         }
-                        return "Coś poszło nie tak";
+                        return "-1";
                     }
                     else
                     {
-                        Console.WriteLine($"Błąd: {response.StatusCode}");
-                        return $"Błąd: {response.StatusCode}";
+                        return "-2";
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Wystąpił błąd: {ex.Message}");
-                    return $"Wystąpił błąd: {ex.Message}";
+                    return "-3";
                 }
             }
         }

@@ -8,6 +8,9 @@ using MimeKit.Text;
 using MailKit.Security;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.Verify;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ServerApiMikoAI.Controllers.Verify
 {
@@ -17,57 +20,69 @@ namespace ServerApiMikoAI.Controllers.Verify
     {
         private readonly VerificationDataBaseContext _context;
         private readonly EmailSettings _email;
-        public VerifyEmailController(VerificationDataBaseContext context)
+        private readonly IConfiguration _configuration;
+        public VerifyEmailController(VerificationDataBaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost]
-        public async Task<string> VerifyEmail([FromBody] VerifyEmailRequest request)
-        {
-            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId))
-            {
-                return "Email and DeviceId are required.";
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [SwaggerOperation(OperationId = "post")]
+        public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request) {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId)) {
+                return BadRequest("Email and DeviceId are required.");
             }
+
             Random rnd = new Random();
             int verificationCode = rnd.Next(100000, 999999);
             DateTime expirationDateLocal = DateTime.Now.AddMinutes(15);
             DateTime expirationDateUtc = expirationDateLocal.ToUniversalTime();
 
-            var emailVerifcation = new VerificationTableContext
-            {
+            var emailVerification = new VerificationTableContext {
                 device_id = request.DeviceId,
                 verification_code = verificationCode,
-                expiration_date = expirationDateUtc                                
+                expiration_date = expirationDateUtc
             };
 
-
-            _context.verification_table.Add(emailVerifcation);
+            _context.verification_table.Add(emailVerification);
             await _context.SaveChangesAsync();
 
             // obsługa wysłania maila
-            try
-            {
+            try {
                 var mail = new MimeMessage();
-                mail.From.Add(MailboxAddress.Parse("mikolai@noreply.pl"));
+                mail.From.Add(new MailboxAddress("MikoAI Support", "mikolai@noreply.pl"));
                 mail.To.Add(MailboxAddress.Parse(request.Email));
-                mail.Subject = "!!!!!!!!!!!!Kod aktywacyjny TEST!!!!!!!!!!!!!";
-                mail.Body = new TextPart(TextFormat.Html) { Text = $"Kod weryfikacyjny do aplikacji to: {verificationCode}" };
+                mail.Subject = "Twój kod weryfikacyjny do aplikacji MikoAI";
+                mail.Body = new TextPart(TextFormat.Html) {
+                    Text = $@"
+                        <html>
+                        <body>
+                            <p>Witaj,</p>
+                            <p>Dziękujemy za korzystanie z aplikacji MikoAI.</p>
+                            <p>Twój kod weryfikacyjny to: <strong>{verificationCode}</strong></p>
+                            <p>Kod jest ważny przez 15 minut.</p>
+                            <p>Jeżeli nie prosiłeś o ten kod, zignoruj tę wiadomość.</p>
+                            <br/>
+                            <p>Pozdrawiamy,</p>
+                            <p>Zespół MikoAI</p>
+                        </body>
+                        </html>"
+                };
 
-                using (var smtp = new SmtpClient())
-                {
+                using (var smtp = new SmtpClient()) {
                     smtp.Connect("poczta1.mat.umk.pl", 587, SecureSocketOptions.StartTls);
-                    smtp.Authenticate("przybysz_mailer", "CY5Y8esWOgiQn7Z");
+                    smtp.Authenticate(_configuration["MailServerSettings:Login"], _configuration["MailServerSettings:Pswd"]);
                     smtp.Send(mail);
                     smtp.Disconnect(true);
                 }
 
             }
-            catch (Exception ex)
-            {
-                return $"Erorr: {ex.Message}";
+            catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
             }
-            return $"Wysłano kod: {verificationCode}, na adres: {request.Email}";
+            return Ok($"Kod weryfikacyjny został wysłany na adres: {request.Email}");
         }
     }
 }
