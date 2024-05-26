@@ -2,6 +2,8 @@ import json
 
 import logging
 
+from pathlib import Path
+
 from typing import Optional
 
 from datetime import datetime
@@ -9,6 +11,8 @@ from datetime import datetime
 from argparse import Namespace
 
 import spacy
+
+import huggingface_hub
 
 from pydantic import BaseModel
 
@@ -46,6 +50,37 @@ class LLMInferenceParams(BaseModel):
     mirostat_tau: float
     mirostat_eta: float
     max_tokens: Optional[int] = None
+
+def _get_models_dir_path() -> Path:
+    return Path("models")
+
+def _get_model_file_local_path(
+    model_file_hf_path: str
+) -> Path:
+    model_file_hf_path_parts = model_file_hf_path.split("/")
+
+    n_model_file_hf_path_parts = len(
+        model_file_hf_path_parts
+    )
+
+    if n_model_file_hf_path_parts != 3:
+        raise ValueError(
+            "Model weights file path must contain exactly 3 parts "
+            "(Hugging Face repo id followed by the file name), "
+            f"got: {n_model_file_hf_path_parts}"
+        )
+
+    model_path = _get_models_dir_path() / model_file_hf_path
+
+    if not model_path.exists():
+        file_name = model_file_hf_path_parts.pop()
+        repo_id = "/".join(model_file_hf_path_parts)
+
+        huggingface_hub.hf_hub_download(
+            repo_id, file_name
+        )
+
+    return model_path
 
 class Common:
     llm: Llama
@@ -96,7 +131,9 @@ class Common:
         self.nlp = spacy.load("en_core_web_md")
 
         self.llm = Llama(
-            model_path=cmd_line_args.model,
+            model_path=_get_model_file_local_path(
+                cmd_line_args.model
+            ),
             n_ctx=cmd_line_args.n_ctx,
             n_gpu_layers=cmd_line_args.n_gpu_layers,
             chat_format="chatml",

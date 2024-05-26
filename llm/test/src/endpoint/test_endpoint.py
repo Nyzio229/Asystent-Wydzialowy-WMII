@@ -65,10 +65,11 @@ class TestEndpoint(unittest.TestCase):
         n_test_cases = len(self._test_cases)
         n_expected_responses = len(self._expected_responses)
 
-        assert n_test_cases == n_expected_responses, (
-            "Expected each test case to have exactly one expected response; "
-            f"got: {n_test_cases} vs {n_expected_responses}"
-        )
+        if n_test_cases != n_expected_responses:
+            raise ValueError(
+                "Expected each test case to have exactly one expected response; "
+                f"got: {n_test_cases} vs {n_expected_responses}"
+            )
 
     @abc.abstractmethod
     def _assert_api_response(
