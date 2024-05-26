@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1.1278199"
-     inkscape:cx="150.28995"
-     inkscape:cy="453.52986"
+     inkscape:zoom="1.5949782"
+     inkscape:cx="624.14646"
+     inkscape:cy="679.31963"
      inkscape:window-width="1600"
      inkscape:window-height="829"
      inkscape:window-x="-8"
@@ -1744,7 +1744,7 @@
        inkscape:transform-center-x="-7.3640067"
        inkscape:transform-center-y="0.49696645" />
     <rect
-       style="fill:#cbebfa;fill-opacity:0.764706;stroke:#010101;stroke-width:0.821152;stroke-opacity:1"
+       style="fill:#666887;fill-opacity:0.7647059;stroke:#010101;stroke-width:0.821152;stroke-opacity:1"
        id="rect191"
        width="38.599079"
        height="5.6381798"
@@ -1843,13 +1843,13 @@
        transform="translate(42.802092,126.42563)">
       <text
          xml:space="preserve"
-         style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+         style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
          x="145.11154"
          y="30.929564"
          id="text5-8"><tspan
            sodipodi:role="line"
            id="tspan5-1"
-           style="stroke-width:0.883"
+           style="stroke-width:0.883;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.175px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="145.11154"
            y="30.929564">S2</tspan></text>
       <g
@@ -1857,13 +1857,13 @@
          transform="translate(-0.14332333,13.787)">
         <text
            xml:space="preserve"
-           style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1"
+           style="font-size:3.175px;fill:#e6f6fb;fill-opacity:0.764706;stroke:none;stroke-width:0.882999;stroke-opacity:1;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="145.11154"
            y="30.929564"
            id="text5-04"><tspan
              sodipodi:role="line"
              id="tspan5-7"
-             style="stroke-width:0.883"
+             style="stroke-width:0.883;-inkscape-font-specification:'Arial, Heavy';font-family:Arial;font-weight:900;font-style:normal;font-stretch:normal;font-variant:normal;font-size:3.175px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
              x="145.11154"
              y="30.929564">S3</tspan></text>
       </g>
