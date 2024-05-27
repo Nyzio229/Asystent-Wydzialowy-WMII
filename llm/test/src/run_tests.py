@@ -66,10 +66,11 @@ class TestModuleDescriptor(BaseModel):
             exported_classes_with_names
         ))
 
-        assert len(exported_classes) == 1, (
-            f"Expected exactly one exported test class "
-            f"named '{test_class_name}', got: {exported_classes}"
-        )
+        if len(exported_classes) != 1:
+            raise ValueError(
+                f"Expected exactly one exported test class "
+                f"named '{test_class_name}', got: {exported_classes}"
+            )
 
         test_class = exported_classes[0]
 
@@ -93,10 +94,11 @@ def get_test_module_descriptors(
         glob_path = str(dir_path / file_pattern)
         paths = glob.glob(glob_path)
 
-        assert len(paths) == 1, (
-            f"Expected exactly one '{file_pattern}' "
-            f"script at '{dir_path}', got: {paths}"
-        )
+        if len(paths) != 1:
+            raise ValueError(
+                f"Expected exactly one '{file_pattern}' "
+                f"script at '{dir_path}', got: {paths}"
+            )
 
         script_path = paths[0]
         module_name = Path(script_path).stem

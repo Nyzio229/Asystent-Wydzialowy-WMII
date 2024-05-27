@@ -23,7 +23,8 @@ from langchain_core.retrievers import RetrieverOutputLike
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from langchain_community.vectorstores.qdrant import Qdrant
+from langchain_qdrant import Qdrant
+
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 
 from langchain.storage import LocalFileStore

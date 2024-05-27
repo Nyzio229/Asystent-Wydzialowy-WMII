@@ -60,9 +60,10 @@ def get_text(tag: bs4.Tag, with_links=True) -> str:
         "p", "li", "div","tr", "br"
     }
 
-    assert _single_newline_blocks.isdisjoint(
-        _inline_elements
-    ), "Blocking elements cannot be inline"
+    if _single_newline_blocks & _inline_elements:
+        raise ValueError(
+            "Blocking elements cannot be inline"
+        )
 
     def _is_all_spaces(text: str) -> bool:
         return not text or text.isspace()

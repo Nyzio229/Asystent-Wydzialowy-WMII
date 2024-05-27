@@ -16,7 +16,11 @@ class FAQLikeRequest(BaseModel):
 class FAQLikeResult(BaseModel):
     faq_ids: list[str]
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "faq_like"
+    ]
+)
 
 @router.post("/faq_like")
 async def faq_like(
