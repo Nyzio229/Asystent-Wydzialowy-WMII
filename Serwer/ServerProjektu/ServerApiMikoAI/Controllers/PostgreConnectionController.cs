@@ -8,6 +8,7 @@ namespace ServerApiMikoAI.Controllers
 {
     [Route("/FAQ")]
     [ApiController]
+    [SwaggerTag("Endpoint do operacji związanych z FAQ.")]
     public class PostgreConnectionController : ControllerBase
     {
         private readonly PostrgeSQLContext _context;
@@ -15,12 +16,20 @@ namespace ServerApiMikoAI.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Pobiera pytanie na podstawie identyfikatora.
+        /// </summary>
+        /// <param name="id">Identyfikator pytania.</param>
+        /// <returns>Informacje o pytaniu.</returns>
+        /// <response code="200">Zwraca informacje o pytaniu.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="404">Pytanie nie zostało znalezione.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost("GetQuestion")]
         [ProducesResponseType(typeof(TableContext), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Pobiera pytanie na podstawie identyfikatora", Description = "Pobiera pytanie z bazy danych na podstawie podanego identyfikatora.")]
         public async Task<IActionResult> GetQueryById(int id)
         {
             try

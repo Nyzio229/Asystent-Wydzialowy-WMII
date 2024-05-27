@@ -9,6 +9,7 @@ namespace ServerApiMikoAI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint do tłumaczenia wiadomości.")]
     public class TranslationController : ControllerBase
     {
         private readonly AuthorizationService _authorizationService;
@@ -19,11 +20,18 @@ namespace ServerApiMikoAI.Controllers
             _authorizationService = authorization;
         }
 
-
+        /// <summary>
+        /// Tłumaczy wiadomość na inny język.
+        /// </summary>
+        /// <param name="translationMessage">Obiekt zawierający wiadomość do przetłumaczenia oraz informacje o językach tłumaczenia.</param>
+        /// <returns>Przetłumaczona wiadomość.</returns>
+        /// <response code="200">Zwraca przetłumaczoną wiadomość.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost(Name = "Translate")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Tłumaczy wiadomość", Description = "Tłumaczy wiadomość z jednego języka na inny przy użyciu API DeepL.")]
         public async Task<IActionResult> Post(TranslationMessage translationMessage)
         {
             string deviceId = HttpContext.Request.Headers["device_id"];

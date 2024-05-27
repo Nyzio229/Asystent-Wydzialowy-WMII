@@ -12,6 +12,7 @@ namespace ServerApiMikoAI.Controllers.Verify
 {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do weryfikacji urządzenia.")]
     public class VerifyDeviceController : ControllerBase
     {
         private readonly VerificationDataBaseContext _context;
@@ -23,10 +24,16 @@ namespace ServerApiMikoAI.Controllers.Verify
             _configuration = configuration;
 
         }
-
+        /// <summary>
+        /// Weryfikuje kod weryfikacyjny urządzenia.
+        /// </summary>
+        /// <param name="request">Żądanie weryfikacji urządzenia zawierające identyfikator urządzenia i kod weryfikacyjny.</param>
+        /// <returns>Informacja o wygenerowanym kluczu API lub odpowiedź informująca o błędzie.</returns>
+        /// <response code="200">Zwraca informacje o wygenerowanym kluczu API.</response>
+        /// <response code="400">Identyfikator urządzenia lub kod weryfikacyjny są nieprawidłowe.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Weryfikuje kod weryfikacyjny urządzenia", Description = "Weryfikuje kod weryfikacyjny urządzenia i generuje klucz API dla zalogowanego urządzenia.")]
         public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request) {
 
             if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0) {

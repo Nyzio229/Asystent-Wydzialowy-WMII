@@ -10,6 +10,7 @@ namespace ServerApiMikoAI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint do klasyfikacji danych")]
     public class ClassifyController : ControllerBase
     {
 
@@ -19,12 +20,20 @@ namespace ServerApiMikoAI.Controllers
         {
             _authorizationService = authorization;
         }
-
+        /// <summary>
+        /// Klasyfikuje podane pytanie.
+        /// </summary>
+        /// <param name="classifyRequest">Klasyfikuje podane pytanie</param>
+        /// <returns>Słowo reprezentujące typ klasyfikacji</returns>
+        /// <response code="200">Klasyfikacja powiodła się.</response>
+        /// <response code="400">Odpowiedź zwróciła błąd.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost(Name = "Classify")]
         [ProducesResponseType(typeof(ClassifyResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Klasyfikuje dane", Description = "Klasyfikuje podane dane.")]
         public async Task<IActionResult> Post(ClassifyRequest classifyRequest)
         {
             string deviceId = HttpContext.Request.Headers["device_id"];

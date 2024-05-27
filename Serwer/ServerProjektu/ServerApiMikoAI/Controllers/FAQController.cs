@@ -10,13 +10,21 @@ namespace ServerApiMikoAI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint do porówanania embedindu.")]
     public class FAQController : ControllerBase
     {
-
+        /// <summary>
+        /// Na podstawie podanego embedingu i języka znajduje pytanie i odpowiedź z FAQ.
+        /// </summary>
+        /// <param name="faqRequest">Obiekt zawierający zembedowane pytania i język.</param>
+        /// <returns>Odpowiedź z listą pytań i odpowiedzi z FAQ.</returns>
+        /// <response code="200">Zwraca listę pytań i odpowiedzi.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost(Name = "FAQRequest")]
         [ProducesResponseType(typeof(FAQResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Przetwarza zembedowane pytanie", Description = "Przetwarza zembedowane pytanie i zwaraca listę odpowiedzi i pytań z FAQ.")]
         public async Task<IActionResult> Post(FAQRequest faqRequest)
         {
             FAQResult result = await FAQRequest(faqRequest);

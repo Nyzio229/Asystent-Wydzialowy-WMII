@@ -28,6 +28,7 @@ namespace ServerApiMikoAI.Controllers
 
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint służący komunikacji z LLM.")]
     public class LLMResponseAdvancedController : ControllerBase
     {
 
@@ -37,13 +38,23 @@ namespace ServerApiMikoAI.Controllers
         {
             _authorizationService = authorization;
         }
-
+        /// <summary>
+        /// Bezpośrednia komunikacja z LLM.
+        /// </summary>
+        /// <param name="requestAdvanced">Lista reprezentująca komunikację z LLM</param>
+        /// <returns>Zwraca odpowiedź z LLM</returns>
+        /// <response code="200">Komunikacja z LLM powiodła się i zwrócono odpowiedź.</response>
+        /// <response code="404">Odpowiedż była pusta.</response>
+        /// <response code="400">Odpowiedź zwróciła błąd.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
+        /// 
         [HttpPost(Name = "LLMRequest - New")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Komunikacja z LLM", Description = "Przetwarza listę będącą reprezentacją poprzedniej i aktualnej komunikacji i zwraca odpowiedź z LLM")]
         public async Task<IActionResult> Post(Message[] requestAdvanced)
         {
             string deviceId = HttpContext.Request.Headers["device_id"];

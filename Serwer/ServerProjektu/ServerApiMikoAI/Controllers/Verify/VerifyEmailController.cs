@@ -16,6 +16,7 @@ namespace ServerApiMikoAI.Controllers.Verify
 {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do weryfikacji adresu e-mail.")]
     public class VerifyEmailController : ControllerBase
     {
         private readonly VerificationDataBaseContext _context;
@@ -27,9 +28,17 @@ namespace ServerApiMikoAI.Controllers.Verify
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Wysyła kod weryfikacyjny na podany adres e-mail.
+        /// </summary>
+        /// <param name="request">Żądanie weryfikacji adresu e-mail zawierające adres e-mail i identyfikator urządzenia.</param>
+        /// <returns>Informacja o wysłanym kodzie weryfikacyjnym lub odpowiedź informująca o błędzie.</returns>
+        /// <response code="200">Zwraca informację o wysłanym kodzie weryfikacyjnym.</response>
+        /// <response code="400">Adres e-mail lub identyfikator urządzenia są nieprawidłowe.</response>
+        /// <response code="500">Wystąpił błąd podczas wysyłania wiadomości e-mail.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Wysyła kod weryfikacyjny na adres e-mail", Description = "Wysyła kod weryfikacyjny na podany adres e-mail i zapisuje go w bazie danych.")]
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request) {
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId)) {
                 return BadRequest("Email and DeviceId are required.");

@@ -14,6 +14,7 @@ namespace ServerApiMikoAI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint do znalezienia pytań z FAQ podobnych do wprowadzonego.")]
     public class FAQLikeController : ControllerBase
     {
         private readonly AuthorizationService _authorizationService;
@@ -22,13 +23,20 @@ namespace ServerApiMikoAI.Controllers
         {
             _authorizationService = authorization;
         }
-
+        /// <summary>
+        /// Znajduje podobne do zadanego putanie z FAQ wraz z odpowiedzią w 2 językach.
+        /// </summary>
+        /// <param name="FAQMessage">Obiekt zawierający pytanie, limit odpowiedzi i język pytania.</param>
+        /// <returns>Zwraca listę pytań i odpowiedzi z FAQ w 2 językach.</returns>
+        /// <response code="200">Zwraca listę pytań i odpowiedzi z FAQ w 2 językach.</response>
+        /// <response code="400">Odpowiedź zwróciła błąd.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost(Name = "FAQLikeRequest")]
         [ProducesResponseType(typeof(FAQFinalResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Znajduje podobne pytanie z FAQ", Description = "Przetwarza pytanie i sprawdza czy istnieje podobne w bazie FAQ, jeżeli tak zwraca pytanie i odpowiedź po polsku i angielsku.")]
         public async Task<IActionResult> Post(FAQMessage FAQMessage)
         {
             string deviceId = HttpContext.Request.Headers["device_id"];
