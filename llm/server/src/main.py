@@ -19,7 +19,49 @@ from api.routers import (
 )
 
 def create_app() -> FastAPI:
-    app = FastAPI()
+    tags_metadata = [
+        dict(
+            name="classify",
+            description=(
+                "Kategoryzacja zapytania użytkownika (kategorie: 'chat', 'navigation')."
+            )
+        ),
+        dict(
+            name="faq_like",
+            description=(
+                "Zwraca identyfikatory pytań z bazy danych FAQ podobnych do zadanego."
+            )
+        ),
+        dict(
+            name="faq",
+            description=(
+                "Zwraca pytania z bazy danych FAQ i odpowiedź na nie dla danych identyfikatorów."
+            )
+        ),
+        dict(
+            name="chat",
+            description=(
+                "Czat z dużym modelem językowym."
+            )
+        ),
+        dict(
+            name="upload_faq",
+            description=(
+                "Przesyłanie pytań i odpowiedzi do bazy danych FAQ."
+            )
+        ),
+        dict(
+            name="upload_rag_docs",
+            description=(
+                "Przesyłanie dokumentów, z których duży model językowy "
+                "korzysta realizując RAG, do wektorowej bazy danych."
+            )
+        )
+    ]
+
+    app = FastAPI(
+        tags_metadata=tags_metadata
+    )
 
     routers = [
         chat.router,

@@ -316,7 +316,11 @@ class ClassificationResult(BaseModel):
 
     metadata: Optional[CategoryNavigationMetadata] = None
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "classify"
+    ]
+)
 
 @router.post("/classify")
 async def classify(

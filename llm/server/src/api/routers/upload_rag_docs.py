@@ -25,7 +25,11 @@ class Document(BaseModel):
 class UploadRAGDocsRequest(BaseModel):
     docs: list[Document]
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "upload_rag_docs"
+    ]
+)
 
 def _get_docs_summaries(docs: list[str]) -> list[str]:
     n_docs = len(docs)

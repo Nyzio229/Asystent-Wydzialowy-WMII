@@ -109,7 +109,11 @@ def _rag(
 class ChatResult(BaseModel):
     text: str
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "chat"
+    ]
+)
 
 @router.post("/chat")
 async def chat(

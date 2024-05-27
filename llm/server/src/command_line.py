@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument(
         "-m",
         "--model",
-        help="Path to the LLM weights file (.gguf) on Hugging Face",
+        help="Path to the LLM weights file (.gguf)",
         required=True
     )
 

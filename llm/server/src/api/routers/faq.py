@@ -18,7 +18,11 @@ class FAQEntry(BaseModel):
 class FAQResult(BaseModel):
     faq: list[FAQEntry]
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "faq"
+    ]
+)
 
 @router.post("/faq")
 async def faq(
