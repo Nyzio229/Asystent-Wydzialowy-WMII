@@ -60,7 +60,7 @@ def create_app() -> FastAPI:
     ]
 
     app = FastAPI(
-        tags_metadata=tags_metadata
+        openapi_tags=tags_metadata
     )
 
     routers = [
