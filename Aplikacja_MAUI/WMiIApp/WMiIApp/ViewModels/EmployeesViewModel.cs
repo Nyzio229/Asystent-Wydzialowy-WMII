@@ -50,7 +50,7 @@ namespace WMiIApp.ViewModels
                         }
                     }
                     catch {}
-                    await Task.Delay(20000);
+                    await Task.Delay(60000);
                 }
             });
         }

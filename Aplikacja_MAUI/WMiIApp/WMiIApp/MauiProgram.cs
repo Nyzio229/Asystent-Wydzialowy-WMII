@@ -35,6 +35,10 @@ namespace WMiIApp
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<EmployeesPage>();
             builder.Services.AddSingleton<EmployeesViewModel>();
+            builder.Services.AddSingleton<MapPage_1>();
+            builder.Services.AddSingleton<MapPage0>();
+            builder.Services.AddSingleton<MapPage1>();
+            builder.Services.AddSingleton<MapPage2>();
             return builder.Build();
         }
     }

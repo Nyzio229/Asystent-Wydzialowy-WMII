@@ -6,6 +6,7 @@ namespace WMiIApp
     {
         //uri for http connections
         public const string uri = "http://158.75.112.151:9124/";
+        public static bool shouldBeVisible = false;
         public static RoomMap GlobalRooms { get; } = new RoomMap();
 
         public static PathFinder pathFinder = new PathFinder();
@@ -50,7 +51,7 @@ namespace WMiIApp
         Room biblioteka = new Room("biblioteka", "Biblioteka/C114 (Parter)", 205, 98, 0);
         Room patio2 = new Room("patio2", "Korytarz", 207, 74, 0);
         Room galeria = new Room("galeria", "Galeria (Parter)", 187, 141, 0);
-        Room patio = new Room("patio", "Patio Wejście Koło Szatni", 85, 144, 0);
+        Room patio = new Room("patio", "Patio Koło Szatni", 85, 144, 0);
         Room b124 = new Room("b124", "B124 (Parter)", 55, 134, 0);
         Room b123 = new Room("b123", "B123 (Parter)", 55, 114, 0);
         Room b122 = new Room("b122", "B122 (Parter)", 55, 105, 0);

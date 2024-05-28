@@ -320,4 +320,16 @@ public partial class MapPage0 : ContentPage
             yOffset = Content.TranslationY;
         }
     }
+
+    protected override void OnAppearing()
+    {
+        if(App.shouldBeVisible)
+        {
+            object sender = this;
+            EventArgs e = EventArgs.Empty;
+            OnShowMenuButtonClicked(sender, e);
+            App.shouldBeVisible = false;
+        }
+        base.OnAppearing();
+    }
 }

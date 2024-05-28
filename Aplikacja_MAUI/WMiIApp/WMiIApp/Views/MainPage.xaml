@@ -19,6 +19,12 @@
         <toolkit:StatusBarBehavior StatusBarColor="#1E1C26"/>
     </ContentPage.Behaviors>
 
+    <Shell.TitleView>
+        <Grid ColumnDefinitions=".8*, .2*">
+            <ImageButton Source="bin_icon.png" Grid.Column="1" MaximumHeightRequest="25" Command="{Binding DeleteHistoryCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <Grid RowDefinitions="*, Auto, Auto" ColumnDefinitions=".75*, .1*, .15*"
           RowSpacing="10" ColumnSpacing="0" BackgroundColor="#2F3142">
 

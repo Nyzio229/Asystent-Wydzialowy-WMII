@@ -15,6 +15,8 @@ namespace WMiIApp.ViewModels
     {
         CancellationTokenSource? textToSpeechCancellationTokenSource;
         readonly MessageService messageService;
+        private List<string> allRoomNames = App.GlobalRooms.GetRooms().Where(room => room.Name != "Korytarz").Select(room => room.Name).OrderBy(name => name).ToList();
+        private List<string> filteredRoomNames = [];
 
         [ObservableProperty]
         ObservableCollection<Message>? items;
@@ -237,14 +239,22 @@ namespace WMiIApp.ViewModels
                         //await Shell.Current.DisplayAlert("Error!", "-1 CATEGORY", "OK");
                         return true;
                     case "navigation":
-                        if(!string.IsNullOrEmpty(classifyResponse.metadata.source))
+                        App.shouldBeVisible = true;
+                        string? source = classifyResponse.metadata.source;
+                        string? destination = classifyResponse.metadata.destination;
+                        //allRoomNames = App.GlobalRooms.GetRooms().Where(room => room.Name != "Korytarz").Select(room => room.Name).OrderBy(name => name).ToList();
+                        if (!string.IsNullOrEmpty(source))
                         {
-                            App.sourceRoom = classifyResponse.metadata.source;
+                            filteredRoomNames = allRoomNames.Where(roomName => roomName.ToLower().Contains(source)).ToList();
+                            App.sourceRoom = filteredRoomNames.First();
+                            filteredRoomNames.Clear();
                         }
-                        if (!string.IsNullOrEmpty(classifyResponse.metadata.destination))
+                        if (!string.IsNullOrEmpty(destination))
                         {
-                            App.destinationRoom = classifyResponse.metadata.destination;
+                            filteredRoomNames = allRoomNames.Where(roomName => roomName.ToLower().Contains(destination)).ToList();
+                            App.destinationRoom = filteredRoomNames.First();
                         }
+                        IsAnimated = false;
                         Message mapAnswer = new()
                         {
                             Content = "Udało mi się wyznaczyć trasę! Spójrz na mapę!",
@@ -259,6 +269,7 @@ namespace WMiIApp.ViewModels
                             Role = "assistant"
                         };
                         ItemsEN.Add(mapAnswerEN);
+                        await Task.Delay(500);
                         await Shell.Current.GoToAsync("///MapPage0");
                         //await Shell.Current.DisplayAlert("Hurra!", "From: " + classifyResponse.metadata.source + " " + "To: " + classifyResponse.metadata.destination, "OK");
                         return false;
@@ -500,6 +511,36 @@ namespace WMiIApp.ViewModels
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
+
+        [RelayCommand]
+        async Task DeleteHistory()
+        {
+            bool isYesChosen = await Shell.Current.DisplayAlert("Uwaga!", "Czy na pewno chcesz usunąć historię?", "Tak", "Nie");
+            if(isYesChosen)
+            {
+                Items.Clear();
+                ItemsEN.Clear();
+
+                IsAnimated = true;
+                await Task.Delay(1000);
+                IsAnimated = false;
+
+                Message message = new()
+                {
+                    Content = "Cześć! Jestem MikoAI i chętnie odpowiem na wszystkie twoje pytania!",
+                    Role = "assistant",
+                    IsSent = false
+                };
+                Items.Add(message);
+                Message message2 = new()
+                {
+                    Content = "Hi, I'm MikoAI and I'm happy to answer all your questions!",
+                    Role = "assistant",
+                    IsSent = false
+                };
+                ItemsEN.Add(message2);
             }
         }
     }

@@ -32,8 +32,8 @@ namespace WMiIApp.Models
             // Rysujemy linie laczace punkty na sciezce
             for (int i = 0; i < points.Count - 1; i++)
             {
-                canvas.StrokeColor = Colors.Chocolate;
-                canvas.StrokeSize = (float)1.5;
+                canvas.StrokeColor = Colors.White;
+                canvas.StrokeSize = 5;
 
                 var startPoint = points[i];
                 var endPoint = points[i + 1];
@@ -41,9 +41,12 @@ namespace WMiIApp.Models
                 canvas.DrawLine(startPoint.Item1, startPoint.Item2, endPoint.Item1, endPoint.Item2);
 
 
-                canvas.StrokeColor = Colors.Chocolate;
-                canvas.StrokeSize = 1;
-                DrawArrow(canvas, startPoint.Item1, startPoint.Item2, endPoint.Item1, endPoint.Item2);
+                canvas.StrokeColor = Colors.White;
+                canvas.StrokeSize = 3;
+                if (CalculateDistance(startPoint.Item1, endPoint.Item1, startPoint.Item2, endPoint.Item2) > 30 || i == points.Count - 2)
+                {
+                    DrawArrow(canvas, startPoint.Item1, startPoint.Item2, endPoint.Item1, endPoint.Item2);
+                }
             }
 
             // Kolor punktu startowego
@@ -69,10 +72,24 @@ namespace WMiIApp.Models
             }
         }
 
+        private double CalculateDistance(float x1, float x2, float y1, float y2)
+        {
+            double result;
+            try
+            {
+                result = Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+            }
+            catch
+            {
+                result = 20.0;
+            }
+            return result;
+        }
+
         // Metoda do rysowania strzalki
         private void DrawArrow(ICanvas canvas, float startX, float startY, float endX, float endY)
         {
-            float arrowSize = (float)5; // Rozmiar strzalki
+            float arrowSize = (float)11; // Rozmiar strzalki
 
             // Obliczamy kat miedzy punktami
             float angle = (float)Math.Atan2(endY - startY, endX - startX);
@@ -86,6 +103,15 @@ namespace WMiIApp.Models
             // Rysujemy dwie linie tworzace strzalke
             canvas.DrawLine(endX, endY, arrowEndX1, arrowEndY1);
             canvas.DrawLine(endX, endY, arrowEndX2, arrowEndY2);
+
+            PathF pathF = new PathF();
+            pathF.LineTo(endX, endY);
+            pathF.LineTo(arrowEndX1, arrowEndY1);
+            pathF.LineTo(arrowEndX2, arrowEndY2);
+            pathF.LineTo(endX, endY);
+            canvas.FillColor = Colors.White;
+            canvas.FillPath(pathF);
+            canvas.DrawPath(pathF);
         }
     }
 }

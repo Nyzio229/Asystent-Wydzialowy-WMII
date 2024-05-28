@@ -42,7 +42,7 @@
                           ColumnDefinitions="0.5*, 0.3*, 0.2*" 
                           ColumnSpacing="5">
                         <Frame BackgroundColor="#3F4152" BorderColor="#3F4152" CornerRadius="20" HasShadow="True">
-                            <Label  Text="{Binding Name}" FontSize="24" TextColor="#FFFFFF" />
+                            <Label  Text="{Binding Name}" FontSize="24" TextColor="#FFFFFF" LineBreakMode="WordWrap" TextType="Html"/>
                         </Frame>
 
                         <Frame Grid.Column="1" BackgroundColor="#3F4152" BorderColor="#3F4152" CornerRadius="20" HasShadow="True">
