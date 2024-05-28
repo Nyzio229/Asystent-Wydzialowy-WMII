@@ -17,7 +17,11 @@ class LangFAQ(BaseModel):
 class UploadFAQRequest(BaseModel):
     lang_faqs: list[LangFAQ]
 
-router = APIRouter()
+router = APIRouter(
+    tags=[
+        "upload_faq"
+    ]
+)
 
 @router.post("/upload_faq")
 async def upload_faq(

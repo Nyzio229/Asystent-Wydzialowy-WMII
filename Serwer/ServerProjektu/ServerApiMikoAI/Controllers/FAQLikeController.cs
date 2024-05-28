@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using ServerApiMikoAI.Models;
+using ServerApiMikoAI.Models.Classify;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.FAQ;
 using Swashbuckle.AspNetCore.Annotations;
@@ -11,15 +14,54 @@ namespace ServerApiMikoAI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("Endpoint do znalezienia pytań z FAQ podobnych do wprowadzonego.")]
     public class FAQLikeController : ControllerBase
     {
+        private readonly AuthorizationService _authorizationService;
 
+        public FAQLikeController(AuthorizationService authorization)
+        {
+            _authorizationService = authorization;
+        }
+        /// <summary>
+        /// Znajduje podobne do zadanego putanie z FAQ wraz z odpowiedzią w 2 językach.
+        /// </summary>
+        /// <param name="FAQMessage">Obiekt zawierający pytanie, limit odpowiedzi i język pytania.</param>
+        /// <returns>Zwraca listę pytań i odpowiedzi z FAQ w 2 językach.</returns>
+        /// <response code="200">Zwraca listę pytań i odpowiedzi z FAQ w 2 językach.</response>
+        /// <response code="400">Odpowiedź zwróciła błąd.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił wewnętrzny błąd serwera.</response>
         [HttpPost(Name = "FAQLikeRequest")]
         [ProducesResponseType(typeof(FAQFinalResponse), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
-        public async Task<FAQFinalResponse> Post(FAQMessage FAQMessage)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(OperationId = "post", Summary = "Znajduje podobne pytanie z FAQ", Description = "Przetwarza pytanie i sprawdza czy istnieje podobne w bazie FAQ, jeżeli tak zwraca pytanie i odpowiedź po polsku i angielsku.")]
+        public async Task<IActionResult> Post(FAQMessage FAQMessage)
         {
-            return await FAQLikeRequest(FAQMessage);
+            string deviceId = HttpContext.Request.Headers["device_id"];
+            string apiKey = HttpContext.Request.Headers["api_key"];
+
+            var isAuthorized = await _authorizationService.IsDeviceAuthorized(deviceId, apiKey);
+
+            if (!isAuthorized)
+            {
+                return Unauthorized("Invalid DeviceId or ApiKey.");
+            }
+
+
+            FAQFinalResponse faqFinalResponse = await FAQLikeRequest(FAQMessage);
+            switch (faqFinalResponse.faq[0].answerPL)
+            {
+                case "-1":
+                    return Ok(faqFinalResponse);
+                case "-2":
+                    return StatusCode(400, "Response not Successful");
+                case "-3":
+                    return StatusCode(500, $"Internal server error: {faqFinalResponse.faq[0].questionPL}");
+                default:
+                    return Ok(faqFinalResponse);
+            }
         }
 
         public static async Task<FAQFinalResponse> FAQLikeRequest(FAQMessage faqMessage)
@@ -35,10 +77,6 @@ namespace ServerApiMikoAI.Controllers
             for (int i = 0; i < faqMessage.limit; i++)
             {
                 FAQFinalItem faqFinalItem = new FAQFinalItem();
-                faqFinalItem.answerEN = "-1";
-                faqFinalItem.questionEN = "-1";
-                faqFinalItem.answerPL = "-1";
-                faqFinalItem.questionPL = "-1";
                 faqFinalResponse.faq.Add(faqFinalItem);
             }
             using (var httpClient = new HttpClient())
@@ -51,8 +89,8 @@ namespace ServerApiMikoAI.Controllers
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
                         FAQResponse faqResponse = JsonConvert.DeserializeObject<FAQResponse>(responseContent);
-                        
-                        if (faqResponse.faq_ids != null)
+
+                        if (faqResponse.faq_ids.Length > 0)
                         {
                             FAQRequest faqRequestEN = new FAQRequest();
                             FAQRequest faqRequestPL = new FAQRequest();
@@ -67,22 +105,29 @@ namespace ServerApiMikoAI.Controllers
 
                             for (int i = 0; i < faqResponse.faq_ids.Length; i++)
                             {
-                                    faqFinalResponse.faq[i].answerEN = faqResultEN.faq[i].answer;
-                                    faqFinalResponse.faq[i].questionEN = faqResultEN.faq[i].question;
-                                    faqFinalResponse.faq[i].answerPL = faqResultPL.faq[i].answer;
-                                    faqFinalResponse.faq[i].questionPL = faqResultPL.faq[i].question;
+                                faqFinalResponse.faq[i].answerEN = faqResultEN.faq[i].answer;
+                                faqFinalResponse.faq[i].questionEN = faqResultEN.faq[i].question;
+                                faqFinalResponse.faq[i].answerPL = faqResultPL.faq[i].answer;
+                                faqFinalResponse.faq[i].questionPL = faqResultPL.faq[i].question;
                             }
                             return faqFinalResponse;
                         }
+                        faqFinalResponse.faq[0].answerPL = "-1";
+                        faqFinalResponse.faq[0].answerEN = "-1";
+                        faqFinalResponse.faq[0].questionPL = "-1";
+                        faqFinalResponse.faq[0].questionEN = "-1";
                         return faqFinalResponse;
                     }
                     else
                     {
+                        faqFinalResponse.faq[0].answerPL = "-2";
                         return faqFinalResponse;
                     }
                 }
                 catch (Exception ex)
                 {
+                    faqFinalResponse.faq[0].answerPL = "-3";
+                    faqFinalResponse.faq[0].questionPL = ex.Message;
                     return faqFinalResponse;
                 }
             }

@@ -114,9 +114,10 @@ def _create_docs(
             ) | metadata
 
             for news in entry["news"]:
-                assert news.keys() == {
+                if news.keys() != {
                     "title", "date", "abstract"
-                }
+                }:
+                    raise ValueError("Unexpected keys in 'news' entry")
 
                 _append_doc(
                     page_content=news["abstract"],

@@ -12,6 +12,7 @@ using ServerApiMikoAI;
 namespace ServerApiMikoAI.Controllers.WMiI {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do sprawdzania statusu pracowników WMiI.")]
     public class WmiIEmployesController : ControllerBase {
         private readonly WMiIEmployeesDatabase _context;
         private readonly AuthorizationService _authorizationService;
@@ -20,10 +21,16 @@ namespace ServerApiMikoAI.Controllers.WMiI {
             _context = context;
             _authorizationService = authorization;
         }
-
+        /// <summary>
+        /// Pobiera status pracowników WMiI.
+        /// </summary>
+        /// <returns>Lista statusów pracowników.</returns>
+        /// <response code="200">Zwraca listę statusów pracowników.</response>
+        /// <response code="401">Uwierzytelnianie nie powiodło się.</response>
+        /// <response code="500">Wystąpił błąd serwera.</response>
         [HttpGet]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "get")]
+        [SwaggerOperation(OperationId = "get", Summary = "Pobiera status pracowników WMiI", Description = "Pobiera status pracowników Wydziału Matematyki i Informatyki Uniwersytetu Mikołaja Kopernika.")]
         public async Task<IActionResult> GetEmployeesStatus() {
 
             string deviceId = HttpContext.Request.Headers["device_id"];

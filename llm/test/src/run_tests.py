@@ -16,12 +16,6 @@ from typing import Callable, Optional, Type
 
 from pydantic import BaseModel
 
-def to_camel_case(snake_case: str):
-    return "".join(
-        x.capitalize()
-        for x in snake_case.lower().split("_")
-    )
-
 class TestModuleDescriptor(BaseModel):
     dir_path: Path
     module_name: str
@@ -40,6 +34,13 @@ class TestModuleDescriptor(BaseModel):
 
         return module
 
+    @staticmethod
+    def _to_camel_case(snake_case: str) -> str:
+        return "".join(
+            x.capitalize()
+            for x in snake_case.lower().split("_")
+        )
+
     def get_test_class(self) -> Type[unittest.TestCase]:
         module = self.get_module()
 
@@ -53,22 +54,23 @@ class TestModuleDescriptor(BaseModel):
             )
         )
 
-        test_class_name = to_camel_case(module_name)
+        test_class_name = self._to_camel_case(module_name)
 
-        exported_classes_with_names = list(filter(
+        exported_classes_with_names = filter(
             lambda pair: pair[0] == test_class_name,
             exported_classes_with_names
-        ))
+        )
 
         exported_classes = list(map(
             lambda pair: pair[1],
             exported_classes_with_names
         ))
 
-        assert len(exported_classes) == 1, (
-            f"Expected exactly one exported test class "
-            f"named '{test_class_name}', got: {exported_classes}"
-        )
+        if len(exported_classes) != 1:
+            raise ValueError(
+                f"Expected exactly one exported test class "
+                f"named '{test_class_name}', got: {exported_classes}"
+            )
 
         test_class = exported_classes[0]
 
@@ -88,13 +90,15 @@ def get_test_module_descriptors(
     test_module_descriptors: list[TestModuleDescriptor] = []
 
     for dir_path in dir_paths:
-        glob_path = str(dir_path / "test_*.py")
+        file_pattern = "test_*.py"
+        glob_path = str(dir_path / file_pattern)
         paths = glob.glob(glob_path)
 
-        assert len(paths) == 1, (
-            f"Expected exactly one 'test_*.py' "
-            f"script at '{dir_path}', got: {paths}"
-        )
+        if len(paths) != 1:
+            raise ValueError(
+                f"Expected exactly one '{file_pattern}' "
+                f"script at '{dir_path}', got: {paths}"
+            )
 
         script_path = paths[0]
         module_name = Path(script_path).stem

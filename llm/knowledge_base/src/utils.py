@@ -1,4 +1,3 @@
-import os
 import json
 
 from pathlib import Path
@@ -94,20 +93,25 @@ def get_cached_translation(
     pl_path: Path,
     cache_path: Path,
     translator: Callable[
-        [list[T]], list[T]
+        [T | list[T]],
+        T | list[T]
     ],
     model_type: Type[T],
     as_list: bool = True,
     with_pl: bool = False,
     serialize: bool = False,
     overwrite_existing: bool = False,
-    create_pl_data: Optional[Callable[[], T]] = None
+    create_pl_data: Optional[
+        Callable[
+            [], T | list[T]
+        ]] = None
 ):
     if not create_pl_data:
-        assert not overwrite_existing, (
-            "'overwrite_existing' cannot be `True` if "
-            "'create_pl_data' is unspecified"
-        )
+        if overwrite_existing:
+            raise ValueError(
+                "'overwrite_existing' cannot be `True` if "
+                "'create_pl_data' is unspecified"
+            )
 
     def _serialize(
         data: T | list[T]
@@ -125,14 +129,18 @@ def get_cached_translation(
 
         return serialized
 
-    will_create_pl_data = overwrite_existing or not pl_path.exists()
+    will_create_pl_data = (
+        overwrite_existing or
+        not pl_path.exists()
+    )
 
     if will_create_pl_data:
-        assert create_pl_data, (
-            "'create_pl_data' cannot be `None` if Polish data is to be created. "
-            "Perhaps the data was assumed to have been created in another way, "
-            "but the file got deleted?"
-        )
+        if not create_pl_data:
+            raise ValueError(
+                "'create_pl_data' cannot be `None` if Polish data "
+                "is to be created. Perhaps the data was assumed to "
+                "have been created in another way, but the file got deleted?"
+            )
 
         pl_data = _serialize(
             create_pl_data()
@@ -165,7 +173,7 @@ def get_cached_translation(
 
     cache_exists = (
         not will_create_pl_data and
-        os.path.exists(cache_path)
+        cache_path.exists()
     )
 
     if cache_exists:
@@ -189,9 +197,11 @@ def get_cached_translation(
         n_pl = len(pl_data)
         n_tr = len(translated)
 
-        assert n_pl == n_tr, (
-            f"[PL data ({n_pl})] <-> [translated data ({n_tr})] size mismatch."
-        )
+        if n_pl != n_tr:
+            raise ValueError(
+                f"[PL data ({n_pl})] <-> [translated data ({n_tr})] "
+                "size mismatch."
+            )
 
     if serialize:
         if with_pl:

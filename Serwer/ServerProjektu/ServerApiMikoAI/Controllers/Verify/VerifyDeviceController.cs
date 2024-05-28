@@ -6,23 +6,34 @@ using ServerApiMikoAI.Models.Verify;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace ServerApiMikoAI.Controllers.Verify
 {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do weryfikacji urządzenia.")]
     public class VerifyDeviceController : ControllerBase
     {
         private readonly VerificationDataBaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public VerifyDeviceController(VerificationDataBaseContext context)
+        public VerifyDeviceController(VerificationDataBaseContext context, IConfiguration configuration)
         {
             _context = context;
-        }
+            _configuration = configuration;
 
+        }
+        /// <summary>
+        /// Weryfikuje kod weryfikacyjny urządzenia.
+        /// </summary>
+        /// <param name="request">Żądanie weryfikacji urządzenia zawierające identyfikator urządzenia i kod weryfikacyjny.</param>
+        /// <returns>Informacja o wygenerowanym kluczu API lub odpowiedź informująca o błędzie.</returns>
+        /// <response code="200">Zwraca informacje o wygenerowanym kluczu API.</response>
+        /// <response code="400">Identyfikator urządzenia lub kod weryfikacyjny są nieprawidłowe.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Weryfikuje kod weryfikacyjny urządzenia", Description = "Weryfikuje kod weryfikacyjny urządzenia i generuje klucz API dla zalogowanego urządzenia.")]
         public async Task<IActionResult> VerifyCode([FromBody] VerifyDeviceRequest request) {
 
             if (string.IsNullOrEmpty(request.DeviceId) || request.VerificationCode <= 0) {
@@ -78,8 +89,10 @@ namespace ServerApiMikoAI.Controllers.Verify
         // Metoda do szyfrowania klucza API
         private string EncryptApiKey(string apiKey) {
             using (Aes aesAlg = Aes.Create()) {
-                byte[] key = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Klucz szyfrowania (możesz użyć inny klucz)
-                byte[] iv = Encoding.UTF8.GetBytes("asdasdasdasdasda"); // Wektor inicjalizacyjny (możesz użyć inny wektor)
+                byte[] key = Encoding.UTF8.GetBytes(_configuration["EncryptionSettings:Key"]); // Klucz szyfrowania (możesz użyć inny klucz)
+                byte[] iv = Encoding.UTF8.GetBytes(_configuration["EncryptionSettings:IV"]); // Wektor inicjalizacyjny (możesz użyć inny wektor)
+
+
 
                 using (ICryptoTransform encryptor = aesAlg.CreateEncryptor(key, iv)) {
                     byte[] encryptedBytes = encryptor.TransformFinalBlock(Encoding.UTF8.GetBytes(apiKey), 0, apiKey.Length);

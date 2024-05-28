@@ -9,23 +9,36 @@ using MailKit.Security;
 using ServerApiMikoAI.Models.Context;
 using ServerApiMikoAI.Models.Verify;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ServerApiMikoAI.Controllers.Verify
 {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do weryfikacji adresu e-mail.")]
     public class VerifyEmailController : ControllerBase
     {
         private readonly VerificationDataBaseContext _context;
         private readonly EmailSettings _email;
-        public VerifyEmailController(VerificationDataBaseContext context)
+        private readonly IConfiguration _configuration;
+        public VerifyEmailController(VerificationDataBaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
+        /// <summary>
+        /// Wysyła kod weryfikacyjny na podany adres e-mail.
+        /// </summary>
+        /// <param name="request">Żądanie weryfikacji adresu e-mail zawierające adres e-mail i identyfikator urządzenia.</param>
+        /// <returns>Informacja o wysłanym kodzie weryfikacyjnym lub odpowiedź informująca o błędzie.</returns>
+        /// <response code="200">Zwraca informację o wysłanym kodzie weryfikacyjnym.</response>
+        /// <response code="400">Adres e-mail lub identyfikator urządzenia są nieprawidłowe.</response>
+        /// <response code="500">Wystąpił błąd podczas wysyłania wiadomości e-mail.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Wysyła kod weryfikacyjny na adres e-mail", Description = "Wysyła kod weryfikacyjny na podany adres e-mail i zapisuje go w bazie danych.")]
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request) {
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.DeviceId)) {
                 return BadRequest("Email and DeviceId are required.");
@@ -69,7 +82,7 @@ namespace ServerApiMikoAI.Controllers.Verify
 
                 using (var smtp = new SmtpClient()) {
                     smtp.Connect("poczta1.mat.umk.pl", 587, SecureSocketOptions.StartTls);
-                    smtp.Authenticate("przybysz_mailer", "CY5Y8esWOgiQn7Z");
+                    smtp.Authenticate(_configuration["MailServerSettings:Login"], _configuration["MailServerSettings:Pswd"]);
                     smtp.Send(mail);
                     smtp.Disconnect(true);
                 }

@@ -6,15 +6,23 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace ServerApiMikoAI.Controllers.WMiI {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoint do rezerwacji sal w WMiI.")]
     public class WMiIClassReservationController : ControllerBase {
         private readonly WMiIPlansDatabase _context;
         public WMiIClassReservationController(WMiIPlansDatabase context) {
             _context = context;
         }
-
+        /// <summary>
+        /// Pobiera rezerwacje sal na podaną datę.
+        /// </summary>
+        /// <param name="date">Data w formacie 'yyyy-MM-dd'.</param>
+        /// <returns>Lista rezerwacji dla podanej daty.</returns>
+        /// <response code="200">Zwraca listę rezerwacji sal na podaną datę.</response>
+        /// <response code="400">Podany format daty jest nieprawidłowy.</response>
+        /// <response code="500">Wystąpił błąd serwera.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [SwaggerOperation(OperationId = "post")]
+        [SwaggerOperation(OperationId = "post", Summary = "Pobiera rezerwacje sal na podaną datę", Description = "Pobiera rezerwacje sal na podaną datę w formacie 'yyyy-MM-dd'.")]
         public async Task<IActionResult> GetClassReservation(string date) {
             try {
                 if (!DateTime.TryParse(date, out DateTime parsedDate)) {
